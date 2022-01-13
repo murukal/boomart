@@ -21,7 +21,8 @@ const Sidebar = (props: Props) => {
             zIndex: 1099,
             width: theme.layouts.drawerWidth,
             marginTop: theme.layouts.toolbarHeight,
-            height: `calc(100% - ${theme.layouts.toolbarHeight})`
+            height: `calc(100% - ${theme.layouts.toolbarHeight})`,
+            border: 0
           }
         }}
       >

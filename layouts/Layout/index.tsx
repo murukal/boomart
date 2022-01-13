@@ -48,13 +48,14 @@ const Layout = (props: Props) => {
 
         {/* 页面正文 */}
         <Box
-          className='h-full w-full'
+          className='h-full w-full bg-slate-400 p-2 rounded-t-md'
           sx={{
             transition: theme.transitions.create('margin', {
               duration: theme.transitions.duration.enteringScreen,
               easing: theme.transitions.easing.easeOut
             }),
-            marginLeft: `calc(20px + ${isSideOpened ? theme.layouts.drawerWidth : '0px'})`
+            marginLeft: `calc(10px + ${isSideOpened ? theme.layouts.drawerWidth : '0px'})`,
+            marginRight: '10px'
           }}
         >
           {props.children}
