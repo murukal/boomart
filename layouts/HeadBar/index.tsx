@@ -1,3 +1,5 @@
+// next
+import { useRouter } from 'next/router'
 // material-ui
 import { useTheme } from '@mui/material/styles'
 import { Box, ButtonBase, IconButton } from '@mui/material'
@@ -7,15 +9,13 @@ import Search from '../../components/Search'
 import { Props } from './assets'
 
 const Header = (props: Props) => {
-  // 主题
   const theme = useTheme()
+  const router = useRouter()
 
-  /**
-   * 转到登录页
-   */
+  // 跳转到登录页
   const onGotoLogin = () => {
     // 转到boom的统一认证登录，当前客户端不做单独的认证登录
-    window.location.href = 'http://www.baidu.com'
+    router.push('http://localhost:3001/account/login')
   }
 
   return (

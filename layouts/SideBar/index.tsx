@@ -1,7 +1,7 @@
 // material-ui
 import { Box, Drawer, useTheme } from '@mui/material'
 // project
-// import Menus from '../Menus'
+import SideMenus from '../SideMenus'
 import { Props } from './assets'
 
 const Sidebar = (props: Props) => {
@@ -14,18 +14,18 @@ const Sidebar = (props: Props) => {
         anchor='left'
         open={props.isOpened}
         onClose={props.onDrawerToggle}
+        transitionDuration={props.transitionDuration}
+        SlideProps={props.SlideProps}
         PaperProps={{
           sx: {
             zIndex: 1099,
-            border: 0,
             width: theme.layouts.drawerWidth,
             marginTop: theme.layouts.toolbarHeight,
             height: `calc(100% - ${theme.layouts.toolbarHeight})`
-          },
-          elevation: 0
+          }
         }}
       >
-        {/* <Menus /> */}
+        <SideMenus />
       </Drawer>
     </Box>
   )
