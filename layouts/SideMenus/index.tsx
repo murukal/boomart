@@ -1,5 +1,7 @@
 // react
 import { useEffect, useState } from 'react'
+// next
+import Link from 'next/link'
 // mui
 import { MenuList, MenuItem, Typography } from '@mui/material'
 import { MenuTree } from '../../typings/menu'
@@ -23,7 +25,7 @@ const SideMenus = () => {
       {menuTree?.nodes?.map((menu) => {
         return (
           <MenuItem key={menu._id}>
-            <Typography>{menu.description}</Typography>
+            <Link href={menu.to}>{menu.description}</Link>
           </MenuItem>
         )
       })}
