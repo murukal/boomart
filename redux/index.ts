@@ -6,11 +6,7 @@ import reducer from './reducer'
 /**
  * 项目下的redux树
  */
-export interface State {
-  tenant: TenantState
-  menus: MenuTreeNode[]
-  userProfile: UserProfile
-}
+export interface State {}
 
 const store = createStore(reducer)
 
