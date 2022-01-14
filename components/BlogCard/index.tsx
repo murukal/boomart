@@ -1,12 +1,16 @@
 // mui
 import { useTheme, Box, Card, CardContent, CardMedia, IconButton, Typography } from '@mui/material'
 import { SkipPrevious, PlayArrow, SkipNext } from '@mui/icons-material'
+import { useRouter } from 'next/router'
 
-const Blog = () => {
+const BlogCard = () => {
   const theme = useTheme()
+  const router = useRouter()
+
+  const onCardClick = () => router.push('/blog/ssss')
 
   return (
-    <Card sx={{ display: 'flex' }}>
+    <Card sx={{ display: 'flex' }} onClick={onCardClick}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component='div' variant='h5'>
@@ -29,4 +33,4 @@ const Blog = () => {
   )
 }
 
-export default Blog
+export default BlogCard

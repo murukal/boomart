@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react'
 // next
 import { useRouter } from 'next/router'
 // mui
-import { MenuList, MenuItem, Typography } from '@mui/material'
+import { MenuList, MenuItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { AbcSharp } from '@mui/icons-material'
+// project
 import { MenuTree } from '../../typings/menu'
 import { getMenuTree } from '../../apis/menu'
 
@@ -16,9 +18,11 @@ const SideMenus = () => {
     setMenuTree(res.data || undefined)
   }
 
-  const onClick = (url: string) => {
-    return () => router.push(url)
+  const onClick = (to: string) => {
+    return () => router.push(to)
   }
+
+  const isSelected = (to: string) => router.pathname === to
 
   // 渲染组件数据
   useEffect(() => {
@@ -29,8 +33,14 @@ const SideMenus = () => {
     <MenuList>
       {menuTree?.nodes?.map((menu) => {
         return (
-          <MenuItem key={menu._id} onClick={onClick(menu.to)}>
-            <Typography>{menu.description}</Typography>
+          <MenuItem key={menu._id}>
+            <ListItemButton onClick={onClick(menu.to)} selected={isSelected(menu.to)}>
+              <ListItemIcon>
+                <AbcSharp />
+              </ListItemIcon>
+
+              <ListItemText primary={menu.description} />
+            </ListItemButton>
           </MenuItem>
         )
       })}
