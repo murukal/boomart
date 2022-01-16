@@ -1,3 +1,5 @@
+// npm
+import {stringify} from 'qs'
 // next
 import { useRouter } from 'next/router'
 // material-ui
@@ -15,7 +17,7 @@ const Header = (props: Props) => {
   // 跳转到登录页
   const onGotoLogin = () => {
     // 转到boom的统一认证登录，当前客户端不做单独的认证登录
-    router.push('http://localhost:3001/account/login')
+    router.push(`http://admin.r2boom.com/account/login?redirect=${window.location.href}`)
   }
 
   return (
