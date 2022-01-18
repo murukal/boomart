@@ -10,6 +10,7 @@ import { Props } from './assets'
 
 const Layout = (props: Props) => {
   const theme = useTheme()
+
   const [isSideOpened, setIsSideOpened] = useState(true)
 
   const onDrawerToggle = () => {
