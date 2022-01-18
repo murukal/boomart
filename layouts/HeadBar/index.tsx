@@ -21,7 +21,7 @@ const Header = (props: Props) => {
     }
 
     // 转到boom的统一认证登录，当前客户端不做单独的认证登录
-    router.push(`http://localhost:3001/account/login?${stringify(params)}`)
+    router.push(`http://admin.r2boom.com/account/login?${stringify(params)}`)
   }
 
   return (
