@@ -5,8 +5,8 @@ import { AppBar, Box, Toolbar, useTheme } from '@mui/material'
 // project
 import SideBar from '../SideBar'
 import HeadBar from '../HeadBar'
-import { getUser } from '../../apis/account'
 import { Props } from './assets'
+import { useSelector } from 'react-redux'
 
 const Layout = (props: Props) => {
   const theme = useTheme()
@@ -16,15 +16,6 @@ const Layout = (props: Props) => {
   const onDrawerToggle = () => {
     setIsSideOpened(!isSideOpened)
   }
-
-  useEffect(() => {
-    const fetch = async () => {
-      const res = await getUser()
-      console.log('res=====', res)
-    }
-
-    fetch()
-  }, [])
 
   return (
     <Box className='h-screen'>

@@ -15,23 +15,7 @@ export interface Action {
 }
 
 // 获取到token之后，进行用户的认证
-export const authenticate = async (
-  authenticate: Authentication = {
-    token: localStorage.getItem(TOKEN) || sessionStorage.removeItem(TOKEN) || ''
-  },
-  isAutoLogin: boolean = false
-): Promise<Action> => {
-  // 设置浏览器内存
-  localStorage.removeItem(TOKEN)
-  sessionStorage.removeItem(TOKEN)
-
-  // 自动登录，设置长期有效的token
-  if (isAutoLogin) {
-    localStorage.setItem(TOKEN, authenticate.token)
-  } else {
-    sessionStorage.setItem(TOKEN, authenticate.token)
-  }
-
+export const authenticate = async (): Promise<Action> => {
   // 读取用户信息
   const res = await getUser()
 
