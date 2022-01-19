@@ -4,15 +4,18 @@ import { stringify } from 'qs'
 import { useRouter } from 'next/router'
 // material-ui
 import { useTheme } from '@mui/material/styles'
-import { Box, ButtonBase, IconButton } from '@mui/material'
+import { Box, ButtonBase, IconButton, Avatar } from '@mui/material'
 import { MenuOpen, Menu, Person } from '@mui/icons-material'
 // project
 import Search from '../../components/Search'
 import { Props } from './assets'
+import { useSelector } from 'react-redux'
 
 const Header = (props: Props) => {
   const theme = useTheme()
   const router = useRouter()
+
+  const userProfile = useSelector((state) => state.userProfile)
 
   // 跳转到登录页
   const onGotoLogin = () => {
@@ -46,9 +49,13 @@ const Header = (props: Props) => {
 
       {/* avatar */}
       <Box className='flex flex-grow justify-end mr-4'>
-        <IconButton onClick={onGotoLogin}>
-          <Person />
-        </IconButton>
+        {userProfile.isLogin ? (
+          <Avatar alt={userProfile.user?.username} src={userProfile.user?.avatar} />
+        ) : (
+          <IconButton onClick={onGotoLogin}>
+            <Person />
+          </IconButton>
+        )}
       </Box>
     </>
   )
