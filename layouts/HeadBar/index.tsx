@@ -43,12 +43,17 @@ const Header = (props: Props) => {
       </Box>
 
       {/* header search */}
-      <Box className='flex flex-grow justify-center'>
+      <Box
+        className='flex justify-center items-center'
+        sx={{
+          flex: 4
+        }}
+      >
         <Search />
       </Box>
 
       {/* avatar */}
-      <Box className='flex flex-grow justify-end mr-4'>
+      <Box className='flex mr-4 flex-1 justify-end items-center'>
         {userProfile.isLogin ? (
           <Avatar alt={userProfile.user?.username} src={userProfile.user?.avatar} />
         ) : (

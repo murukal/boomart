@@ -1,6 +1,5 @@
 // react
 import React from 'react'
-
 // material-ui
 import { Paper, InputBase, Divider, IconButton } from '@mui/material'
 import { MenuOutlined, SearchOutlined, DirectionsOutlined } from '@mui/icons-material'
@@ -12,7 +11,7 @@ const Search = () => {
         <MenuOutlined />
       </IconButton>
 
-      <InputBase className='ml-px flex' placeholder='你想看什么？' />
+      <InputBase className='ml-px' placeholder='你想看什么？' />
 
       <IconButton className='p-2.5'>
         <SearchOutlined />
