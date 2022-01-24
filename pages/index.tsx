@@ -1,10 +1,12 @@
 // next
 import type { NextPage } from 'next'
+// project
+import Publish from '../components/Charts/Publish'
 
 const Home: NextPage = () => {
   return (
     <>
-      <div>123123213</div>
+      <Publish />
     </>
   )
 }

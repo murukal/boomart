@@ -1,5 +1,5 @@
 const Boomap = () => {
-  return <div className='w-full h-full'>vvvvvvvv</div>
+  return <div className='w-full h-full'></div>
 }
 
 export default Boomap

@@ -1,6 +1,10 @@
-import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+// axios
+import type { AxiosRequestConfig, AxiosResponse } from 'axios'
+import Axios from 'axios'
+import { stringify } from 'qs'
+// project
+import type { ApiResponse } from '../typings/api'
 import { TOKEN } from '../assets'
-import { ApiResponse } from '../typings/api'
 
 // 生成一个axios实例
 const axios = Axios.create()
@@ -9,8 +13,8 @@ const axios = Axios.create()
  * 请求拦截器
  */
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
-  // 从缓存中获取token信息
-  const token = localStorage.getItem(TOKEN) || sessionStorage.getItem(TOKEN) || ''
+  // 从localStorage中获取token信息
+  const token = localStorage.getItem(TOKEN) || sessionStorage.getItem(TOKEN)
 
   if (token && config.headers) {
     config.headers['Authorization'] = `Bearer ${token}`
@@ -43,13 +47,50 @@ axios.interceptors.response.use(
 )
 
 /**
- * request
- * @param requestConfig
+ * get
+ * @param url
+ * @param config
  * @returns
  */
-const request = async <T = any, D = any>(requestConfig: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
-  const res = await axios.request(requestConfig)
+export const get = async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
+  const res = await axios.get(url, {
+    ...config,
+    paramsSerializer: stringify
+  })
   return res.data
 }
 
-export { request }
+/**
+ * post
+ * @param url
+ * @param data
+ * @param config
+ * @returns
+ */
+export const post = async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
+  const res = await axios.post(url, data, config)
+  return res.data
+}
+
+/**
+ * patch
+ * @param url
+ * @param data
+ * @param config
+ * @returns
+ */
+export const patch = async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
+  const res = await axios.patch(url, data, config)
+  return res.data
+}
+
+/**
+ * remove
+ * @param url
+ * @param config
+ * @returns
+ */
+export const shift = async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
+  const res = await axios.delete(url, config)
+  return res.data
+}

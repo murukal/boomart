@@ -1,7 +1,3 @@
-import { request } from '.'
+import { get } from '.'
 
-export const getUser = () =>
-  request({
-    method: 'GET',
-    url: '/api/auth'
-  })
+export const getUser = () => get('/api/auth')
