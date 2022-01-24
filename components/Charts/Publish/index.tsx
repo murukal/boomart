@@ -18,7 +18,9 @@ export const Publish = () => {
   // 渲染数据
   // 博客的数量按照发布日期进行group
   useEffect(() => {
-    getBlogPublishRecord(+dayjs(categories[0]), +dayjs(categories[categories.length - 1]))
+    console.log('categories[0]====', categories[0])
+
+    getBlogPublishRecord(+dayjs(categories[0]), +dayjs(categories[categories.length - 1]).endOf('day'))
   }, [])
 
   return (

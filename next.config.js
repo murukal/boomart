@@ -7,7 +7,7 @@ module.exports = {
       {
         source: '/api/:path*',
         // destination: `http://admin.r2boom.com/api/:path*`
-        destination: 'http://localhost:3000/api/:path*'
+        destination: 'http://localhost:3100/api/:path*'
       }
     ]
   })
