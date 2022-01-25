@@ -1,10 +1,11 @@
-import MarkdownIt from 'markdown-it'
+// import MarkdownIt from 'markdown-it'
 
-const Blog = (props: any) => {
-  const md = new MarkdownIt()
-  const res = md.render(`# markdown-it rulezz!
-## sssss`)
+const Blog = () => {
+  //   const md = new MarkdownIt()
+  //   const res = md.render(`# markdown-it rulezz!
+  // ## sssss`)
 
-  return <div dangerouslySetInnerHTML={{ __html: res }} />
+  return <div dangerouslySetInnerHTML={{ __html: '' }} />
 }
+
 export default Blog

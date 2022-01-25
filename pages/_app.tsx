@@ -23,9 +23,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     // query参数为空，不执行逻辑
     if (!Object.keys(router.query).length) return
     // 存储query
-    storeQueryParams(router.query)
+    const isRedirct = storeQueryParams(router.query)
     // 路由重定向
-    router.replace(router.pathname)
+    isRedirct && router.replace(router.asPath)
   }, [router.asPath])
 
   const onMounted = async () => {

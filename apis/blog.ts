@@ -1,6 +1,7 @@
 // project
-import type { PublishRecord } from '../typings/blog'
+import type { Blog, PublishRecord } from '../typings/blog'
 import { get } from '.'
+import { PaginateResult } from '../typings/api'
 
 const url = '/api/blog'
 
@@ -13,5 +14,5 @@ export const getBlogPublishRecord = (from: number, to: number) =>
   })
 
 export const getBlogs = () => {
-  return get(url)
+  return get<PaginateResult<Blog>>(url)
 }
