@@ -12,7 +12,7 @@ import { ThemeProvider } from '@mui/material'
 import '../styles/index.css'
 import theme from '../theme'
 import Layout from '../layouts/Layout'
-import { authenticate } from '../redux/userProfile/actions'
+import { authenticate, passToken } from '../redux/userProfile/actions'
 import store from '../redux'
 import { storeQueryParams } from '../utils/app'
 
@@ -29,6 +29,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [router.asPath])
 
   const onMounted = async () => {
+    // 将客户端的token存储到redux中
+    store.dispatch(passToken())
     // 鉴权
     store.dispatch(await authenticate())
   }

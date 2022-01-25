@@ -1,11 +1,17 @@
+// project
+import type { PublishRecord } from '../typings/blog'
 import { get } from '.'
 
 const url = '/api/blog'
 
 export const getBlogPublishRecord = (from: number, to: number) =>
-  get(`${url}/publish-record`, {
+  get<PublishRecord[]>(`${url}/publish-record`, {
     params: {
       from,
       to
     }
   })
+
+export const getBlogs = () => {
+  return get(url)
+}
