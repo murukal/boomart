@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react'
 // next
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import { useRouter, withRouter } from 'next/router'
 // redux
 import { Provider } from 'react-redux'
 // mui
@@ -22,10 +22,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   const redirect = useCallback(async () => {
     // query参数为空，不执行逻辑
     if (!Object.keys(router.query).length) return
-    // 存储query
-    const isRedirct = storeQueryParams(router.query)
-    // 路由重定向
-    isRedirct && router.replace(router.asPath)
+    // 处理query && 路由重定向
+    storeQueryParams(router.query) && router.replace(router.asPath.split('?')[0])
   }, [router.asPath])
 
   const onMounted = async () => {

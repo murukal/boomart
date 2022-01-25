@@ -1,12 +1,11 @@
 // react
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 // mui
 import { AppBar, Box, Toolbar, useTheme } from '@mui/material'
 // project
+import type { Props } from './assets'
 import SideBar from '../SideBar'
 import HeadBar from '../HeadBar'
-import { Props } from './assets'
-import { useSelector } from 'react-redux'
 
 const Layout = (props: Props) => {
   const theme = useTheme()
@@ -40,7 +39,7 @@ const Layout = (props: Props) => {
 
         {/* 页面正文 */}
         <Box
-          className='h-full w-full bg-slate-400 p-2 rounded-t-md'
+          className='h-full w-full bg-slate-400 p-2 rounded-t-md overflow-auto'
           sx={{
             transition: theme.transitions.create('margin', {
               duration: theme.transitions.duration.enteringScreen,

@@ -16,3 +16,5 @@ export const getBlogPublishRecord = (from: number, to: number) =>
 export const getBlogs = () => {
   return get<PaginateResult<Blog>>(url)
 }
+
+export const getBlogById = (id: string) => get<Blog>(`${url}/${id}`)
