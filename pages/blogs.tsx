@@ -49,7 +49,13 @@ const Blogs = (props: Props) => {
 export default Blogs
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const res = await getBlogs()
+  const res = await getBlogs({
+    pagination: {
+      populate: 'createdBy'
+    }
+  })
+
+  console.log('res====', res.data?.docs[0])
 
   return {
     props: {

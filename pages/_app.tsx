@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react'
 // next
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { useRouter, withRouter } from 'next/router'
+import { useRouter } from 'next/router'
 // redux
 import { Provider } from 'react-redux'
 // mui

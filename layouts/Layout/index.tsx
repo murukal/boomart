@@ -1,14 +1,26 @@
 // react
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // mui
 import { AppBar, Box, Toolbar, useTheme } from '@mui/material'
 // project
 import type { Props } from './assets'
 import SideBar from '../SideBar'
 import HeadBar from '../HeadBar'
+// third
+import PerfectScrollbar from 'perfect-scrollbar'
+import 'perfect-scrollbar/css/perfect-scrollbar.css'
 
 const Layout = (props: Props) => {
   const theme = useTheme()
+
+  useEffect(() => {
+    const ps = new PerfectScrollbar('#content')
+
+    // 返回一个函数，react会在自动注销
+    return () => {
+      ps.destroy()
+    }
+  }, [props.children])
 
   const [isSideOpened, setIsSideOpened] = useState(true)
 
@@ -18,7 +30,7 @@ const Layout = (props: Props) => {
 
   return (
     <Box className='h-screen'>
-      <AppBar color='inherit' elevation={0} position='fixed'>
+      <AppBar color='inherit' elevation={0} position='sticky'>
         <Toolbar
           sx={{
             height: theme.layouts.toolbarHeight
@@ -29,9 +41,9 @@ const Layout = (props: Props) => {
       </AppBar>
 
       <Box
-        className='flex h-full'
+        className='flex'
         sx={{
-          paddingTop: theme.layouts.toolbarHeight
+          height: `calc(100% - ${theme.layouts.toolbarHeight})`
         }}
       >
         {/* 侧边导航栏 */}
@@ -39,14 +51,16 @@ const Layout = (props: Props) => {
 
         {/* 页面正文 */}
         <Box
-          className='h-full w-full bg-slate-400 p-2 rounded-t-md overflow-auto'
+          id='content'
+          className='w-full bg-slate-400 p-2 rounded-t-md overflow-hidden relative'
           sx={{
             transition: theme.transitions.create('margin', {
               duration: theme.transitions.duration.enteringScreen,
               easing: theme.transitions.easing.easeOut
             }),
             marginLeft: `calc(10px + ${isSideOpened ? theme.layouts.drawerWidth : '0px'})`,
-            marginRight: '10px'
+            marginRight: '10px',
+            height: 'calc(100% - 16px)'
           }}
         >
           {props.children}
