@@ -1,4 +1,4 @@
-import { TenantCode } from './tenant'
+import type { TenantCode } from './tenant'
 
 export interface User {
   _id: string
@@ -8,8 +8,6 @@ export interface User {
   password?: string
   avatar: string
 }
-
-export type Users = User[]
 
 export type LoginType = 'phone' | 'account'
 

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@mui/icons-material": "^5.2.5",
+    "@mui/lab": "^5.0.0-alpha.66",
     "@mui/material": "^5.2.7",
     "apexcharts": "^3.33.0",
     "axios": "^0.24.0",
