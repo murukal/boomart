@@ -22,7 +22,7 @@ const Layout = (props: Props) => {
     }
   }, [props.children])
 
-  const [isSideOpened, setIsSideOpened] = useState(true)
+  const [isSideOpened, setIsSideOpened] = useState(false)
 
   const onDrawerToggle = () => {
     setIsSideOpened(!isSideOpened)
@@ -61,7 +61,7 @@ const Layout = (props: Props) => {
             marginRight: '10px'
           }}
         >
-          <div id='content' className='flex-1 bg-slate-400 rounded-t-md p-2 relative overflow-hidden'>
+          <div id='content' className='flex-1 p-2 relative overflow-hidden'>
             {props.children}
           </div>
         </Box>

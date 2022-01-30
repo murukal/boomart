@@ -4,7 +4,7 @@ import { stringify } from 'qs'
 import { useRouter } from 'next/router'
 // material-ui
 import { useTheme } from '@mui/material/styles'
-import { Box, ButtonBase, IconButton, Avatar } from '@mui/material'
+import { Box, IconButton, Avatar } from '@mui/material'
 import { MenuOpen, Menu, Person } from '@mui/icons-material'
 // project
 import Search from '../../components/Search'
@@ -37,9 +37,7 @@ const Header = (props: Props) => {
       >
         <Box component='span' className='flex-grow'></Box>
 
-        <ButtonBase className='rounded-md' onClick={props.onDrawerToggle}>
-          {props.isOpened ? <MenuOpen fontSize='large' /> : <Menu fontSize='large' />}
-        </ButtonBase>
+        <IconButton onClick={props.onDrawerToggle}>{props.isOpened ? <MenuOpen fontSize='large' /> : <Menu fontSize='large' />}</IconButton>
       </Box>
 
       {/* header search */}
