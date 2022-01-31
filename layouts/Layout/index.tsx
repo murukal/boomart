@@ -51,14 +51,14 @@ const Layout = (props: Props) => {
 
         {/* 页面正文 */}
         <Box
-          className='w-full flex flex-col'
+          className='flex flex-col'
           sx={{
             transition: theme.transitions.create('margin', {
               duration: theme.transitions.duration.enteringScreen,
               easing: theme.transitions.easing.easeOut
             }),
-            marginLeft: `calc(10px + ${isSideOpened ? theme.layouts.drawerWidth : '0px'})`,
-            marginRight: '10px'
+            marginLeft: isSideOpened ? theme.layouts.drawerWidth : '0px',
+            width: `calc(100% - ${isSideOpened ? theme.layouts.drawerWidth : '0px'})`
           }}
         >
           <div id='content' className='flex-1 p-2 relative overflow-hidden'>

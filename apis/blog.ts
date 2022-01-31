@@ -13,12 +13,9 @@ export const getBlogPublishRecord = (from: number, to: number) =>
     }
   })
 
-export const getBlogs = (params: QueryOptions) => {
-  console.log('params=====', params)
-
-  return get<PaginateResult<Blog>>(url, {
+export const getBlogs = (params: QueryOptions) =>
+  get<PaginateResult<Blog>>(url, {
     params
   })
-}
 
 export const getBlogById = (id: string) => get<Blog>(`${url}/${id}`)

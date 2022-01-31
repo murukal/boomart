@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 // material-ui
 import { useTheme } from '@mui/material/styles'
 import { Box, IconButton, Avatar } from '@mui/material'
-import { MenuOpen, Menu, Person } from '@mui/icons-material'
+import { MenuOpen, Menu, Person, Star, History } from '@mui/icons-material'
 // project
 import Search from '../../components/Search'
 import { Props } from './assets'
@@ -50,15 +50,25 @@ const Header = (props: Props) => {
         <Search />
       </Box>
 
-      {/* avatar */}
       <Box className='flex mr-4 flex-1 justify-end items-center'>
+        {/* avatar */}
         {userProfile.isLogin ? (
           <Avatar alt={userProfile.user?.username} src={userProfile.user?.avatar} />
         ) : (
-          <IconButton onClick={onGotoLogin}>
+          <IconButton onClick={onGotoLogin} aria-label='登录/注册'>
             <Person />
           </IconButton>
         )}
+
+        {/* star */}
+        <IconButton aria-label='收藏夹' className='ml-2'>
+          <Star />
+        </IconButton>
+
+        {/* history */}
+        <IconButton aria-label='历史记录' className='ml-2'>
+          <History />
+        </IconButton>
       </Box>
     </>
   )

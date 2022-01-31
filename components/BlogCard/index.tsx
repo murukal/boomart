@@ -1,17 +1,14 @@
+// next
+import { useRouter } from 'next/router'
 // mui
 import { Avatar, Card, CardContent, CardHeader, IconButton, Typography } from '@mui/material'
 import { MoreVert } from '@mui/icons-material'
-// next
-import { useRouter } from 'next/router'
+// third
+import dayjs from 'dayjs'
 // project
 import type { Props } from './assets'
 import type { User } from '../../typings/user'
 import { useMemo } from 'react'
-
-/** 按内容的长度设定不同的卡片高度 */
-const getHeight = (length: number) => {
-  return length > 500 ? 400 : length > 100 ? 150 : 50
-}
 
 const BlogCard = (props: Props) => {
   const router = useRouter()
@@ -20,11 +17,12 @@ const BlogCard = (props: Props) => {
     return props.blog.createdBy as User | undefined
   }, [props.blog])
 
-  const height = useMemo(() => {
-    return getHeight(props.blog.content.length)
-  }, [props.blog])
-
   const onCardClick = () => router.push(`/blog/${props.blog._id}`)
+
+  /** 格式化展示时间 */
+  const createdAt = useMemo(() => {
+    return dayjs(props.blog.createdAt).format('YYYY-MM-DD HH:mm:ss')
+  }, [props.blog.createdAt])
 
   return (
     <Card onClick={onCardClick}>
@@ -36,18 +34,13 @@ const BlogCard = (props: Props) => {
             <MoreVert />
           </IconButton>
         }
-        title={props.blog.title}
-        subheader={props.blog.createdAt}
+        title={user?.username}
+        subheader={createdAt}
       />
 
-      <CardContent
-        className='overflow-hidden'
-        sx={{
-          height
-        }}
-      >
-        <Typography variant='body2' color='text.secondary'>
-          {props.blog.content}
+      <CardContent>
+        <Typography variant='body2' color='text.secondary' noWrap>
+          {props.blog.title}
         </Typography>
       </CardContent>
     </Card>
