@@ -23,7 +23,8 @@
     "react-markdown": "^8.0.0",
     "react-redux": "^7.2.6",
     "rehype-raw": "^6.1.1",
-    "remark-gfm": "^3.0.1"
+    "remark-gfm": "^3.0.1",
+    "sharp": "^0.29.3"
   },
   "devDependencies": {
     "@emotion/react": "^11.7.1",
