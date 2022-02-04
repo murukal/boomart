@@ -1,9 +1,9 @@
 // react
 import { useCallback, useEffect } from 'react'
 // next
-import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import type { AppProps } from 'next/app'
 // redux
 import { Provider } from 'react-redux'
 // mui

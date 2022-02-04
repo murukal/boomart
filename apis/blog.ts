@@ -1,7 +1,7 @@
 // project
-import type { Blog, PublishRecord } from '../typings/blog'
 import { get } from '.'
-import { PaginateResult, QueryOptions } from '../typings/api'
+import type { PaginateResult, QueryOptions } from '../typings/api'
+import type { Blog, CreativeTop5, PublishRecord } from '../typings/blog'
 
 const url = '/api/blog'
 
@@ -19,3 +19,5 @@ export const getBlogs = (params: QueryOptions) =>
   })
 
 export const getBlogById = (id: string) => get<Blog>(`${url}/${id}`)
+
+export const getCreativeTop5 = () => get<CreativeTop5>(`${url}/creative-top5`)

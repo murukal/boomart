@@ -1,15 +1,16 @@
 // react
-import type { ChangeEvent } from 'react'
 import { useState } from 'react'
+import type { ChangeEvent } from 'react'
 // next
 import { GetServerSideProps } from 'next'
 // mui
 import { Box, Pagination } from '@mui/material'
 import { Masonry } from '@mui/lab'
 // project
-import type { Blog } from '../typings/blog'
 import BlogCard from '../components/BlogCard'
 import { getBlogs } from '../apis/blog'
+import SitePush from '../components/SitePush'
+import type { Blog } from '../typings/blog'
 
 interface Props {
   blogs: Blog[]
@@ -46,15 +47,19 @@ const Blogs = (props: Props) => {
   }
 
   return (
-    <Box className='flex flex-col h-full items-center'>
-      <Masonry className='flex-1' columns={4} spacing={2}>
-        {blogs.map((blog) => (
-          <BlogCard key={blog._id} blog={blog} />
-        ))}
-      </Masonry>
+    <div className='w-full h-full flex'>
+      <Box className='flex-1 flex flex-col h-full items-center'>
+        <Masonry className='flex-1 h-0 content-start' columns={3} spacing={2}>
+          {blogs.map((blog) => (
+            <BlogCard key={blog._id} blog={blog} />
+          ))}
+        </Masonry>
 
-      <Pagination className='my-3' count={pageCount} page={pageCurrent} size='large' onChange={onPageChange} />
-    </Box>
+        <Pagination className='my-3' count={pageCount} page={pageCurrent} size='large' onChange={onPageChange} />
+      </Box>
+
+      <SitePush></SitePush>
+    </div>
   )
 }
 

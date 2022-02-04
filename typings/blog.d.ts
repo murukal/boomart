@@ -12,3 +12,9 @@ export interface PublishRecord {
   _id: number
   count: number
 }
+
+export type CreativeTop5 = {
+  _id: string
+  count: number
+  users: User[]
+}[]
