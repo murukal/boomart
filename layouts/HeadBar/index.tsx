@@ -1,15 +1,15 @@
-// npm
-import { stringify } from 'qs'
 // next
 import { useRouter } from 'next/router'
 // material-ui
 import { useTheme } from '@mui/material/styles'
 import { Box, IconButton, Avatar } from '@mui/material'
 import { MenuOpen, Menu, Person, Star, History } from '@mui/icons-material'
+// third
+import { stringify } from 'qs'
 // project
 import Search from '../../components/Search'
-import { Props } from './assets'
 import { useSelector } from 'react-redux'
+import type { Props } from './assets'
 
 const Header = (props: Props) => {
   const theme = useTheme()
@@ -37,7 +37,9 @@ const Header = (props: Props) => {
       >
         <Box component='span' className='flex-grow'></Box>
 
-        <IconButton onClick={props.onDrawerToggle}>{props.isOpened ? <MenuOpen fontSize='large' /> : <Menu fontSize='large' />}</IconButton>
+        <IconButton onClick={props.onDrawerToggle}>
+          {props.isOpened ? <MenuOpen fontSize='large' /> : <Menu fontSize='large' />}
+        </IconButton>
       </Box>
 
       {/* header search */}

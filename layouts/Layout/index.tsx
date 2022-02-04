@@ -47,13 +47,18 @@ const Layout = (props: Props) => {
         }}
       >
         {/* 侧边导航栏 */}
-        <SideBar isOpened={isSideOpened} onDrawerToggle={onDrawerToggle} transitionDuration={theme.transitions.duration.enteringScreen} SlideProps={{ easing: theme.transitions.easing.easeOut }} />
+        <SideBar
+          isOpened={isSideOpened}
+          onDrawerToggle={onDrawerToggle}
+          transitionDuration={theme.transitions.duration.enteringScreen}
+          SlideProps={{ easing: theme.transitions.easing.easeOut }}
+        />
 
         {/* 页面正文 */}
         <Box
           className='flex flex-col'
           sx={{
-            transition: theme.transitions.create('margin', {
+            transition: theme.transitions.create('all', {
               duration: theme.transitions.duration.enteringScreen,
               easing: theme.transitions.easing.easeOut
             }),
@@ -61,7 +66,7 @@ const Layout = (props: Props) => {
             width: `calc(100% - ${isSideOpened ? theme.layouts.drawerWidth : '0px'})`
           }}
         >
-          <div id='content' className='flex-1 p-2 relative overflow-hidden'>
+          <div id='content' className='flex-1 h-0 p-2 relative overflow-hidden'>
             {props.children}
           </div>
         </Box>

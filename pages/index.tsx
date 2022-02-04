@@ -4,8 +4,7 @@ import type { ChangeEvent } from 'react'
 // next
 import { GetServerSideProps } from 'next'
 // mui
-import { Box, Pagination } from '@mui/material'
-import { Masonry } from '@mui/lab'
+import { Box, Pagination, Grid } from '@mui/material'
 // project
 import BlogCard from '../components/BlogCard'
 import { getBlogs } from '../apis/blog'
@@ -22,7 +21,7 @@ const onFetch = async (page = 1) => {
   const res = await getBlogs({
     pagination: {
       page,
-      limit: 10,
+      limit: 9,
       populate: 'createdBy'
     }
   })
@@ -48,17 +47,21 @@ const Blogs = (props: Props) => {
 
   return (
     <div className='w-full h-full flex'>
-      <Box className='flex-1 flex flex-col h-full items-center'>
-        <Masonry className='flex-1 h-0 content-start' columns={3} spacing={2}>
-          {blogs.map((blog) => (
-            <BlogCard key={blog._id} blog={blog} />
-          ))}
-        </Masonry>
+      <Box className='flex-1 w-0 flex flex-col h-full items-center mr-2'>
+        <Box className='flex-1 h-0'>
+          <Grid container spacing={1}>
+            {blogs.map((blog) => (
+              <Grid key={blog._id} item xs={4}>
+                <BlogCard key={blog._id} blog={blog} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
 
         <Pagination className='my-3' count={pageCount} page={pageCurrent} size='large' onChange={onPageChange} />
       </Box>
 
-      <SitePush></SitePush>
+      <SitePush />
     </div>
   )
 }
