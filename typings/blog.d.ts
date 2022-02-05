@@ -1,3 +1,5 @@
+// project
+import type { Tag } from './tag'
 import type { User } from './user'
 
 export interface Blog {
@@ -6,7 +8,13 @@ export interface Blog {
   content: string
   createdBy: string | User
   createdAt: string
+  tags: Array<Tag | string>
+  cover?: string
 }
+
+export interface CreateBlog extends Omit<Blog, '_id' | 'createdBy'> {}
+
+export interface UpdateBlog extends CreateBlog {}
 
 export interface PublishRecord {
   _id: number

@@ -1,10 +1,12 @@
 // react
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ChangeEvent } from 'react'
 // next
 import { GetServerSideProps } from 'next'
 // mui
 import { Box, Pagination, Grid } from '@mui/material'
+// third
+import PerfectScrollbar from 'perfect-scrollbar'
 // project
 import BlogCard from '../components/BlogCard'
 import { getBlogs } from '../apis/blog'
@@ -22,7 +24,7 @@ const onFetch = async (page = 1) => {
     pagination: {
       page,
       limit: 9,
-      populate: 'createdBy'
+      populate: ['createdBy', 'tags']
     }
   })
 
@@ -45,10 +47,19 @@ const Blogs = (props: Props) => {
     setBlogs(props.blogs)
   }
 
+  useEffect(() => {
+    const ps = new PerfectScrollbar('#blogs')
+
+    // 返回一个函数，react会在自动注销
+    return () => {
+      ps.destroy()
+    }
+  }, [])
+
   return (
     <div className='w-full h-full flex'>
-      <Box className='flex-1 w-0 flex flex-col h-full items-center mr-2'>
-        <Box className='flex-1 h-0'>
+      <Box className='flex-1 w-0 flex flex-col h-full items-center'>
+        <Box id='blogs' className='flex-1 h-0 pr-3 pb-1 relative overflow-hidden'>
           <Grid container spacing={1}>
             {blogs.map((blog) => (
               <Grid key={blog._id} item xs={4}>

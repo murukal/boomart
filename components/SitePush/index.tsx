@@ -33,7 +33,7 @@ const SitePush = () => {
   }, [])
 
   return (
-    <Paper className='w-1/4 flex flex-col p-2 overflow-auto' elevation={3}>
+    <Paper className='w-1/5 flex flex-col p-2 overflow-auto' elevation={3}>
       {/* 创作榜单 */}
       <Accordion style={accordionStyles} expanded={true}>
         <AccordionSummary>

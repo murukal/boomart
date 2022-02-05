@@ -8,7 +8,6 @@ import SideBar from '../SideBar'
 import HeadBar from '../HeadBar'
 // third
 import PerfectScrollbar from 'perfect-scrollbar'
-import 'perfect-scrollbar/css/perfect-scrollbar.css'
 
 const Layout = (props: Props) => {
   const theme = useTheme()
