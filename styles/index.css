@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;900');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,4 +8,12 @@
 
 body {
   margin: 0;
+}
+
+.MuiTypography-root,
+.MuiInput-root {
+  font-style: normal;
+  font-weight: 500;
+  text-transform: none;
+  font-family: 'Noto Sans JP', sans-serif;
 }

@@ -9,12 +9,13 @@ import { Provider } from 'react-redux'
 // mui
 import { ThemeProvider } from '@mui/material'
 // project
-import '../styles/index.css'
 import theme from '../theme'
-import Layout from '../layouts/Layout'
+import Layout from '../layouts2/Layout'
 import { authenticate, passToken } from '../redux/userProfile/actions'
 import store from '../redux'
 import { storeQueryParams } from '../utils/app'
+// styles
+import '../styles/index.css'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()

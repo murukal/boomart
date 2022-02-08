@@ -55,7 +55,14 @@ const Header = (props: Props) => {
       <Box className='flex mr-4 flex-1 justify-end items-center'>
         {/* avatar */}
         {userProfile.isLogin ? (
-          <Avatar alt={userProfile.user?.username} src={userProfile.user?.avatar} />
+          <Avatar
+            sx={{
+              width: '24px',
+              height: '24px'
+            }}
+            alt={userProfile.user?.username}
+            src={userProfile.user?.avatar}
+          />
         ) : (
           <IconButton onClick={onGotoLogin} aria-label='登录/注册'>
             <Person />
