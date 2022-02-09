@@ -1,17 +1,80 @@
+// react
+import type { CSSProperties } from 'react'
 // next
 import Image from 'next/image'
 // mui
-import { Box, Button, Container, Input, Paper, Typography, Card, CardMedia, Grid } from '@mui/material'
+import {
+  Box,
+  Button,
+  Container,
+  Input,
+  Paper,
+  Typography,
+  Card,
+  CardMedia,
+  Grid,
+  CardContent,
+  Divider
+} from '@mui/material'
 import { LabelOutlined } from '@mui/icons-material'
+import type { SxProps, Theme } from '@mui/material'
 // third
 import { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 // project
 import featured from '../public/featured.png'
-import { width } from '@mui/system'
+import { getBlogs } from '../apis/blog'
+import { getBlogBrowseTop } from '../apis/trigger-event'
+import type { TopResults } from '../typings/trigger-event'
+import type { Tag } from '../typings/tag'
+import type { Blog } from '../typings/blog'
 
-const Home = () => {
+interface Props {
+  blogs: Blog[]
+  blogBrowseTopResults: TopResults
+}
+
+const tagEndStyles: SxProps<Theme> = {
+  content: '""',
+  width: 3,
+  height: 3,
+  background: '#999',
+  position: 'absolute',
+  right: 0,
+  bottom: 3,
+  borderRadius: '50%'
+}
+
+const blogTitleStyles: CSSProperties = {
+  fontSize: 20,
+  fontWeight: 700
+}
+
+const Home = (props: Props) => {
+  /** 博客卡片的点击事件 */
+  const onCardClick = (id: string) => () => {}
+
+  /** tags渲染组建 */
+  const getTagComponents = (tags: Tag[]) => (
+    <Box className='mb-2.5'>
+      {tags.map((tag) => (
+        <Typography
+          key={tag._id}
+          className='mr-2.5'
+          component='span'
+          sx={{
+            paddingRight: '7px',
+            position: 'relative',
+            '&::after': tagEndStyles
+          }}
+        >
+          {tag.name}
+        </Typography>
+      ))}
+    </Box>
+  )
+
   return (
     <>
       {/* featured */}
@@ -109,18 +172,107 @@ const Home = () => {
             </Grid>
 
             {/* 排名后4 */}
-            {[0, 1, 2, 3].map((item) => (
-              <Grid className='px-4 mb-8' key={item} item xs={4}>
-                <Card className='h-96'>
-                  <CardMedia component='img' height='194' image='/static/images/cards/paella.jpg' alt='Paella dish' />
-                </Card>
-              </Grid>
-            ))}
+            {props.blogBrowseTopResults.map((topResult) => {
+              // 断言获取标签
+              const tags = topResult.target.tags as Tag[]
+
+              return (
+                <Grid className='px-4 mb-8' key={topResult.target._id} item xs={4}>
+                  <Card className='h-96' onClick={onCardClick(topResult.target._id)}>
+                    <CardMedia
+                      component='img'
+                      height='200'
+                      image={topResult.target.cover || tags[0]?.cover}
+                      alt='Paella dish'
+                    />
+                    <CardContent className='p-7'>
+                      {getTagComponents(tags)}
+                      <Typography style={blogTitleStyles}>{topResult.target.title}</Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              )
+            })}
           </Grid>
         </Box>
       </Container>
+
+      {/* 博客列表 */}
+      <Box className='bg-gray-50'>
+        <Container>
+          <Grid container>
+            <Grid item className='px-4 mt-7' xs={8}>
+              <Typography>最近发布的博客</Typography>
+              <Divider className='mt-2.5' />
+
+              {/* 博客列表 */}
+              {props.blogs.map((blog) => {
+                const tags = blog.tags as Tag[]
+
+                console.log('tags====', tags)
+
+                return (
+                  <Card className='flex mt-7 bg-gray-50' key={blog._id} elevation={0}>
+                    <CardMedia
+                      className='rounded-r'
+                      component='img'
+                      height={150}
+                      image={blog.cover || tags[0]?.cover}
+                      alt='Paella dish'
+                      sx={{
+                        flex: 1
+                      }}
+                    />
+                    <CardContent
+                      className='px-4 self-center'
+                      sx={{
+                        flex: 2
+                      }}
+                    >
+                      {getTagComponents(tags)}
+                      <Typography style={blogTitleStyles}>{blog.title}</Typography>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </Grid>
+
+            <Grid item className='px-4 mt-7' xs={4}>
+              <Typography>最新的评论</Typography>
+              <Divider className='mt-2.5' />
+
+              {/* 评论列表 */}
+            </Grid>
+            <Grid item xs={4}></Grid>
+          </Grid>
+        </Container>
+      </Box>
     </>
   )
 }
 
 export default Home
+
+export const onFetch = async () => {
+  const res = await getBlogs({
+    pagination: {
+      limit: 4,
+      page: 1,
+      populate: 'tags'
+    }
+  })
+
+  return res.data?.docs || []
+}
+
+export const getServerSideProps = async () => {
+  const blogs = await onFetch()
+  const blogBrowseTopResults = (await getBlogBrowseTop({ limit: 4 })).data || []
+
+  return {
+    props: {
+      blogs,
+      blogBrowseTopResults
+    }
+  }
+}
