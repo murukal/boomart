@@ -10,7 +10,6 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
 // third
 import { CacheProvider } from '@emotion/react'
-import type { EmotionCache } from '@emotion/cache'
 // project
 import { createEmotionCache } from '../utils/ui'
 import theme from '../theme'
@@ -21,14 +20,9 @@ import { storeQueryParams } from '../utils/app'
 // styles
 import '../styles/index.css'
 
-export interface Props {
-  emotionCache: EmotionCache
-}
-
-const clientSideEmotionCache = createEmotionCache()
-
-const App = (props: AppProps & Props) => {
-  const { Component, pageProps, emotionCache = clientSideEmotionCache } = props
+const App = (props: AppProps) => {
+  const { Component, pageProps } = props
+  const emotionCache = createEmotionCache()
   const router = useRouter()
 
   const redirect = useCallback(async () => {

@@ -1,9 +1,9 @@
-import React from 'react'
+// next
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { ServerStyleSheets } from '@mui/styles'
+// third
 import createEmotionServer from '@emotion/server/create-instance'
+// project
 import { createEmotionCache } from '../utils/ui'
-import { AppProps } from 'next/app'
 
 interface Props {
   emotionStyleTags: JSX.Element[]
@@ -14,7 +14,7 @@ export default class MyDocument extends Document<Props> {
     return (
       <Html lang='zh-CN'>
         <Head>
-          {/* PWA primary color */}
+          {/* font */}
           <link
             rel='stylesheet'
             href='https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap'
@@ -57,17 +57,10 @@ MyDocument.getInitialProps = async (ctx) => {
   // 3. app.render
   // 4. page.render
 
-  const originalRenderPage = ctx.renderPage
-
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
   const cache = createEmotionCache()
   const { extractCriticalToChunks } = createEmotionServer(cache)
-
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => App
-    })
 
   const initialProps = await Document.getInitialProps(ctx)
   // This is important. It prevents emotion to render invalid HTML.
