@@ -1,6 +1,12 @@
 // react
 import type { RefObject } from 'react'
+// third
+import createCache from '@emotion/cache'
 
+// mui 给出的 css 集成方案
+export const createEmotionCache = () => createCache({ key: 'css', prepend: true })
+
+// 自动打字的ui效果
 export const setTypedUI = (ref: RefObject<HTMLSpanElement>) => {
   const contents = ['这里有一些技术分享。', '不乏总结下来的编程导航。', '也有生活中的一点乐趣。']
   let contentIndex: number = 0

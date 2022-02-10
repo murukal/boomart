@@ -8,7 +8,11 @@ import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 // mui
 import { ThemeProvider } from '@mui/material'
+// third
+import { CacheProvider } from '@emotion/react'
+import type { EmotionCache } from '@emotion/cache'
 // project
+import { createEmotionCache } from '../utils/ui'
 import theme from '../theme'
 import Layout from '../layouts/Layout'
 import { authenticate, passToken } from '../redux/userProfile/actions'
@@ -17,7 +21,14 @@ import { storeQueryParams } from '../utils/app'
 // styles
 import '../styles/index.css'
 
-const App = ({ Component, pageProps }: AppProps) => {
+export interface Props {
+  emotionCache: EmotionCache
+}
+
+const clientSideEmotionCache = createEmotionCache()
+
+const App = (props: AppProps & Props) => {
+  const { Component, pageProps, emotionCache = clientSideEmotionCache } = props
   const router = useRouter()
 
   const redirect = useCallback(async () => {
@@ -45,16 +56,18 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [])
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Head>
-          <title>Boom!Boom!</title>
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </Provider>
+    <CacheProvider value={emotionCache}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Head>
+            <title>Boom!Boom!</title>
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </Provider>
+    </CacheProvider>
   )
 }
 
