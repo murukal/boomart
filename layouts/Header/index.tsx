@@ -1,4 +1,5 @@
 // next
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 // mui
 import { Box, Button, Container, Divider, Tab, Tabs } from '@mui/material'
@@ -7,6 +8,13 @@ import { KeyboardArrowDown, Search, Facebook, Twitter, GitHub, Notes } from '@mu
 import logo from '../../public/logo.png'
 
 const Header = () => {
+  const router = useRouter()
+
+  /** 搜索 */
+  const onSearch = () => {
+    router.push('/test')
+  }
+
   return (
     <>
       {/* title */}
@@ -18,7 +26,7 @@ const Header = () => {
             传送门
           </Button>
           <Divider className='mx-3 h-5' orientation='vertical' />
-          <Button variant='text' startIcon={<Search />}>
+          <Button variant='text' startIcon={<Search />} onClick={onSearch}>
             搜索
           </Button>
         </Box>

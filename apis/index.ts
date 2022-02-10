@@ -34,8 +34,6 @@ axios.interceptors.response.use(
 
   // http异常拦截器
   (error): AxiosResponse => {
-    console.dir(error)
-
     return {
       status: error.response?.status,
       statusText: error.response?.statusText,
@@ -71,7 +69,11 @@ export const get = async <T = any, D = any>(url: string, config?: AxiosRequestCo
  * @param config
  * @returns
  */
-export const post = async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
+export const post = async <T = any, D = any>(
+  url: string,
+  data?: D,
+  config?: AxiosRequestConfig<D>
+): Promise<ApiResponse<T>> => {
   const res = await axios.post(url, data, config)
   return res.data
 }
@@ -83,7 +85,11 @@ export const post = async <T = any, D = any>(url: string, data?: D, config?: Axi
  * @param config
  * @returns
  */
-export const patch = async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
+export const patch = async <T = any, D = any>(
+  url: string,
+  data?: D,
+  config?: AxiosRequestConfig<D>
+): Promise<ApiResponse<T>> => {
   const res = await axios.patch(url, data, config)
   return res.data
 }

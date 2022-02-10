@@ -1,4 +1,5 @@
 // react
+import { createRef, useCallback, useEffect } from 'react'
 import type { CSSProperties } from 'react'
 // next
 import Image from 'next/image'
@@ -17,25 +18,28 @@ import {
   Divider
 } from '@mui/material'
 import { LabelOutlined } from '@mui/icons-material'
-import type { SxProps, Theme } from '@mui/material'
+import type { SxProps } from '@mui/material'
 // third
 import { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
+import dayjs from 'dayjs'
 // project
 import featured from '../public/featured.png'
+import { setTypedUI } from '../utils/ui'
 import { getBlogs } from '../apis/blog'
 import { getBlogBrowseTop } from '../apis/trigger-event'
 import type { TopResults } from '../typings/trigger-event'
 import type { Tag } from '../typings/tag'
 import type { Blog } from '../typings/blog'
+import type { User } from '../typings/user'
 
 interface Props {
   blogs: Blog[]
   blogBrowseTopResults: TopResults
 }
 
-const tagEndStyles: SxProps<Theme> = {
+const subScriptStyles: SxProps = {
   content: '""',
   width: 3,
   height: 3,
@@ -52,28 +56,68 @@ const blogTitleStyles: CSSProperties = {
 }
 
 const Home = (props: Props) => {
+  const ref = createRef<HTMLSpanElement>()
+
   /** 博客卡片的点击事件 */
   const onCardClick = (id: string) => () => {}
 
+  useEffect(() => {
+    // 返回的函数传递给Effect，取消订阅
+    return setTypedUI(ref)
+  }, [])
+
   /** tags渲染组建 */
-  const getTagComponents = (tags: Tag[]) => (
-    <Box className='mb-2.5'>
-      {tags.map((tag) => (
+  const getTagComponents = useCallback(
+    (tags: Tag[]) => (
+      <Box className='mb-2.5'>
+        {tags.map((tag) => (
+          <Typography
+            key={tag._id}
+            className='mr-2.5'
+            component='span'
+            sx={{
+              paddingRight: '7px',
+              position: 'relative',
+              '&::after': subScriptStyles
+            }}
+          >
+            {tag.name}
+          </Typography>
+        ))}
+      </Box>
+    ),
+    []
+  )
+
+  /** 博客署名栏 */
+  const getBlogSignature = useCallback((blog: Blog) => {
+    const createdBy = blog.createdBy as User
+
+    const textStyles: SxProps = {
+      position: 'relative',
+      color: '#666',
+      fontSize: 10
+    }
+
+    return (
+      <Box className='mt-5'>
         <Typography
-          key={tag._id}
-          className='mr-2.5'
+          className='uppercase pr-2.5 mr-2.5'
           component='span'
           sx={{
-            paddingRight: '7px',
-            position: 'relative',
-            '&::after': tagEndStyles
+            ...textStyles,
+            '&::after': {
+              ...subScriptStyles,
+              top: '50%'
+            }
           }}
         >
-          {tag.name}
+          {dayjs(blog.createdAt).format('D MMM')}
         </Typography>
-      ))}
-    </Box>
-  )
+        <Typography component='span' sx={textStyles}>{`By ${createdBy.username}`}</Typography>
+      </Box>
+    )
+  }, [])
 
   return (
     <>
@@ -87,6 +131,18 @@ const Home = (props: Props) => {
         <Container className='flex'>
           {/* 左侧 */}
           <Box className='flex-1'>
+            <Box className='mb-4'>
+              <Typography
+                component='span'
+                ref={ref}
+                sx={{
+                  color: '#687385',
+                  borderRight: 1,
+                  borderRightColor: '#687385'
+                }}
+              />
+            </Box>
+
             <Typography
               variant='h2'
               style={{
@@ -136,7 +192,7 @@ const Home = (props: Props) => {
 
           {/* 右侧 */}
           <Box className='flex-1 flex justify-center'>
-            <Image src={featured} alt='featured' />
+            <Image src={featured} alt='featured' priority={true} />
           </Box>
         </Container>
       </Box>
@@ -209,8 +265,6 @@ const Home = (props: Props) => {
               {props.blogs.map((blog) => {
                 const tags = blog.tags as Tag[]
 
-                console.log('tags====', tags)
-
                 return (
                   <Card className='flex mt-7 bg-gray-50' key={blog._id} elevation={0}>
                     <CardMedia
@@ -231,6 +285,9 @@ const Home = (props: Props) => {
                     >
                       {getTagComponents(tags)}
                       <Typography style={blogTitleStyles}>{blog.title}</Typography>
+
+                      {/* 博客署名 */}
+                      {getBlogSignature(blog)}
                     </CardContent>
                   </Card>
                 )
@@ -258,7 +315,7 @@ export const onFetch = async () => {
     pagination: {
       limit: 4,
       page: 1,
-      populate: 'tags'
+      populate: ['tags', 'createdBy']
     }
   })
 

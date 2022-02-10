@@ -10,7 +10,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
 // project
 import theme from '../theme'
-import Layout from '../layouts2/Layout'
+import Layout from '../layouts/Layout'
 import { authenticate, passToken } from '../redux/userProfile/actions'
 import store from '../redux'
 import { storeQueryParams } from '../utils/app'
