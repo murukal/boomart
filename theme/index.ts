@@ -1,10 +1,5 @@
 import { createTheme } from '@mui/material'
 
-const theme = createTheme({
-  layouts: {
-    toolbarHeight: '70px',
-    drawerWidth: '250px'
-  }
-})
+const theme = createTheme()
 
 export default theme

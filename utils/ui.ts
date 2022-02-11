@@ -29,7 +29,7 @@ export const setTypedUI = (ref: RefObject<HTMLSpanElement>) => {
       clearInterval(interval)
 
       timeout = setTimeout(() => {
-        interval = setInterval(handler, 200)
+        interval = setInterval(handler, 100)
       }, 1000)
 
       return
