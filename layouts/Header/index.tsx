@@ -12,7 +12,7 @@ const Header = () => {
 
   /** 搜索 */
   const onSearch = () => {
-    router.push('/test')
+    router.push('/mui')
   }
 
   return (

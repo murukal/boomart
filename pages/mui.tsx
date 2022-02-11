@@ -1,5 +1,5 @@
 const Temo = () => {
-  return <>1231321</>
+  return <></>
 }
 
 export default Temo
