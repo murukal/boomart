@@ -1,19 +1,37 @@
+// react
+import { useEffect, useState } from 'react'
 // next
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 // mui
-import { Box, Button, Container, Divider, Tab, Tabs } from '@mui/material'
-import { KeyboardArrowDown, Search, Facebook, Twitter, GitHub, Notes } from '@mui/icons-material'
+import { Box, Button, Container, Divider } from '@mui/material'
+import { Search, Facebook, Twitter, GitHub, Notes } from '@mui/icons-material'
 // project
 import logo from '../../public/logo.png'
+import ShortcutPortal from "../../components/Navigator/ShortcutPortal";
+import { getMenuTree } from '../../apis/menu'
+import type { MenuTree } from '../../typings/menu'
 
 const Header = () => {
+
+  const [menuTree, setMenuTree] = useState<MenuTree | null>()
+
   const router = useRouter()
 
   /** 搜索 */
   const onSearch = () => {
     router.push('/mui')
   }
+
+  const onFetch = async () => {
+    const res = await getMenuTree('BOOMART')
+    setMenuTree(res.data)
+  }
+
+  /** 初次渲染请求 */
+  useEffect(() => {
+    onFetch()
+  }, [])
 
   return (
     <>
@@ -22,9 +40,15 @@ const Header = () => {
         <Image src={logo} alt='logo' />
 
         <Box className='flex items-center'>
-          <Button variant='text' endIcon={<KeyboardArrowDown />}>
-            传送门
-          </Button>
+
+          <ShortcutPortal children={menuTree?.nodes} portal={{
+            description: "传送门",
+          }}
+            anchorOrigin={{
+              horizontal: "left",
+              vertical: "bottom"
+            }} />
+
           <Divider className='mx-3 h-5' orientation='vertical' />
           <Button variant='text' startIcon={<Search />} onClick={onSearch}>
             搜索

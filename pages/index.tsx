@@ -23,7 +23,8 @@ import type { LatestResult } from '../components/Blog/assets';
 
 interface Props {
   latestResult: LatestResult
-  blogBrowseTopResults: TopResults
+  blogBrowseTopResults: TopResults,
+  likeTopResults: TopResults
 }
 
 const Home = (props: Props) => {
@@ -64,7 +65,10 @@ const Home = (props: Props) => {
                 fontWeight: 900
               }}
             >
-              Halo, I’m Murukal
+              Halo, I’m <Typography variant='h2' style={{
+                color: "#5869DA",
+                fontWeight: 900
+              }} component='span'>tutu</Typography>
             </Typography>
 
             <Typography className='mt-6' variant='h3'>
@@ -113,7 +117,7 @@ const Home = (props: Props) => {
       </Box>
 
       {/* 热门榜单 */}
-      <Hot className='py-8' browseTopResults={props.blogBrowseTopResults} />
+      <Hot className='py-8' browseTopResults={props.blogBrowseTopResults} likeTopResults={props.likeTopResults} />
 
       {/* 最近发布 博客 + 评论列表 */}
       <Latest className='bg-gray-50 py-8' blogs={props.latestResult.blogs} totalPages={props.latestResult.totalPages} />
@@ -135,7 +139,8 @@ export const getServerSideProps = async () => {
   return {
     props: {
       latestResult,
-      blogBrowseTopResults
+      blogBrowseTopResults,
+      likeTopResults: []
     }
   }
 }

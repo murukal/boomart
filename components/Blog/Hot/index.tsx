@@ -1,3 +1,5 @@
+// react
+import { useMemo } from "react";
 // mui
 import { Container, Grid, Typography, Paper, Card, CardMedia, CardContent } from "@mui/material";
 import { LabelOutlined } from "@mui/icons-material";
@@ -5,14 +7,26 @@ import { LabelOutlined } from "@mui/icons-material";
 import { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
+import _ from "lodash";
 // project
 import Tags from "../Tags";
 import Signature from "../Signature";
 import { blogTitleStyle } from "../assets";
+import { hotTagStyle } from "./assets";
 import type { Props } from "./assets";
 import type { Tag } from "../../../typings/tag";
 
 const Hot = (props: Props) => {
+
+    // 抽离tags
+    const hotTags = useMemo<Tag[]>(() => {
+        const tags = [...props.browseTopResults, ...props.likeTopResults].reduce((previous, topResult) => {
+            return previous.concat(topResult.target.tags as Tag[])
+        }, [] as Tag[])
+
+        return _.uniqBy(tags, '_id')
+    }, [props.browseTopResults, props.likeTopResults])
+
     return (
         <Container className={props.className} >
             {/* 热门博客cards */}
@@ -23,7 +37,10 @@ const Hot = (props: Props) => {
 
                 <Grid item xs={4} className='flex items-center justify-end'>
                     <LabelOutlined fontSize='small' />
-                    <Typography>热门标签：</Typography>
+                    <Typography>热门标签：{
+                        hotTags.map((tag) => <Typography key={tag._id} component='span' sx={hotTagStyle}>{tag.name}</Typography>)
+                    }
+                    </Typography>
                 </Grid>
 
                 <Grid item xs={8}>
