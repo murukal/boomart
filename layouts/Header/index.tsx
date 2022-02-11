@@ -8,12 +8,11 @@ import { Box, Button, Container, Divider } from '@mui/material'
 import { Search, Facebook, Twitter, GitHub, Notes } from '@mui/icons-material'
 // project
 import logo from '../../public/logo.png'
-import ShortcutPortal from "../../components/Navigator/ShortcutPortal";
+import ShortcutPortal from '../../components/Navigator/ShortcutPortal'
 import { getMenuTree } from '../../apis/menu'
 import type { MenuTree } from '../../typings/menu'
 
 const Header = () => {
-
   const [menuTree, setMenuTree] = useState<MenuTree | null>()
 
   const router = useRouter()
@@ -40,14 +39,16 @@ const Header = () => {
         <Image src={logo} alt='logo' />
 
         <Box className='flex items-center'>
-
-          <ShortcutPortal children={menuTree?.nodes} portal={{
-            description: "传送门",
-          }}
+          <ShortcutPortal
+            menuTreeNodes={menuTree?.nodes}
+            portal={{
+              description: '传送门'
+            }}
             anchorOrigin={{
-              horizontal: "left",
-              vertical: "bottom"
-            }} />
+              horizontal: 'left',
+              vertical: 'bottom'
+            }}
+          />
 
           <Divider className='mx-3 h-5' orientation='vertical' />
           <Button variant='text' startIcon={<Search />} onClick={onSearch}>

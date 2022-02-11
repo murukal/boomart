@@ -3,27 +3,21 @@ import { createRef, useEffect } from 'react'
 // next
 import Image from 'next/image'
 // mui
-import {
-  Box,
-  Button,
-  Container,
-  Input,
-  Typography,
-} from '@mui/material'
+import { Box, Button, Container, Input, Typography } from '@mui/material'
 // project
-import Latest from "../components/Blog/Latest";
-import Hot from "../components/Blog/Hot";
-import Footer from "../components/Home/Footer";
+import Latest from '../components/Blog/Latest'
+import Hot from '../components/Blog/Hot'
+import Footer from '../components/Home/Footer'
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { getBlogBrowseTop } from '../apis/trigger-event'
-import { onFetchLatest } from '../components/Blog/assets';
+import { onFetchLatest } from '../components/Blog/assets'
 import type { TopResults } from '../typings/trigger-event'
-import type { LatestResult } from '../components/Blog/assets';
+import type { LatestResult } from '../components/Blog/assets'
 
 interface Props {
   latestResult: LatestResult
-  blogBrowseTopResults: TopResults,
+  blogBrowseTopResults: TopResults
   likeTopResults: TopResults
 }
 
@@ -65,10 +59,17 @@ const Home = (props: Props) => {
                 fontWeight: 900
               }}
             >
-              Halo, I’m <Typography variant='h2' style={{
-                color: "#5869DA",
-                fontWeight: 900
-              }} component='span'>tutu</Typography>
+              Halo, I’m{' '}
+              <Typography
+                variant='h2'
+                style={{
+                  color: '#5869DA',
+                  fontWeight: 900
+                }}
+                component='span'
+              >
+                tutu
+              </Typography>
             </Typography>
 
             <Typography className='mt-6' variant='h3'>
@@ -129,8 +130,6 @@ const Home = (props: Props) => {
 }
 
 export default Home
-
-
 
 export const getServerSideProps = async () => {
   const latestResult = await onFetchLatest()
