@@ -6,15 +6,18 @@ import { Box, Container, Grid, Typography, Divider, Card, CardMedia, CardContent
 // project
 import Tags from "../Tags";
 import Signature from "../Signature";
-import { blogTitleStyles, onFetchLatestBlogs } from "../assets";
+import { blogTitleStyle, onFetchLatest } from "../assets";
 import type { Tag } from "../../../typings/tag";
 import type { Props } from "./assets";
 
 const Latest = (props: Props) => {
     const [blogs, setBlogs] = useState(props.blogs)
+    const [totalPages, setTotalPages] = useState(props.totalPages)
 
     const onPageChange = async (event: ChangeEvent<unknown>, page: number) => {
-        setBlogs(await onFetchLatestBlogs())
+        const result = await onFetchLatest(page)
+        setBlogs(result.blogs)
+        setTotalPages(result.totalPages)
     }
 
     return (
@@ -48,7 +51,7 @@ const Latest = (props: Props) => {
                                         }}
                                     >
                                         <Tags className='mb-3' tags={tags} />
-                                        <Typography style={blogTitleStyles}>{blog.title}</Typography>
+                                        <Typography style={blogTitleStyle}>{blog.title}</Typography>
 
                                         {/* 博客署名 */}
                                         <Signature className='mt-5' blog={blog} />
@@ -58,7 +61,7 @@ const Latest = (props: Props) => {
                         })}
 
                         {/* 分页 */}
-                        <Pagination className='mt-7' count={10} color='primary' onChange={onPageChange} />
+                        <Pagination className='mt-7' count={totalPages} color='primary' onChange={onPageChange} />
                     </Grid>
 
                     <Grid item xs={4}>

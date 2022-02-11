@@ -7,7 +7,7 @@ export interface Props {
     className?: string
 }
 
-export const footerTitleStyles: SxProps = {
+export const footerTitleStyle: SxProps = {
     fontSize: '12px',
     textTransform: 'uppercase',
     borderBottomWidth: '1px',
@@ -27,7 +27,7 @@ export const footerTitleStyles: SxProps = {
     }
 }
 
-export const footerContentStyles: CSSProperties = {
+export const footerContentStyle: CSSProperties = {
     color: '#687385',
     fontSize: '12px',
     fontWeight: 400

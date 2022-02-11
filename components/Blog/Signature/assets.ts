@@ -8,13 +8,13 @@ export interface Props {
   className?: string
 }
 
-export const textStyles: CSSProperties = {
+export const textStyle: CSSProperties = {
   position: 'relative',
   color: '#666',
   fontSize: 10
 }
 
-export const subScriptStyles: CSSProperties = {
+export const subScriptStyle: CSSProperties = {
   content: '""',
   width: 3,
   height: 3,

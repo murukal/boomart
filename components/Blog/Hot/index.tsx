@@ -8,7 +8,7 @@ import 'swiper/css'
 // project
 import Tags from "../Tags";
 import Signature from "../Signature";
-import { blogTitleStyles } from "../assets";
+import { blogTitleStyle } from "../assets";
 import type { Props } from "./assets";
 import type { Tag } from "../../../typings/tag";
 
@@ -59,7 +59,7 @@ const Hot = (props: Props) => {
                                     />
                                     <CardContent className='p-7'>
                                         <Tags className='mb-3' tags={tags} />
-                                        <Typography style={blogTitleStyles}>{topResult.target.title}</Typography>
+                                        <Typography style={blogTitleStyle}>{topResult.target.title}</Typography>
 
                                         {/* 博客署名 */}
                                         <Signature className='mt-5' blog={topResult.target} />

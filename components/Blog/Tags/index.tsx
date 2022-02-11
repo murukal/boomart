@@ -1,7 +1,7 @@
 // mui
 import { Box, Typography } from '@mui/material'
 // project
-import { subScriptStyles } from './assets'
+import { subScriptStyle } from './assets'
 import type { Props } from './assets'
 
 const Tags = (props: Props) => {
@@ -15,7 +15,7 @@ const Tags = (props: Props) => {
           sx={{
             paddingRight: '7px',
             position: 'relative',
-            '&::after': subScriptStyles
+            '&::after': subScriptStyle
           }}
         >
           {tag.name}

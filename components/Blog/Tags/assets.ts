@@ -8,7 +8,7 @@ export interface Props {
   className?: string
 }
 
-export const subScriptStyles: CSSProperties = {
+export const subScriptStyle: CSSProperties = {
   content: '""',
   width: 3,
   height: 3,

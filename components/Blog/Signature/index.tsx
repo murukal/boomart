@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material'
 // third
 import dayjs from 'dayjs'
 // project
-import { textStyles, subScriptStyles } from './assets'
+import { textStyle, subScriptStyle } from './assets'
 import type { Props } from './assets'
 import type { User } from '../../../typings/user'
 
@@ -20,15 +20,15 @@ const Signature = (props: Props) => {
         className='uppercase pr-2.5 mr-2.5'
         component='span'
         sx={{
-          ...textStyles,
+          ...textStyle,
           '&::after': {
-            ...subScriptStyles
+            ...subScriptStyle
           }
         }}
       >
         {dayjs(props.blog.createdAt).format('D MMM')}
       </Typography>
-      <Typography component='span' sx={textStyles}>{`By ${createdBy.username}`}</Typography>
+      <Typography component='span' sx={textStyle}>{`By ${createdBy.username}`}</Typography>
     </Box>
   )
 }

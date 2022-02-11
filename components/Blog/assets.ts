@@ -2,20 +2,29 @@
 import type { CSSProperties } from "react";
 // project
 import { getBlogs } from '../../apis/blog'
+import type { Blog } from "../../typings/blog";
 
-export const blogTitleStyles: CSSProperties = {
+export const blogTitleStyle: CSSProperties = {
     fontSize: 20,
     fontWeight: 700
 }
 
-export const onFetchLatestBlogs = async () => {
+export interface LatestResult {
+    blogs: Blog[],
+    totalPages: number
+}
+
+export const onFetchLatest = async (page: number = 1) => {
     const res = await getBlogs({
         pagination: {
             limit: 4,
-            page: 1,
+            page,
             populate: ['tags', 'createdBy']
         }
     })
 
-    return res.data?.docs || []
+    return {
+        blogs: res.data?.docs || [],
+        totalPages: res.data?.totalPages || 0
+    }
 }

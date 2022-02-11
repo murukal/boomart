@@ -17,17 +17,14 @@ import Footer from "../components/Home/Footer";
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { getBlogBrowseTop } from '../apis/trigger-event'
-import { onFetchLatestBlogs } from '../components/Blog/assets';
+import { onFetchLatest } from '../components/Blog/assets';
 import type { TopResults } from '../typings/trigger-event'
-import type { Blog } from '../typings/blog'
-
+import type { LatestResult } from '../components/Blog/assets';
 
 interface Props {
-  blogs: Blog[]
+  latestResult: LatestResult
   blogBrowseTopResults: TopResults
 }
-
-
 
 const Home = (props: Props) => {
   const ref = createRef<HTMLSpanElement>()
@@ -119,7 +116,7 @@ const Home = (props: Props) => {
       <Hot className='py-8' browseTopResults={props.blogBrowseTopResults} />
 
       {/* 最近发布 博客 + 评论列表 */}
-      <Latest className='bg-gray-50 py-8' blogs={props.blogs} />
+      <Latest className='bg-gray-50 py-8' blogs={props.latestResult.blogs} totalPages={props.latestResult.totalPages} />
 
       {/* 底部 */}
       <Footer className='pt-12 pb-5' />
@@ -132,12 +129,12 @@ export default Home
 
 
 export const getServerSideProps = async () => {
-  const blogs = await onFetchLatestBlogs()
+  const latestResult = await onFetchLatest()
   const blogBrowseTopResults = (await getBlogBrowseTop({ limit: 4 })).data || []
 
   return {
     props: {
-      blogs,
+      latestResult,
       blogBrowseTopResults
     }
   }
