@@ -16,10 +16,11 @@ import Hot from "../components/Blog/Hot";
 import Footer from "../components/Home/Footer";
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
-import { getBlogs } from '../apis/blog'
 import { getBlogBrowseTop } from '../apis/trigger-event'
+import { onFetchLatestBlogs } from '../components/Blog/assets';
 import type { TopResults } from '../typings/trigger-event'
 import type { Blog } from '../typings/blog'
+
 
 interface Props {
   blogs: Blog[]
@@ -128,20 +129,10 @@ const Home = (props: Props) => {
 
 export default Home
 
-export const onFetch = async () => {
-  const res = await getBlogs({
-    pagination: {
-      limit: 4,
-      page: 1,
-      populate: ['tags', 'createdBy']
-    }
-  })
 
-  return res.data?.docs || []
-}
 
 export const getServerSideProps = async () => {
-  const blogs = await onFetch()
+  const blogs = await onFetchLatestBlogs()
   const blogBrowseTopResults = (await getBlogBrowseTop({ limit: 4 })).data || []
 
   return {

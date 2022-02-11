@@ -1,14 +1,22 @@
+// react
+import { useState } from "react";
+import type { ChangeEvent } from "react";
 // mui
 import { Box, Container, Grid, Typography, Divider, Card, CardMedia, CardContent, Pagination } from "@mui/material";
 // project
 import Tags from "../Tags";
 import Signature from "../Signature";
-import { blogTitleStyles } from "../assets";
+import { blogTitleStyles, onFetchLatestBlogs } from "../assets";
 import type { Tag } from "../../../typings/tag";
 import type { Props } from "./assets";
 
-
 const Latest = (props: Props) => {
+    const [blogs, setBlogs] = useState(props.blogs)
+
+    const onPageChange = async (event: ChangeEvent<unknown>, page: number) => {
+        setBlogs(await onFetchLatestBlogs())
+    }
+
     return (
         <Box className={props.className}>
             <Container>
@@ -18,7 +26,7 @@ const Latest = (props: Props) => {
                         <Divider className='mt-2.5' />
 
                         {/* 博客列表 */}
-                        {props.blogs.map((blog) => {
+                        {blogs.map((blog) => {
                             const tags = blog.tags as Tag[]
 
                             return (
@@ -50,7 +58,7 @@ const Latest = (props: Props) => {
                         })}
 
                         {/* 分页 */}
-                        <Pagination className='mt-7' count={10} color='primary' />
+                        <Pagination className='mt-7' count={10} color='primary' onChange={onPageChange} />
                     </Grid>
 
                     <Grid item xs={4}>
