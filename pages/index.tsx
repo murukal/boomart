@@ -7,7 +7,6 @@ import { Box, Button, Container, Input, Typography } from '@mui/material'
 // project
 import Latest from '../components/Blog/Latest'
 import Hot from '../components/Blog/Hot'
-import Footer from '../components/Home/Footer'
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { getBlogBrowseTop } from '../apis/trigger-event'
@@ -122,9 +121,6 @@ const Home = (props: Props) => {
 
       {/* 最近发布 博客 + 评论列表 */}
       <Latest className='bg-gray-50 py-8' blogs={props.latestResult.blogs} totalPages={props.latestResult.totalPages} />
-
-      {/* 底部 */}
-      <Footer className='pt-12 pb-5' />
     </>
   )
 }

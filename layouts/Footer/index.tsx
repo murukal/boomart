@@ -1,10 +1,12 @@
+// react
+import { useEffect, useState } from 'react'
 // next
 import Image from 'next/image'
 // mui
 import { Box, Container, Grid, Typography, Link, Divider } from '@mui/material'
 // project
-import { footerTitleStyle, footerContentStyle } from './assets'
-import beian from '../../../public/beian.png'
+import { getTitleStyle, getContentStyle } from './assets'
+import beian from '../../public/beian.png'
 import TagChips from './TagChips'
 import type { Props } from './assets'
 
@@ -14,11 +16,11 @@ const Footer = (props: Props) => {
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={3}>
-            <Typography variant='h5' sx={footerTitleStyle}>
+            <Typography variant='h5' sx={getTitleStyle}>
               abount us
             </Typography>
 
-            <Typography className='mb-3' style={footerContentStyle}>
+            <Typography className='mb-3' sx={getContentStyle}>
               谁也阻挡不了一颗想要创作的心
             </Typography>
 
@@ -31,23 +33,23 @@ const Footer = (props: Props) => {
             >
               邮箱地址
             </Typography>
-            <Typography style={footerContentStyle}>fanfan: rrongpan@outlook.com</Typography>
-            <Typography style={footerContentStyle}>tutu: jokerxxx222@126.com</Typography>
+            <Typography sx={getContentStyle}>fanfan: rrongpan@outlook.com</Typography>
+            <Typography sx={getContentStyle}>tutu: jokerxxx222@126.com</Typography>
           </Grid>
           <Grid item xs={2}>
-            <Typography variant='h5' sx={footerTitleStyle}>
+            <Typography variant='h5' sx={getTitleStyle}>
               quick link
             </Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography variant='h5' sx={footerTitleStyle}>
+            <Typography variant='h5' sx={getTitleStyle}>
               tags
             </Typography>
 
             <TagChips />
           </Grid>
           <Grid item xs={4}>
-            <Typography variant='h5' sx={footerTitleStyle}>
+            <Typography variant='h5' sx={getTitleStyle}>
               newsletter
             </Typography>
           </Grid>
@@ -57,28 +59,22 @@ const Footer = (props: Props) => {
 
         {/* copyright */}
         <Box className='flex justify-between'>
-          <Link
-            target='_blank'
-            rel='noreferrer'
-            href='https://beian.miit.gov.cn'
-            style={footerContentStyle}
-            underline='none'
-          >
+          <Link sx={getContentStyle} target='_blank' rel='noreferrer' href='https://beian.miit.gov.cn' underline='none'>
             浙ICP备2021003835号
           </Link>
 
           <Link
             className='flex items-center'
+            sx={getContentStyle}
             target='_blank'
             rel='noreferrer'
             href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010902003160'
-            style={footerContentStyle}
             underline='none'
           >
             <Image src={beian} alt='' />
             浙公网安备 33010902003160号
           </Link>
-          <Typography style={footerContentStyle}>Copyright © 2022 by fanfan & tutu</Typography>
+          <Typography sx={getContentStyle}>Copyright © 2022 by fanfan & tutu</Typography>
         </Box>
       </Container>
     </Box>

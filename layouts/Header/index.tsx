@@ -4,18 +4,21 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 // mui
-import { Box, Button, Container, Divider } from '@mui/material'
+import { Box, Button, Container, Divider, Tabs, Tab } from '@mui/material'
 import { Search, Facebook, Twitter, GitHub, Notes } from '@mui/icons-material'
 // project
 import logo from '../../public/logo.png'
 import ShortcutPortal from '../../components/Navigator/ShortcutPortal'
 import { getMenuTree } from '../../apis/menu'
 import type { MenuTree } from '../../typings/menu'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
   const [menuTree, setMenuTree] = useState<MenuTree | null>()
+  const [tabIndex, setTabIndex] = useState(0)
 
   const router = useRouter()
+  const tags = useSelector((state) => state.tags)
 
   /** 搜索 */
   const onSearch = () => {
@@ -61,14 +64,21 @@ const Header = () => {
       <Divider />
 
       {/* 菜单栏 */}
-      <Container className='flex justify-between sticky'>
-        <Box>
-          {/* <Tabs aria-label='basic tabs example'>
-            <Tab label='Item One' />
-            <Tab label='Item Two' />
-            <Tab label='Item Three' />
-          </Tabs> */}
-        </Box>
+      <Container className='flex justify-between items-center sticky'>
+        <Tabs
+          value={tabIndex}
+          variant='scrollable'
+          scrollButtons='auto'
+          sx={{
+            flex: 1,
+            marginRight: '20px'
+          }}
+        >
+          {tags.map((tag) => (
+            <Tab key={tag._id} label={tag.name} />
+          ))}
+        </Tabs>
+
         <Box className='my-4'>
           <Facebook />
           <Twitter />

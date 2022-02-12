@@ -1,10 +1,21 @@
 // react
 import { useMemo } from 'react'
 // mui
-import { Container, Grid, Typography, Paper, Card, CardMedia, CardContent, Box } from '@mui/material'
-import { LabelOutlined } from '@mui/icons-material'
+import {
+  Container,
+  Grid,
+  Typography,
+  Paper,
+  Card,
+  CardMedia,
+  CardContent,
+  Box,
+  CardActions,
+  IconButton
+} from '@mui/material'
+import { LabelOutlined, Favorite, Share } from '@mui/icons-material'
 // third
-import { Autoplay } from 'swiper'
+import { Autoplay, EffectFade, Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import _ from 'lodash'
@@ -12,7 +23,7 @@ import _ from 'lodash'
 import Tags from '../Tags'
 import Signature from '../Signature'
 import { blogTitleStyle } from '../assets'
-import { hotTagStyle } from './assets'
+import { getHotTagStyle } from './assets'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
 
@@ -40,7 +51,7 @@ const Hot = (props: Props) => {
           <Typography className='ml-1'>热门标签：</Typography>
 
           {hotTags.map((tag) => (
-            <Typography key={tag._id} component='span' sx={hotTagStyle}>
+            <Typography sx={getHotTagStyle} key={tag._id} component='span' color='muted'>
               {tag.name}
             </Typography>
           ))}
@@ -48,11 +59,14 @@ const Hot = (props: Props) => {
 
         <Grid item xs={8}>
           <Swiper
-            className='h-96'
-            modules={[Autoplay]}
+            className='h-full'
+            modules={[Autoplay, EffectFade, Navigation]}
             slidesPerView={1}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
+            autoplay={true}
+            effect='fade'
+            navigation={true}
           >
             {[0, 1, 2, 3].map((item) => (
               <SwiperSlide className='flex justify-center items-center' key={item}>
@@ -69,20 +83,28 @@ const Hot = (props: Props) => {
 
           return (
             <Grid key={topResult.target._id} item xs={4}>
-              <Card className='h-96' onClick={props.onCardClick}>
+              <Card onClick={props.onCardClick}>
                 <CardMedia
                   component='img'
                   height='200'
                   image={topResult.target.cover || tags[0]?.cover}
                   alt='Paella dish'
                 />
-                <CardContent className='p-7'>
-                  <Tags className='mb-3' tags={tags} />
-                  <Typography style={blogTitleStyle}>{topResult.target.title}</Typography>
+                <Box className='flex justify-between'>
+                  <CardContent className='p-7'>
+                    <Tags className='mb-3' tags={tags} />
+                    <Typography style={blogTitleStyle}>{topResult.target.title}</Typography>
 
-                  {/* 博客署名 */}
-                  <Signature className='mt-5' blog={topResult.target} />
-                </CardContent>
+                    {/* 博客署名 */}
+                    <Signature className='mt-5' blog={topResult.target} />
+                  </CardContent>
+
+                  <CardActions disableSpacing className='flex flex-col justify-end p-5'>
+                    <IconButton>
+                      <Favorite />
+                    </IconButton>
+                  </CardActions>
+                </Box>
               </Card>
             </Grid>
           )

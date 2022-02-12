@@ -1,7 +1,7 @@
 // react
 import type { MouseEventHandler } from 'react'
 // mui
-import type { SxProps } from '@mui/material'
+import type { SxProps, Theme } from '@mui/material'
 // project
 import type { TopResults } from '../../../typings/trigger-event'
 
@@ -12,14 +12,15 @@ export interface Props {
   onCardClick?: MouseEventHandler
 }
 
-export const hotTagStyle: SxProps = {
+export const getHotTagStyle: SxProps<Theme> = (theme: Theme) => ({
   position: 'relative',
   fontSize: '12px',
   marginLeft: '8px',
-  color: '#687385',
+  color: theme.palette.muted?.main,
   '&::before': {
     content: '"#"',
     fontSize: '12px',
-    color: '#687385'
+    color: theme.palette.muted?.main,
+    marginRight: '4px'
   }
-}
+})
