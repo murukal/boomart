@@ -13,12 +13,12 @@ import {
   CardActions,
   IconButton
 } from '@mui/material'
-import { LabelOutlined, Favorite, Share } from '@mui/icons-material'
+import { LabelOutlined, Favorite } from '@mui/icons-material'
 // third
 import { Autoplay, EffectFade, Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import _ from 'lodash'
+import { uniqBy } from 'lodash'
 // project
 import Tags from '../Tags'
 import Signature from '../Signature'
@@ -34,7 +34,7 @@ const Hot = (props: Props) => {
       return previous.concat(topResult.target.tags as Tag[])
     }, [] as Tag[])
 
-    return _.uniqBy(tags, '_id')
+    return uniqBy(tags, '_id')
   }, [props.browseTopResults, props.likeTopResults])
 
   return (
@@ -83,17 +83,20 @@ const Hot = (props: Props) => {
 
           return (
             <Grid key={topResult.target._id} item xs={4}>
-              <Card onClick={props.onCardClick}>
+              <Card>
                 <CardMedia
                   component='img'
                   height='200'
                   image={topResult.target.cover || tags[0]?.cover}
                   alt='Paella dish'
+                  onClick={props.onClick && props.onClick(topResult.target._id)}
                 />
                 <Box className='flex justify-between'>
                   <CardContent className='p-7'>
                     <Tags className='mb-3' tags={tags} />
-                    <Typography style={blogTitleStyle}>{topResult.target.title}</Typography>
+                    <Typography style={blogTitleStyle} onClick={props.onClick && props.onClick(topResult.target._id)}>
+                      {topResult.target.title}
+                    </Typography>
 
                     {/* 博客署名 */}
                     <Signature className='mt-5' blog={topResult.target} />

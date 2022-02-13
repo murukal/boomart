@@ -9,7 +9,7 @@ export interface Props {
   className?: string
   browseTopResults: TopResults
   likeTopResults: TopResults
-  onCardClick?: MouseEventHandler
+  onClick?: (id: string) => MouseEventHandler
 }
 
 export const getHotTagStyle: SxProps<Theme> = (theme: Theme) => ({
