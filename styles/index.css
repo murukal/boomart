@@ -7,11 +7,3 @@
 body {
   margin: 0;
 }
-
-.MuiTypography-root,
-.MuiInput-root,
-.MuiButtonBase-root {
-  font-style: normal;
-  font-weight: 500;
-  font-family: 'Noto Sans JP', sans-serif;
-}

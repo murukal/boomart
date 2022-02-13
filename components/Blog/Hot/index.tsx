@@ -22,7 +22,6 @@ import { uniqBy } from 'lodash'
 // project
 import Tags from '../Tags'
 import Signature from '../Signature'
-import { blogTitleStyle } from '../assets'
 import { getHotTagStyle } from './assets'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
@@ -94,7 +93,7 @@ const Hot = (props: Props) => {
                 <Box className='flex justify-between'>
                   <CardContent className='p-7'>
                     <Tags className='mb-3' tags={tags} />
-                    <Typography style={blogTitleStyle} onClick={props.onClick && props.onClick(topResult.target._id)}>
+                    <Typography variant='h5' onClick={props.onClick && props.onClick(topResult.target._id)}>
                       {topResult.target.title}
                     </Typography>
 

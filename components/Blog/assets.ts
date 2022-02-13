@@ -1,30 +1,25 @@
 // react
-import type { CSSProperties } from "react";
+import type { CSSProperties } from 'react'
 // project
 import { getBlogs } from '../../apis/blog'
-import type { Blog } from "../../typings/blog";
-
-export const blogTitleStyle: CSSProperties = {
-    fontSize: 20,
-    fontWeight: 700
-}
+import type { Blog } from '../../typings/blog'
 
 export interface LatestResult {
-    blogs: Blog[],
-    totalPages: number
+  blogs: Blog[]
+  totalPages: number
 }
 
 export const onFetchLatest = async (page: number = 1) => {
-    const res = await getBlogs({
-        pagination: {
-            limit: 4,
-            page,
-            populate: ['tags', 'createdBy']
-        }
-    })
-
-    return {
-        blogs: res.data?.docs || [],
-        totalPages: res.data?.totalPages || 0
+  const res = await getBlogs({
+    pagination: {
+      limit: 4,
+      page,
+      populate: ['tags', 'createdBy']
     }
+  })
+
+  return {
+    blogs: res.data?.docs || [],
+    totalPages: res.data?.totalPages || 0
+  }
 }

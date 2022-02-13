@@ -14,12 +14,10 @@ export interface Props {
 
 export const getHotTagStyle: SxProps<Theme> = (theme: Theme) => ({
   position: 'relative',
-  fontSize: '12px',
   marginLeft: '8px',
   color: theme.palette.muted?.main,
   '&::before': {
     content: '"#"',
-    fontSize: '12px',
     color: theme.palette.muted?.main,
     marginRight: '4px'
   }

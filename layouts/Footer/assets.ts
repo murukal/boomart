@@ -1,5 +1,3 @@
-// react
-import type { CSSProperties } from 'react'
 // mui
 import type { SxProps, Theme } from '@mui/material'
 
@@ -8,7 +6,7 @@ export interface Props {
 }
 
 export const getTitleStyle: SxProps<Theme> = () => ({
-  fontSize: '12px',
+  fontSize: 12,
   textTransform: 'uppercase',
   borderBottomWidth: '1px',
   borderBottomStyle: 'solid',
@@ -29,6 +27,6 @@ export const getTitleStyle: SxProps<Theme> = () => ({
 
 export const getContentStyle: SxProps<Theme> = (theme) => ({
   color: theme.palette.muted?.main,
-  fontSize: '12px',
+  fontSize: 12,
   fontWeight: 400
 })

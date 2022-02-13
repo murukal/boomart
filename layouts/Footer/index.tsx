@@ -16,42 +16,28 @@ const Footer = (props: Props) => {
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={3}>
-            <Typography variant='h5' sx={getTitleStyle}>
-              abount us
-            </Typography>
+            <Typography sx={getTitleStyle}>abount us</Typography>
 
             <Typography className='mb-3' sx={getContentStyle}>
               谁也阻挡不了一颗想要创作的心
             </Typography>
 
-            <Typography
-              className='mb-3'
-              style={{
-                color: '#212529',
-                fontWeight: 700
-              }}
-            >
+            <Typography className='mb-3 font-bold' color='#212529'>
               邮箱地址
             </Typography>
             <Typography sx={getContentStyle}>fanfan: rrongpan@outlook.com</Typography>
             <Typography sx={getContentStyle}>tutu: jokerxxx222@126.com</Typography>
           </Grid>
           <Grid item xs={2}>
-            <Typography variant='h5' sx={getTitleStyle}>
-              quick link
-            </Typography>
+            <Typography sx={getTitleStyle}>quick link</Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography variant='h5' sx={getTitleStyle}>
-              tags
-            </Typography>
+            <Typography sx={getTitleStyle}>tags</Typography>
 
             <TagChips />
           </Grid>
           <Grid item xs={4}>
-            <Typography variant='h5' sx={getTitleStyle}>
-              newsletter
-            </Typography>
+            <Typography sx={getTitleStyle}>newsletter</Typography>
           </Grid>
         </Grid>
 
