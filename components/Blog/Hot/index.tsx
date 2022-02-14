@@ -1,18 +1,7 @@
 // react
 import { useMemo } from 'react'
 // mui
-import {
-  Container,
-  Grid,
-  Typography,
-  Paper,
-  Card,
-  CardMedia,
-  CardContent,
-  Box,
-  CardActions,
-  IconButton
-} from '@mui/material'
+import { Container, Grid, Typography, Paper, Card, CardMedia, CardContent, Box, CardActions, IconButton } from '@mui/material'
 import { LabelOutlined, Favorite } from '@mui/icons-material'
 // third
 import { Autoplay, EffectFade, Navigation } from 'swiper'
@@ -22,9 +11,11 @@ import { uniqBy } from 'lodash'
 // project
 import Tags from '../Tags'
 import Signature from '../Signature'
+import Actions from '../Actions'
 import { getHotTagStyle } from './assets'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
+import { TriggerType } from '../../../typings/trigger-event'
 
 const Hot = (props: Props) => {
   // 抽离tags
@@ -87,7 +78,7 @@ const Hot = (props: Props) => {
                   component='img'
                   height='200'
                   image={topResult.target.cover || tags[0]?.cover}
-                  alt='Paella dish'
+                  alt={topResult.target.title}
                   onClick={props.onClick && props.onClick(topResult.target._id)}
                 />
                 <Box className='flex justify-between'>
@@ -101,11 +92,7 @@ const Hot = (props: Props) => {
                     <Signature className='mt-5' blog={topResult.target} />
                   </CardContent>
 
-                  <CardActions disableSpacing className='flex flex-col justify-end p-5'>
-                    <IconButton>
-                      <Favorite />
-                    </IconButton>
-                  </CardActions>
+                  <Actions />
                 </Box>
               </Card>
             </Grid>

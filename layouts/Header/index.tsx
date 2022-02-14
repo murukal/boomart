@@ -1,25 +1,24 @@
 // react
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { SyntheticEvent } from 'react'
 // next
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
 // mui
-import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography } from '@mui/material'
-import { Search, Facebook, Twitter, GitHub, Notes } from '@mui/icons-material'
-// third
-import { stringify } from 'qs'
+import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography, IconButton } from '@mui/material'
+import { Search, Facebook, Twitter, GitHub, Notes, Home } from '@mui/icons-material'
 // project
 import logo from '../../public/logo.png'
 import ShortcutPortal from '../../components/Navigator/ShortcutPortal'
 import { getMenuTree } from '../../apis/menu'
-import type { MenuTree } from '../../typings/menu'
 import { logout } from '../../redux/userProfile/actions'
+import { onLogin } from '../../utils/account'
+import type { MenuTree } from '../../typings/menu'
 
 const Header = () => {
   const [menuTree, setMenuTree] = useState<MenuTree | null>()
-  const [tabIndex, setTabIndex] = useState(0)
   const [isUserProfileOpened, setIsUserProfileOpened] = useState(false)
 
   const userProfileEl = useRef(null)
@@ -30,7 +29,7 @@ const Header = () => {
 
   /** 搜索 */
   const onSearch = () => {
-    router.push('/mui')
+    router.push('/search')
   }
 
   const onFetch = async () => {
@@ -42,15 +41,6 @@ const Header = () => {
   useEffect(() => {
     onFetch()
   }, [])
-
-  /** 登陆 */
-  const onSignIn = () => {
-    const params = {
-      redirect: window.location.href
-    }
-
-    window.location.href = `http://admin.r2boom.com/account/login?${stringify(params)}`
-  }
 
   /** 用户菜单关闭 */
   const onUserProfileClose = () => {
@@ -66,6 +56,17 @@ const Header = () => {
   const onLogout = () => {
     dispatch(logout())
   }
+
+  /** tab 切换 */
+  const onTabChange = (event: SyntheticEvent, value: string) => {
+    router.push(value)
+  }
+
+  /** tabs */
+  const tabs = useMemo(() => tags.map((tag) => <Tab key={tag._id} label={tag.name} value={`/category/${tag._id}`} />), [tags])
+
+  /** 选中 tab */
+  const tabValue = useMemo(() => (tags.length ? router.asPath : '/'), [tags, router.asPath])
 
   return (
     <>
@@ -94,12 +95,7 @@ const Header = () => {
           {/* 已登陆显示用户头像 */}
           {userProfile.isLogin ? (
             <>
-              <Avatar
-                ref={userProfileEl}
-                className='ml-2 w-8 h-8'
-                src={userProfile.user?.avatar}
-                onClick={onUserProfileOpen}
-              />
+              <Avatar ref={userProfileEl} className='ml-2 w-8 h-8' src={userProfile.user?.avatar} onClick={onUserProfileOpen} />
               <Menu anchorEl={userProfileEl.current} open={isUserProfileOpened} onClose={onUserProfileClose}>
                 <MenuItem onClick={onLogout}>
                   <Typography color='primary'>注销</Typography>
@@ -107,7 +103,7 @@ const Header = () => {
               </Menu>
             </>
           ) : (
-            <Button variant='contained' onClick={onSignIn}>
+            <Button variant='contained' onClick={onLogin}>
               Sign in
             </Button>
           )}
@@ -120,24 +116,33 @@ const Header = () => {
       {/* 菜单栏 */}
       <Container className='flex justify-between items-center sticky'>
         <Tabs
-          value={tabIndex}
+          value={tabValue}
           variant='scrollable'
           scrollButtons='auto'
           sx={{
             flex: 1,
             marginRight: '20px'
           }}
+          onChange={onTabChange}
         >
-          {tags.map((tag) => (
-            <Tab key={tag._id} label={tag.name} />
-          ))}
+          {/* home */}
+          <Tab label='Home' icon={<Home />} value='/' iconPosition='start' />
+          {tabs}
         </Tabs>
 
-        <Box className='my-4'>
-          <Facebook />
-          <Twitter />
-          <GitHub />
-          <Notes />
+        <Box>
+          <IconButton>
+            <Facebook />
+          </IconButton>
+          <IconButton>
+            <Twitter />
+          </IconButton>
+          <IconButton>
+            <GitHub />
+          </IconButton>
+          <IconButton>
+            <Notes />
+          </IconButton>
         </Box>
       </Container>
     </>

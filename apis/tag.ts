@@ -16,3 +16,5 @@ export const getTags = () => {
     params
   })
 }
+
+export const getTagById = (id: string) => get<Tag>(`${url}/${id}`)

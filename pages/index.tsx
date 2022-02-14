@@ -32,7 +32,7 @@ const Home = (props: Props) => {
   useEffect(() => {
     // 返回的函数传递给Effect，取消订阅
     return setTypedUI(ref)
-  }, [])
+  }, [props])
 
   return (
     <>
@@ -123,12 +123,7 @@ const Home = (props: Props) => {
       </Box>
 
       {/* 热门榜单 */}
-      <Hot
-        className='py-8'
-        browseTopResults={props.blogBrowseTopResults}
-        likeTopResults={props.likeTopResults}
-        onClick={onGo2Blog}
-      />
+      <Hot className='py-8' browseTopResults={props.blogBrowseTopResults} likeTopResults={props.likeTopResults} onClick={onGo2Blog} />
 
       {/* 最近发布 博客 + 评论列表 */}
       <Latest className='bg-gray-50 py-8' blogs={props.latestResult.blogs} totalPages={props.latestResult.totalPages} />

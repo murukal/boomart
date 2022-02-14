@@ -1,10 +1,9 @@
 // react
 import { useMemo } from 'react'
 // next
-import Image from 'next/image'
 import type { GetServerSideProps } from 'next'
 // mui
-import { Container, Box, Typography, Avatar } from '@mui/material'
+import { Container, Box, Typography, Avatar, CardMedia } from '@mui/material'
 // third
 import dayjs from 'dayjs'
 // project
@@ -19,9 +18,11 @@ interface Props {
 
 const Blog = (props: Props) => {
   const blog = useMemo(() => props.blog, [props.blog])
+
   const createdBy = useMemo(() => {
     return blog.createdBy as User
   }, [blog])
+
   const cover = useMemo(() => {
     return blog.cover || (blog.tags[0] as Tag | undefined)?.cover || ''
   }, [blog])
@@ -50,9 +51,11 @@ const Blog = (props: Props) => {
         </Box>
 
         {/* 封面 */}
-        {/* <Box className='w-full h-1'>
-          <Image src={cover} alt={blog.title} layout='fill' />
-        </Box> */}
+        <CardMedia className='rounded-lg' component='img' height={600} image={cover} alt={blog.title} />
+
+        {/* 博客正文 */}
+
+        {/* 页脚 */}
       </Box>
     </Container>
   )
@@ -64,17 +67,17 @@ export default Blog
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context
 
-  const res = await getBlogById(params?.id as string)
+  const { data: blog } = await getBlogById(params?.id as string)
 
   // 博客未找到，返回404
-  if (!res.data)
+  if (!blog)
     return {
       notFound: true
     }
 
   return {
     props: {
-      blog: res.data
+      blog
     }
   }
 }

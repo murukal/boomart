@@ -6,6 +6,7 @@ import { Box, Container, Grid, Typography, Divider, Card, CardMedia, CardContent
 // project
 import Tags from '../Tags'
 import Signature from '../Signature'
+import Actions from '../Actions'
 import { onFetchLatest } from '../assets'
 import type { Tag } from '../../../typings/tag'
 import type { Props } from './assets'
@@ -39,7 +40,7 @@ const Latest = (props: Props) => {
                     component='img'
                     height={150}
                     image={blog.cover || tags[0]?.cover}
-                    alt='Paella dish'
+                    alt={blog.title}
                     sx={{
                       flex: 1
                     }}
@@ -56,6 +57,8 @@ const Latest = (props: Props) => {
                     {/* 博客署名 */}
                     <Signature className='mt-5' blog={blog} />
                   </CardContent>
+
+                  <Actions />
                 </Card>
               )
             })}
