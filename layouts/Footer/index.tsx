@@ -1,5 +1,3 @@
-// react
-import { useEffect, useState } from 'react'
 // next
 import Image from 'next/image'
 // mui
@@ -33,7 +31,7 @@ const Footer = (props: Props) => {
           </Grid>
           <Grid item xs={3}>
             <Typography sx={getTitleStyle}>tags</Typography>
-
+            {/* chips */}
             <TagChips />
           </Grid>
           <Grid item xs={4}>
@@ -60,6 +58,7 @@ const Footer = (props: Props) => {
             <Image src={beian} alt='' />
             浙公网安备 33010902003160号
           </Link>
+
           <Typography sx={getContentStyle}>Copyright © 2022 by fanfan & tutu</Typography>
         </Box>
       </Container>

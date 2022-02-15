@@ -1,8 +1,8 @@
 // react
 import { useMemo } from 'react'
 // mui
-import { Container, Grid, Typography, Paper, Card, CardMedia, CardContent, Box, CardActions, IconButton } from '@mui/material'
-import { LabelOutlined, Favorite } from '@mui/icons-material'
+import { Container, Grid, Typography, Paper, Card, CardMedia, CardContent, Box } from '@mui/material'
+import { LabelOutlined } from '@mui/icons-material'
 // third
 import { Autoplay, EffectFade, Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -15,7 +15,6 @@ import Actions from '../Actions'
 import { getHotTagStyle } from './assets'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
-import { TriggerType } from '../../../typings/trigger-event'
 
 const Hot = (props: Props) => {
   // 抽离tags
@@ -41,7 +40,7 @@ const Hot = (props: Props) => {
           <Typography className='ml-1'>热门标签：</Typography>
 
           {hotTags.map((tag) => (
-            <Typography sx={getHotTagStyle} key={tag._id} component='span' color='muted'>
+            <Typography sx={getHotTagStyle} key={tag._id} component='span' color={(theme) => theme.palette.muted?.main}>
               {tag.name}
             </Typography>
           ))}
@@ -75,6 +74,7 @@ const Hot = (props: Props) => {
             <Grid key={topResult.target._id} item xs={4}>
               <Card>
                 <CardMedia
+                  className='cursor-pointer'
                   component='img'
                   height='200'
                   image={topResult.target.cover || tags[0]?.cover}
@@ -84,7 +84,9 @@ const Hot = (props: Props) => {
                 <Box className='flex justify-between'>
                   <CardContent className='p-7'>
                     <Tags className='mb-3' tags={tags} />
-                    <Typography variant='h5' onClick={props.onClick && props.onClick(topResult.target._id)}>
+
+                    {/* 博客标题 */}
+                    <Typography className='cursor-pointer' variant='h5' onClick={props.onClick && props.onClick(topResult.target._id)}>
                       {topResult.target.title}
                     </Typography>
 

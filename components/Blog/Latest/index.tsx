@@ -36,7 +36,7 @@ const Latest = (props: Props) => {
               return (
                 <Card className='flex mt-7 bg-gray-50' key={blog._id} elevation={0}>
                   <CardMedia
-                    className='rounded-r'
+                    className='rounded-r cursor-pointer'
                     component='img'
                     height={150}
                     image={blog.cover || tags[0]?.cover}
@@ -52,7 +52,11 @@ const Latest = (props: Props) => {
                     }}
                   >
                     <Tags className='mb-3' tags={tags} />
-                    <Typography variant='h5'>{blog.title}</Typography>
+
+                    {/* 博客标题 */}
+                    <Typography className='cursor-pointer' variant='h5'>
+                      {blog.title}
+                    </Typography>
 
                     {/* 博客署名 */}
                     <Signature className='mt-5' blog={blog} />

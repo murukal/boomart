@@ -1,11 +1,13 @@
 // react
 import { useMemo } from 'react'
 // next
+import Link from 'next/link'
 import type { GetServerSideProps } from 'next'
 // mui
 import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from '@mui/material'
 // third
 import dayjs from 'dayjs'
+import ReactMarkdown from 'react-markdown'
 // project
 import { getBlogById } from '../../apis/blog'
 import type { Blog } from '../../typings/blog'
@@ -54,6 +56,7 @@ const Blog = (props: Props) => {
         <CardMedia className='rounded-lg mt-12' component='img' height={600} image={cover} alt={blog.title} />
 
         {/* 博客正文 */}
+        <ReactMarkdown className='mt-12'>{blog.content}</ReactMarkdown>
 
         {/* tags */}
         <Box className='mt-12'>
@@ -62,8 +65,15 @@ const Blog = (props: Props) => {
           </Typography>
 
           {blog.tags.map((tag) => (
-            <Typography key={(tag as Tag)._id} className='ml-1' fontSize={14} fontStyle='italic' color='muted' component='span'>
-              {(tag as Tag).name}
+            <Typography
+              key={(tag as Tag)._id}
+              className='ml-3'
+              fontSize={14}
+              fontStyle='italic'
+              color={(theme) => theme.palette.muted?.main}
+              component='span'
+            >
+              <Link href={`/category/${(tag as Tag)._id}`}>{(tag as Tag).name}</Link>
             </Typography>
           ))}
         </Box>
@@ -72,15 +82,20 @@ const Blog = (props: Props) => {
         <Card className='mt-12 p-7 flex'>
           <CardMedia className='rounded-full w-24 h-24' component='img' image={createdBy.avatar} />
 
-          <CardContent className='p-0 ml-10'>
+          <CardContent
+            className='ml-10'
+            style={{
+              padding: 0
+            }}
+          >
             <Typography variant='h4'>{createdBy.username}</Typography>
 
             <Typography className='mt-5'>关于作者</Typography>
 
             <Typography className='mt-4'>{createdBy.username}</Typography>
 
-            <Typography className='mt-4' fontSize={14} fontStyle='italic'>
-              去看下他/她全部的博客(125)
+            <Typography className='mt-4' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main}>
+              <Link href='/'>去看下 ta 全部的博客 (125)</Link>
             </Typography>
           </CardContent>
         </Card>

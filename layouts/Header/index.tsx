@@ -66,7 +66,10 @@ const Header = () => {
   const tabs = useMemo(() => tags.map((tag) => <Tab key={tag._id} label={tag.name} value={`/category/${tag._id}`} />), [tags])
 
   /** 选中 tab */
-  const tabValue = useMemo(() => (tags.length ? router.asPath : '/'), [tags, router.asPath])
+  const tabValue = useMemo(
+    () => (tags.length ? (['/category/[id]', '/'].includes(router.pathname) ? router.asPath : false) : '/'),
+    [tags, router.asPath]
+  )
 
   return (
     <>
@@ -114,7 +117,7 @@ const Header = () => {
       <Divider />
 
       {/* 菜单栏 */}
-      <Container className='flex justify-between items-center sticky'>
+      <Container className='flex justify-between items-center'>
         <Tabs
           value={tabValue}
           variant='scrollable'
