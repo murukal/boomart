@@ -1,12 +1,10 @@
-// react
-import { useEffect, useState } from 'react'
 // mui
 import { CardActions, IconButton } from '@mui/material'
 import { Favorite, ThumbUp } from '@mui/icons-material'
 // project
 import type { Props } from './assets'
 
-const Actions = (props: Props) => {
+const Markers = (props: Props) => {
   return (
     <CardActions disableSpacing className='flex flex-col justify-end p-5'>
       <IconButton disabled>
@@ -20,4 +18,4 @@ const Actions = (props: Props) => {
   )
 }
 
-export default Actions
+export default Markers

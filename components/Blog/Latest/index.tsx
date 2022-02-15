@@ -6,7 +6,7 @@ import { Box, Container, Grid, Typography, Divider, Card, CardMedia, CardContent
 // project
 import Tags from '../Tags'
 import Signature from '../Signature'
-import Actions from '../Actions'
+import Markers from '../Markers'
 import { onFetchLatest } from '../assets'
 import type { Tag } from '../../../typings/tag'
 import type { Props } from './assets'
@@ -62,7 +62,7 @@ const Latest = (props: Props) => {
                     <Signature className='mt-5' blog={blog} />
                   </CardContent>
 
-                  <Actions />
+                  <Markers />
                 </Card>
               )
             })}

@@ -11,7 +11,7 @@ import { uniqBy } from 'lodash'
 // project
 import Tags from '../Tags'
 import Signature from '../Signature'
-import Actions from '../Actions'
+import Markers from '../Markers'
 import { getHotTagStyle } from './assets'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
@@ -86,7 +86,11 @@ const Hot = (props: Props) => {
                     <Tags className='mb-3' tags={tags} />
 
                     {/* 博客标题 */}
-                    <Typography className='cursor-pointer' variant='h5' onClick={props.onClick && props.onClick(topResult.target._id)}>
+                    <Typography
+                      className='cursor-pointer'
+                      variant='h5'
+                      onClick={props.onClick && props.onClick(topResult.target._id)}
+                    >
                       {topResult.target.title}
                     </Typography>
 
@@ -94,7 +98,7 @@ const Hot = (props: Props) => {
                     <Signature className='mt-5' blog={topResult.target} />
                   </CardContent>
 
-                  <Actions />
+                  <Markers />
                 </Box>
               </Card>
             </Grid>

@@ -2,7 +2,7 @@
 import type { Blog } from './blog'
 import type { User } from './user'
 
-export type TriggerType = 'THUMBUP' | 'FAVORITE' | 'BROWSE'
+export type TriggerType = 'THUMBUP' | 'FAVORITE' | 'BROWSE' | 'COMMENT'
 
 export interface TriggerEvent {
   _id: string

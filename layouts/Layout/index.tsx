@@ -3,7 +3,8 @@ import { useEffect } from 'react'
 // redux
 import { useDispatch } from 'react-redux'
 // mui
-import { Box } from '@mui/material'
+import { Box, Fab } from '@mui/material'
+import { ArrowUpward } from '@mui/icons-material'
 // third
 import PerfectScrollbar from 'perfect-scrollbar'
 // project
@@ -37,6 +38,18 @@ const Layout = (props: Props) => {
       <Box>{props.children}</Box>
       {/* 底部 */}
       <Footer className='pt-12 pb-5' />
+
+      <Fab
+        sx={{
+          position: 'fixed',
+          bottom: 50,
+          right: 50
+        }}
+        size='small'
+        color='primary'
+      >
+        <ArrowUpward />
+      </Fab>
     </Box>
   )
 }
