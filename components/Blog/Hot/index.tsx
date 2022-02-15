@@ -50,12 +50,12 @@ const Hot = (props: Props) => {
           <Swiper
             className='h-full'
             modules={[Autoplay, EffectFade, Navigation]}
-            slidesPerView={1}
+            // slidesPerView={1}
             onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
+            // onSwiper={(swiper) => console.log(swiper)}
             autoplay={true}
             effect='fade'
-            navigation={true}
+            // navigation={true}
           >
             {[0, 1, 2, 3].map((item) => (
               <SwiperSlide className='flex justify-center items-center' key={item}>
