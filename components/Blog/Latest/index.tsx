@@ -26,10 +26,10 @@ const Latest = (props: Props) => {
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={8}>
-            <Typography>最近发布的博客</Typography>
+            <Typography>最近发布的文章</Typography>
             <Divider className='mt-2.5' />
 
-            {/* 博客列表 */}
+            {/* 文章列表 */}
             {blogs.map((blog) => {
               const tags = blog.tags as Tag[]
 
@@ -53,12 +53,12 @@ const Latest = (props: Props) => {
                   >
                     <Tags className='mb-3' tags={tags} />
 
-                    {/* 博客标题 */}
+                    {/* 文章标题 */}
                     <Typography className='cursor-pointer' variant='h5'>
                       {blog.title}
                     </Typography>
 
-                    {/* 博客署名 */}
+                    {/* 文章署名 */}
                     <Signature className='mt-5' blog={blog} />
                   </CardContent>
 

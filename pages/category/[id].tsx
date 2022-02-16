@@ -52,7 +52,7 @@ const onFetch = async (tagId: string, page: number) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context
 
-  // 获取分类下的博客
+  // 获取分类下的文章
   const res = params?.id && (await onFetch(params?.id as string, 1))
 
   // 请求失败

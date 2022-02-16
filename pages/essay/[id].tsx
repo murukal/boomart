@@ -56,7 +56,7 @@ const Blog = (props: Props) => {
       {/* 封面 */}
       <CardMedia className='rounded-lg mt-12' component='img' height={600} image={cover} alt={blog.title} />
 
-      {/* 博客正文 */}
+      {/* 文章正文 */}
       <ReactMarkdown className='mt-12'>{blog.content}</ReactMarkdown>
 
       {/* tags */}
@@ -116,7 +116,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { data: blog } = await getBlogById(params?.id as string)
 
-  // 博客未找到，返回404
+  // 文章未找到，返回404
   if (!blog)
     return {
       notFound: true

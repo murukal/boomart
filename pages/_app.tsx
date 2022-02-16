@@ -54,7 +54,7 @@ const App = (props: AppProps) => {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <Head>
-            <title>Boom!Boom!</title>
+            <title>一粒灰烬想燃烧的更久</title>
           </Head>
           <Layout>
             <Component {...pageProps} />

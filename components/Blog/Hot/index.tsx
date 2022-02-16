@@ -28,7 +28,7 @@ const Hot = (props: Props) => {
 
   return (
     <Container className={props.className}>
-      {/* 热门博客cards */}
+      {/* 热门文章cards */}
       <Grid container spacing={4}>
         <Grid item xs={8}>
           <Typography>当前热门🔥</Typography>
@@ -85,16 +85,12 @@ const Hot = (props: Props) => {
                   <CardContent className='p-7'>
                     <Tags className='mb-3' tags={tags} />
 
-                    {/* 博客标题 */}
-                    <Typography
-                      className='cursor-pointer'
-                      variant='h5'
-                      onClick={props.onClick && props.onClick(topResult.target._id)}
-                    >
+                    {/* 文章标题 */}
+                    <Typography className='cursor-pointer' variant='h5' onClick={props.onClick && props.onClick(topResult.target._id)}>
                       {topResult.target.title}
                     </Typography>
 
-                    {/* 博客署名 */}
+                    {/* 文章署名 */}
                     <Signature className='mt-5' blog={topResult.target} />
                   </CardContent>
 
