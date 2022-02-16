@@ -9,33 +9,33 @@ import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from
 import dayjs from 'dayjs'
 import ReactMarkdown from 'react-markdown'
 // project
-import Triggers from '../../components/Blog/Triggers'
-import Comments from '../../components/Blog/Comments'
-import { getBlogById } from '../../apis/blog'
-import type { Blog } from '../../typings/blog'
+import Triggers from '../../components/Essay/Triggers'
+import Comments from '../../components/Essay/Comments'
+import { getEssayById } from '../../apis/essay'
+import type { Essay } from '../../typings/essay'
 import type { User } from '../../typings/user'
 import type { Tag } from '../../typings/tag'
 
 interface Props {
-  blog: Blog
+  essay: Essay
 }
 
-const Blog = (props: Props) => {
-  const blog = useMemo(() => props.blog, [props.blog])
+const Essay = (props: Props) => {
+  const essay = useMemo(() => props.essay, [props.essay])
 
   const createdBy = useMemo(() => {
-    return blog.createdBy as User
-  }, [blog])
+    return essay.createdBy as User
+  }, [essay])
 
   const cover = useMemo(() => {
-    return blog.cover || (blog.tags[0] as Tag | undefined)?.cover || ''
-  }, [blog])
+    return essay.cover || (essay.tags[0] as Tag | undefined)?.cover || ''
+  }, [essay])
 
   return (
     <Container className='p-12'>
       {/* 抬头 */}
       <Typography className='font-black' variant='h1'>
-        {blog.title}
+        {essay.title}
       </Typography>
 
       {/* 著作信息 */}
@@ -49,15 +49,15 @@ const Blog = (props: Props) => {
               {createdBy.username}
             </Typography>
           </Box>
-          <Typography>{dayjs(blog.createdAt).format('YYYY MMM DD')}</Typography>
+          <Typography>{dayjs(essay.createdAt).format('YYYY MMM DD')}</Typography>
         </Box>
       </Box>
 
       {/* 封面 */}
-      <CardMedia className='rounded-lg mt-12' component='img' height={600} image={cover} alt={blog.title} />
+      <CardMedia className='rounded-lg mt-12' component='img' height={600} image={cover} alt={essay.title} />
 
       {/* 文章正文 */}
-      <ReactMarkdown className='mt-12'>{blog.content}</ReactMarkdown>
+      <ReactMarkdown className='mt-12'>{essay.content}</ReactMarkdown>
 
       {/* tags */}
       <Box className='mt-12 flex items-center'>
@@ -65,7 +65,7 @@ const Blog = (props: Props) => {
           Tags:
         </Typography>
 
-        {blog.tags.map((tag) => (
+        {essay.tags.map((tag) => (
           <Typography
             key={(tag as Tag)._id}
             className='ml-3'
@@ -78,7 +78,7 @@ const Blog = (props: Props) => {
           </Typography>
         ))}
 
-        <Triggers className='ml-auto' blogId={blog._id} />
+        <Triggers className='ml-auto' essayId={essay._id} />
       </Box>
 
       {/* 关于作者 */}
@@ -108,23 +108,23 @@ const Blog = (props: Props) => {
   )
 }
 
-export default Blog
+export default Essay
 
 /** 服务端渲染 */
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context
 
-  const { data: blog } = await getBlogById(params?.id as string)
+  const { data: essay } = await getEssayById(params?.id as string)
 
   // 文章未找到，返回404
-  if (!blog)
+  if (!essay)
     return {
       notFound: true
     }
 
   return {
     props: {
-      blog
+      essay
     }
   }
 }

@@ -1,10 +1,10 @@
 // react
 import type { CSSProperties } from 'react'
 // project
-import type { Blog } from '../../../typings/blog'
+import type { Essay } from '../../../typings/essay'
 
 export interface Props {
-  blog: Blog
+  essay: Essay
   className?: string
 }
 

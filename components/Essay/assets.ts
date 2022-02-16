@@ -1,16 +1,14 @@
-// react
-import type { CSSProperties } from 'react'
 // project
-import { getBlogs } from '../../apis/blog'
-import type { Blog } from '../../typings/blog'
+import { getEssays } from '../../apis/essay'
+import type { Essay } from '../../typings/essay'
 
 export interface LatestResult {
-  blogs: Blog[]
+  essays: Essay[]
   totalPages: number
 }
 
 export const onFetchLatest = async (page: number = 1) => {
-  const res = await getBlogs({
+  const res = await getEssays({
     pagination: {
       limit: 4,
       page,
@@ -19,7 +17,7 @@ export const onFetchLatest = async (page: number = 1) => {
   })
 
   return {
-    blogs: res.data?.docs || [],
+    essays: res.data?.docs || [],
     totalPages: res.data?.totalPages || 0
   }
 }

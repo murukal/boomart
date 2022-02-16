@@ -11,8 +11,8 @@ import type { User } from '../../../typings/user'
 
 const Signature = (props: Props) => {
   const createdBy = useMemo<User>(() => {
-    return props.blog.createdBy as User
-  }, [props.blog])
+    return props.essay.createdBy as User
+  }, [props.essay])
 
   return (
     <Box className={props.className}>
@@ -26,7 +26,7 @@ const Signature = (props: Props) => {
           }
         }}
       >
-        {dayjs(props.blog.createdAt).format('D MMM')}
+        {dayjs(props.essay.createdAt).format('D MMM')}
       </Typography>
       <Typography component='span' sx={textStyle}>{`By ${createdBy.username}`}</Typography>
     </Box>

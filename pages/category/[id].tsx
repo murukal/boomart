@@ -7,11 +7,11 @@ import type { GetServerSideProps } from 'next'
 // mui
 import { Pagination, Container } from '@mui/material'
 // project
-import { getBlogs } from '../../apis/blog'
-import type { Blog } from '../../typings/blog'
+import { getEssays } from '../../apis/essay'
+import type { Essay } from '../../typings/essay'
 
 interface Props {
-  blogs: Blog[]
+  essays: Essay[]
   page: number
   totalPages: number
 }
@@ -40,7 +40,7 @@ export default Category
 
 /** 请求 */
 const onFetch = async (tagId: string, page: number) => {
-  return await getBlogs({
+  return await getEssays({
     pagination: {
       page
     },
@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // 请求成功
   return {
     props: {
-      blogs: res.data?.docs,
+      essays: res.data?.docs,
       page: res.data?.page,
       totalPages: res.data?.totalPages
     }

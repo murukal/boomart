@@ -91,7 +91,7 @@ const Hot = (props: Props) => {
                     </Typography>
 
                     {/* 文章署名 */}
-                    <Signature className='mt-5' blog={topResult.target} />
+                    <Signature className='mt-5' essay={topResult.target} />
                   </CardContent>
 
                   <Markers />

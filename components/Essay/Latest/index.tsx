@@ -12,12 +12,12 @@ import type { Tag } from '../../../typings/tag'
 import type { Props } from './assets'
 
 const Latest = (props: Props) => {
-  const [blogs, setBlogs] = useState(props.blogs)
+  const [essays, setEssays] = useState(props.essays)
   const [totalPages, setTotalPages] = useState(props.totalPages)
 
   const onPageChange = async (event: ChangeEvent<unknown>, page: number) => {
     const result = await onFetchLatest(page)
-    setBlogs(result.blogs)
+    setEssays(result.essays)
     setTotalPages(result.totalPages)
   }
 
@@ -30,17 +30,17 @@ const Latest = (props: Props) => {
             <Divider className='mt-2.5' />
 
             {/* 文章列表 */}
-            {blogs.map((blog) => {
-              const tags = blog.tags as Tag[]
+            {essays.map((essay) => {
+              const tags = essay.tags as Tag[]
 
               return (
-                <Card className='flex mt-7 bg-gray-50' key={blog._id} elevation={0}>
+                <Card className='flex mt-7 bg-gray-50' key={essay._id} elevation={0}>
                   <CardMedia
                     className='rounded-r cursor-pointer'
                     component='img'
                     height={150}
-                    image={blog.cover || tags[0]?.cover}
-                    alt={blog.title}
+                    image={essay.cover || tags[0]?.cover}
+                    alt={essay.title}
                     sx={{
                       flex: 1
                     }}
@@ -55,11 +55,11 @@ const Latest = (props: Props) => {
 
                     {/* 文章标题 */}
                     <Typography className='cursor-pointer' variant='h5'>
-                      {blog.title}
+                      {essay.title}
                     </Typography>
 
                     {/* 文章署名 */}
-                    <Signature className='mt-5' blog={blog} />
+                    <Signature className='mt-5' essay={essay} />
                   </CardContent>
 
                   <Markers />

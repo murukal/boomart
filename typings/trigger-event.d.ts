@@ -1,5 +1,5 @@
 // project
-import type { Blog } from './blog'
+import type { Essay } from './essay'
 import type { User } from './user'
 
 export type TriggerType = 'THUMBUP' | 'FAVORITE' | 'BROWSE' | 'COMMENT'
@@ -7,8 +7,8 @@ export type TriggerType = 'THUMBUP' | 'FAVORITE' | 'BROWSE' | 'COMMENT'
 export interface TriggerEvent {
   _id: string
   triggerman: string | User
-  targetType: 'Blog'
-  target: string | Blog
+  targetType: 'Essay'
+  target: string | Essay
   triggerType: TriggerType
 }
 
@@ -21,5 +21,5 @@ export interface TopQuery {
 export type TopResults = {
   _id: string
   count: number
-  target: Blog
+  target: Essay
 }[]
