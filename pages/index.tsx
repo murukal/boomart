@@ -78,7 +78,7 @@ const Home = (props: Props) => {
             </Typography>
 
             <Typography className='mt-6' variant='h3'>
-              欢迎来到我的博客站点
+              欢迎来到我的技术分享
             </Typography>
 
             <Typography className='mt-6' variant='h5'>
@@ -86,7 +86,7 @@ const Home = (props: Props) => {
             </Typography>
 
             {/* 订阅组件 */}
-            <Box className='mt-7 flex'>
+            {/* <Box className='mt-7 flex'>
               <Input
                 disableUnderline
                 placeholder='请输入您的邮箱'
@@ -112,7 +112,7 @@ const Home = (props: Props) => {
               >
                 订阅
               </Button>
-            </Box>
+            </Box> */}
           </Box>
 
           {/* 右侧 */}

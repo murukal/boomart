@@ -98,7 +98,7 @@ const Blog = (props: Props) => {
           <Typography className='mt-4'>{createdBy.username}</Typography>
 
           <Typography className='mt-4' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main}>
-            <Link href='/'>去看下 ta 全部的博客 (125)</Link>
+            <Link href='/'>去看下 ta (125)</Link>
           </Typography>
         </CardContent>
       </Card>
