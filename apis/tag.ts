@@ -1,20 +1,10 @@
 // project
-import { get } from '.'
+import arq from '.'
 import type { PaginateResult, QueryOptions } from '../typings/api'
 import type { Tag } from '../typings/tag'
 
 const url = '/api/tag'
 
-export const getTags = () => {
-  const params: QueryOptions = {
-    pagination: {
-      pagination: false
-    }
-  }
+export const getTags = () => arq.get<PaginateResult<Tag>>(url)
 
-  return get<PaginateResult<Tag>>(url, {
-    params
-  })
-}
-
-export const getTagById = (id: string) => get<Tag>(`${url}/${id}`)
+export const getTagById = (id: string) => arq.get<Tag>(`${url}/${id}`)

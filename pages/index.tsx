@@ -4,15 +4,15 @@ import { createRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 // mui
-import { Box, Button, Container, Input, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 // project
 import Latest from '../components/Essay/Latest'
 import Hot from '../components/Essay/Hot'
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
-import { getEssayBrowseTop } from '../apis/trigger-event'
+import { getEssayBrowseTop } from '../apis/toggle'
 import { onFetchLatest } from '../components/Essay/assets'
-import type { TopResults } from '../typings/trigger-event'
+import type { TopResults } from '../typings/toggle'
 import type { LatestResult } from '../components/Essay/assets'
 
 interface Props {
@@ -124,10 +124,19 @@ const Home = (props: Props) => {
       </Box>
 
       {/* 热门榜单 */}
-      <Hot className='py-8' browseTopResults={props.browseTopResults} likeTopResults={props.likeTopResults} onClick={onGo2Essay} />
+      <Hot
+        className='py-8'
+        browseTopResults={props.browseTopResults}
+        likeTopResults={props.likeTopResults}
+        onClick={onGo2Essay}
+      />
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest className='bg-gray-50 py-8' essays={props.latestResult.essays} totalPages={props.latestResult.totalPages} />
+      <Latest
+        className='bg-gray-50 py-8'
+        essays={props.latestResult.essays}
+        totalPages={props.latestResult.totalPages}
+      />
     </>
   )
 }

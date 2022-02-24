@@ -1,3 +1,3 @@
-import { get } from '.'
+import arq from '.'
 
-export const getUser = () => get('/api/auth')
+export const getUser = () => arq.get('/api/authentication')

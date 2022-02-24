@@ -3,10 +3,10 @@ import { Box, IconButton } from '@mui/material'
 import { ThumbUp, Favorite, Comment } from '@mui/icons-material'
 // project
 import type { Props } from './assets'
-import type { TriggerType } from '../../../typings/trigger-event'
+import type { Type as ToggleType } from '../../../typings/toggle'
 
 const Triggers = (props: Props) => {
-  const onTrigger = (triggerType: TriggerType) => () => {}
+  const onTrigger = (triggerType: ToggleType) => () => {}
 
   return (
     <Box className={props.className}>

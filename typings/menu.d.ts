@@ -14,6 +14,6 @@ export interface MenuTreeNode extends Omit<Menu, 'parent' | 'tenant'> {
 }
 
 export interface MenuTree {
-  tenant: string
+  tenantCode: string
   nodes: MenuTreeNode[] | null
 }

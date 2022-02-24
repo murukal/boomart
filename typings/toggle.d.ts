@@ -2,17 +2,17 @@
 import type { Essay } from './essay'
 import type { User } from './user'
 
-export type TriggerType = 'THUMBUP' | 'FAVORITE' | 'BROWSE' | 'COMMENT'
+export type Type = 'THUMBUP' | 'FAVORITE' | 'BROWSE' | 'COMMENT'
 
-export interface TriggerEvent {
+export interface Toggle {
   _id: string
-  triggerman: string | User
+  createdBy: string | User
   targetType: 'Essay'
   target: string | Essay
-  triggerType: TriggerType
+  type: Type
 }
 
-export interface CreateTriggerEvent extends Omit<TriggerEvent, '_id' | 'triggerman'> {}
+export interface CreateToggle extends Omit<Toggle, '_id' | 'createdBy'> {}
 
 export interface TopQuery {
   limit: number

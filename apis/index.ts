@@ -1,20 +1,21 @@
-// axios
-import type { AxiosRequestConfig, AxiosResponse } from 'axios'
-import Axios from 'axios'
+// third
+import axios from 'axios'
 import { stringify } from 'qs'
+import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 // project
-import type { ApiResponse } from '../typings/api'
 import store from '../redux'
+import type { ApiResponse } from '../typings/api'
 
 // 生成一个axios实例
-const axios = Axios.create({
+const instance = axios.create({
+  paramsSerializer: stringify,
   baseURL: process.env.NEXT_PUBLIC_BASE_URL
 })
 
 /**
  * 请求拦截器
  */
-axios.interceptors.request.use((config: AxiosRequestConfig) => {
+instance.interceptors.request.use((config: AxiosRequestConfig) => {
   // 获取token信息
   const token = store.getState().userProfile.token
 
@@ -28,79 +29,41 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 /**
  * 结果拦截器
  */
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   // http res拦截器
   (res) => res,
 
   // http异常拦截器
-  (error): AxiosResponse => {
-    return {
-      status: error.response?.status,
-      statusText: error.response?.statusText,
-      headers: error.response?.headers,
-      config: error.response?.config,
-      data: {
-        code: error.response?.data?.code || 999,
-        message: error.response?.data?.message || '纳尼，后端居然连消息都不给！',
-        data: error.response?.data?.data || null
-      }
+  (error): AxiosResponse<ApiResponse> => ({
+    status: error.response?.status,
+    statusText: error.response?.statusText,
+    headers: error.response?.headers,
+    config: error.response?.config,
+    data: {
+      code: error.response?.data?.code || -1,
+      message: error.response?.data?.message,
+      data: error.response?.data?.data
     }
-  }
+  })
 )
 
-/**
- * get
- * @param url
- * @param config
- * @returns
- */
-export const get = async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
-  const res = await axios.get(url, {
-    ...config,
-    paramsSerializer: stringify
-  })
-  return res.data
+/** 生成一个访问请求对象 access request object */
+const arq = {
+  /** get */
+  get: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
+    (await instance.get(url, config)).data,
+
+  /** post */
+  post: async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
+    (await instance.post(url, data, config)).data,
+
+  /** patch */
+  patch: async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
+    (await instance.patch(url, data, config)).data,
+
+  /** delete */
+  delete: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
+    (await instance.delete(url, config)).data
 }
 
-/**
- * post
- * @param url
- * @param data
- * @param config
- * @returns
- */
-export const post = async <T = any, D = any>(
-  url: string,
-  data?: D,
-  config?: AxiosRequestConfig<D>
-): Promise<ApiResponse<T>> => {
-  const res = await axios.post(url, data, config)
-  return res.data
-}
-
-/**
- * patch
- * @param url
- * @param data
- * @param config
- * @returns
- */
-export const patch = async <T = any, D = any>(
-  url: string,
-  data?: D,
-  config?: AxiosRequestConfig<D>
-): Promise<ApiResponse<T>> => {
-  const res = await axios.patch(url, data, config)
-  return res.data
-}
-
-/**
- * remove
- * @param url
- * @param config
- * @returns
- */
-export const shift = async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => {
-  const res = await axios.delete(url, config)
-  return res.data
-}
+export default arq

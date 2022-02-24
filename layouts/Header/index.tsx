@@ -7,12 +7,24 @@ import Image from 'next/image'
 // redux
 import { useDispatch, useSelector } from 'react-redux'
 // mui
-import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography, IconButton } from '@mui/material'
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Tabs,
+  Tab,
+  Avatar,
+  Menu,
+  MenuItem,
+  Typography,
+  IconButton
+} from '@mui/material'
 import { Search, Facebook, Twitter, GitHub, Notes, Home } from '@mui/icons-material'
 // project
 import logo from '../../public/logo.png'
 import ShortcutPortal from '../../components/Navigator/ShortcutPortal'
-import { getMenuTree } from '../../apis/menu'
+import { getMenuTrees } from '../../apis/menu'
 import { logout } from '../../redux/userProfile/actions'
 import { onLogin } from '../../utils/account'
 import type { MenuTree } from '../../typings/menu'
@@ -33,8 +45,7 @@ const Header = () => {
   }
 
   const onFetch = async () => {
-    const res = await getMenuTree('BOOMART')
-    setMenuTree(res.data)
+    setMenuTree((await getMenuTrees(['BOOMART'])).data?.at(0))
   }
 
   /** 初次渲染请求 */
@@ -63,7 +74,10 @@ const Header = () => {
   }
 
   /** tabs */
-  const tabs = useMemo(() => tags.map((tag) => <Tab key={tag._id} label={tag.name} value={`/category/${tag._id}`} />), [tags])
+  const tabs = useMemo(
+    () => tags.map((tag) => <Tab key={tag._id} label={tag.name} value={`/category/${tag._id}`} />),
+    [tags]
+  )
 
   /** 选中 tab */
   const tabValue = useMemo(
@@ -98,7 +112,12 @@ const Header = () => {
           {/* 已登陆显示用户头像 */}
           {userProfile.isLogin ? (
             <>
-              <Avatar ref={userProfileEl} className='ml-2 w-8 h-8' src={userProfile.user?.avatar} onClick={onUserProfileOpen} />
+              <Avatar
+                ref={userProfileEl}
+                className='ml-2 w-8 h-8'
+                src={userProfile.user?.avatar}
+                onClick={onUserProfileOpen}
+              />
               <Menu anchorEl={userProfileEl.current} open={isUserProfileOpened} onClose={onUserProfileClose}>
                 <MenuItem onClick={onLogout}>
                   <Typography color='primary'>注销</Typography>

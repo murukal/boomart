@@ -1,12 +1,12 @@
 // project
-import { get } from '.'
+import arq from '.'
 import type { PaginateResult, QueryOptions } from '../typings/api'
 import type { Essay, CreativeTop5, PublishRecord } from '../typings/essay'
 
 const url = '/api/essay'
 
 export const getEssayPublishRecord = (from: number, to: number) =>
-  get<PublishRecord[]>(`${url}/publish-record`, {
+  arq.get<PublishRecord[]>(`${url}/publish-record`, {
     params: {
       from,
       to
@@ -14,10 +14,10 @@ export const getEssayPublishRecord = (from: number, to: number) =>
   })
 
 export const getEssays = (params: QueryOptions) =>
-  get<PaginateResult<Essay>>(url, {
+  arq.get<PaginateResult<Essay>>(url, {
     params
   })
 
-export const getEssayById = (id: string) => get<Essay>(`${url}/${id}`)
+export const getEssayById = (id: string) => arq.get<Essay>(`${url}/${id}`)
 
-export const getCreativeTop5 = () => get<CreativeTop5>(`${url}/creative-top5`)
+export const getCreativeTop5 = () => arq.get<CreativeTop5>(`${url}/creative-top5`)
