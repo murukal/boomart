@@ -11,9 +11,9 @@ export const onFetchLatest = async (page: number = 1) => {
   const res = await getEssays({
     pagination: {
       limit: 4,
-      page,
-      populate: ['tags', 'createdBy']
-    }
+      page
+    },
+    populate: ['tags', 'createdBy']
   })
 
   return {

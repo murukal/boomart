@@ -16,9 +16,9 @@ const Latest = (props: Props) => {
   const [totalPages, setTotalPages] = useState(props.totalPages)
 
   const onPageChange = async (event: ChangeEvent<unknown>, page: number) => {
-    const result = await onFetchLatest(page)
-    setEssays(result.essays)
-    setTotalPages(result.totalPages)
+    const { essays, totalPages } = await onFetchLatest(page)
+    setEssays(essays)
+    setTotalPages(totalPages)
   }
 
   return (
