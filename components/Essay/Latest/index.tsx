@@ -1,6 +1,8 @@
 // react
 import { useState } from 'react'
 import type { ChangeEvent } from 'react'
+// nextjs
+import { useRouter } from 'next/router'
 // mui
 import { Box, Container, Grid, Typography, Divider, Card, CardMedia, CardContent, Pagination } from '@mui/material'
 // project
@@ -15,10 +17,18 @@ const Latest = (props: Props) => {
   const [essays, setEssays] = useState(props.essays)
   const [totalPages, setTotalPages] = useState(props.totalPages)
 
+  const router = useRouter()
+
+  /** 跳转分页 */
   const onPageChange = async (event: ChangeEvent<unknown>, page: number) => {
     const { essays, totalPages } = await onFetchLatest(page)
     setEssays(essays)
     setTotalPages(totalPages)
+  }
+
+  /** 路由跳转 */
+  const onGo2Essay = (id: string) => () => {
+    router.push(`/essay/${id}`)
   }
 
   return (
@@ -44,6 +54,7 @@ const Latest = (props: Props) => {
                     sx={{
                       flex: 1
                     }}
+                    onClick={onGo2Essay(essay._id)}
                   />
                   <CardContent
                     className='px-4 self-center'

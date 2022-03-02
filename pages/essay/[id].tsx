@@ -11,7 +11,7 @@ import ReactMarkdown from 'react-markdown'
 // project
 import Triggers from '../../components/Essay/Triggers'
 import Comments from '../../components/Essay/Comments'
-import { getEssayById } from '../../apis/essay'
+import { getEssay } from '../../apis/essay'
 import type { Essay } from '../../typings/essay'
 import type { User } from '../../typings/user'
 import type { Tag } from '../../typings/tag'
@@ -114,7 +114,9 @@ export default Essay
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context
 
-  const { data: essay } = await getEssayById(params?.id as string)
+  console.log('res===', await getEssay(params?.id as string))
+
+  const { data: essay } = await getEssay(params?.id as string)
 
   // 文章未找到，返回404
   if (!essay)

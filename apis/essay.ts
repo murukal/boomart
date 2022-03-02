@@ -18,6 +18,6 @@ export const getEssays = (params: QueryOptions) =>
     params
   })
 
-export const getEssayById = (id: string) => arq.get<Essay>(`${url}/${id}`)
+export const getEssay = (id: string) => arq.get<Essay>(`${url}/${id}`)
 
 export const getCreativeTop5 = () => arq.get<CreativeTop5>(`${url}/creative-top5`)
