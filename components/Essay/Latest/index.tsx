@@ -65,7 +65,7 @@ const Latest = (props: Props) => {
                     <Tags className='mb-3' tags={tags} />
 
                     {/* 文章标题 */}
-                    <Typography className='cursor-pointer' variant='h5'>
+                    <Typography className='cursor-pointer' variant='h5' onClick={onGo2Essay(essay._id)}>
                       {essay.title}
                     </Typography>
 

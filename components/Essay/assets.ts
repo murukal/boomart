@@ -16,8 +16,6 @@ export const onFetchLatest = async (page: number = 1) => {
     populate: ['tags', 'createdBy']
   })
 
-  console.log('res====', res)
-
   return {
     essays: res.data?.docs || [],
     totalPages: res.data?.totalPages || 0

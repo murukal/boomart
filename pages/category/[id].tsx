@@ -42,18 +42,19 @@ export default Category
 const onFetch = async (tagId: string, page: number) => {
   return await getEssays({
     pagination: {
-      page
+      page,
+      limit: 10
     },
-    tag: tagId
+    tags: tagId
   })
 }
 
 /** 服务端渲染 */
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params } = context
-
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   // 获取分类下的文章
-  const res = params?.id && (await onFetch(params?.id as string, 1))
+  const res = params?.id && (await onFetch(params.id.toString(), 1))
+
+  console.log('res====', res)
 
   // 请求失败
   if (!res)

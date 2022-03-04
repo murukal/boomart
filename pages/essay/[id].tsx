@@ -114,8 +114,6 @@ export default Essay
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context
 
-  console.log('res===', await getEssay(params?.id as string))
-
   const { data: essay } = await getEssay(params?.id as string)
 
   // 文章未找到，返回404

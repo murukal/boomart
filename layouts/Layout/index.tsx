@@ -1,5 +1,5 @@
 // react
-import { useEffect } from 'react'
+import { createRef, useEffect, useState } from 'react'
 // redux
 import { useDispatch } from 'react-redux'
 // mui
@@ -14,22 +14,37 @@ import { fetch } from '../../redux/tags/actions'
 import type { Props } from './assets'
 
 const Layout = (props: Props) => {
+  const [ps, setPs] = useState<PerfectScrollbar>()
+
   const dispatch = useDispatch()
 
-  // 获取tags存入redux
+  /** 渲染 */
   useEffect(() => {
+    // 获取tags存入redux
     fetch().then((res) => {
       dispatch(res)
     })
+
+    // 初始化渲染滚动条
+    setPs(new PerfectScrollbar('#layout'))
+
+    return () => {
+      ps?.destroy()
+    }
   }, [])
 
   // 生成滚动条
   useEffect(() => {
-    const ps = new PerfectScrollbar('#layout')
+    if (!ps) return
 
-    return () => {
-      ps.destroy()
-    }
+    // 更新滚动条
+    ps.update()
+
+    // 滚动到初始位置
+    ps.element.scrollTo({
+      top: 0,
+      left: 0
+    })
   }, [props.children])
 
   return (

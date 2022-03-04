@@ -17,6 +17,7 @@ import Layout from '../layouts/Layout'
 import { authenticate, passToken } from '../redux/userProfile/actions'
 import store from '../redux'
 import { storeQueryParams } from '../utils/app'
+import boomartUrl from '../public/boomart.ico'
 // styles
 import '../styles/index.css'
 
@@ -55,6 +56,7 @@ const App = (props: AppProps) => {
         <ThemeProvider theme={theme}>
           <Head>
             <title>番土番土</title>
+            <link rel='icon' href={boomartUrl.src} />
           </Head>
           <Layout>
             <Component {...pageProps} />
