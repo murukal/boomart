@@ -4,7 +4,7 @@ import { createRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 // mui
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Container, Typography, Input, Button } from '@mui/material'
 // project
 import Latest from '../components/Essay/Latest'
 import Hot from '../components/Essay/Hot'
@@ -83,11 +83,11 @@ const Home = (props: Props) => {
 
             {/* 订阅组件 */}
 
-            {/* <Typography className='mt-6' variant='h5'>
+            <Typography className='mt-6' variant='h5'>
               您可以使用您的邮箱来订阅最新的消息推送
-            </Typography> */}
+            </Typography>
 
-            {/* <Box className='mt-7 flex'>
+            <Box className='mt-7 flex'>
               <Input
                 disableUnderline
                 placeholder='请输入您的邮箱'
@@ -113,7 +113,7 @@ const Home = (props: Props) => {
               >
                 订阅
               </Button>
-            </Box> */}
+            </Box>
           </Box>
 
           {/* 右侧 */}
@@ -124,19 +124,10 @@ const Home = (props: Props) => {
       </Box>
 
       {/* 热门榜单 */}
-      <Hot
-        className='py-8'
-        browseTopResults={props.browseTopResults}
-        likeTopResults={props.likeTopResults}
-        onClick={onGo2Essay}
-      />
+      <Hot className='py-8' browseTopResults={props.browseTopResults} likeTopResults={props.likeTopResults} onClick={onGo2Essay} />
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest
-        className='bg-gray-50 py-8'
-        essays={props.latestResult.essays}
-        totalPages={props.latestResult.totalPages}
-      />
+      <Latest className='bg-gray-50 py-8' essays={props.latestResult.essays} totalPages={props.latestResult.totalPages} />
     </>
   )
 }

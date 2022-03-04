@@ -40,12 +40,17 @@ const Layout = (props: Props) => {
     // 更新滚动条
     ps.update()
 
-    // 滚动到初始位置
-    ps.element.scrollTo({
-      top: 0,
-      left: 0
-    })
+    onGo2Top()
   }, [props.children])
+
+  /** 回到顶部 */
+  const onGo2Top = () => {
+    ps?.element.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }
 
   return (
     <Box id='layout' className='h-screen relative overflow-hidden'>
@@ -62,6 +67,7 @@ const Layout = (props: Props) => {
         }}
         size='small'
         color='primary'
+        onClick={onGo2Top}
       >
         <ArrowUpward />
       </Fab>

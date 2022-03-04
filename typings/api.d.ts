@@ -21,6 +21,7 @@ export interface QueryParams<RecordType = any> {
   pagination?: TablePaginationConfig
   sorter?: SorterResult<RecordType> | SorterResult<RecordType>[]
   filters?: Record<string, FilterValue | null>
+  populate?: string[]
 }
 
 /**
@@ -29,6 +30,7 @@ export interface QueryParams<RecordType = any> {
 export interface QueryOptions {
   pagination?: PaginateOptions
   sorter?: DBQueryOptions
+  populate?: string[]
   [K: string]: K extends 'pagination' ? PaginateOptions : K extends 'sorter' ? DBQueryOptions : FilterQuery
 }
 
