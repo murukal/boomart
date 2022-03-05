@@ -17,6 +17,7 @@ const ShortCutPortal = (props: Props) => {
   const menuTreeNodes = useMemo(() => props.menuTreeNodes || [], [props.menuTreeNodes])
   const isParent = useMemo(() => menuTreeNodes.length !== 0, [menuTreeNodes])
 
+  /** 打开侧边栏或者跳转页面 */
   const onPortalOpen = () => {
     if (isParent) {
       setIsPortalOpened(true)
@@ -25,6 +26,8 @@ const ShortCutPortal = (props: Props) => {
       router.push(props.portal.to || '/')
     }
   }
+
+  /** 关闭侧边栏 */
   const onPortalClose = () => {
     setIsPortalOpened(false)
   }
@@ -52,12 +55,7 @@ const ShortCutPortal = (props: Props) => {
           onClose={onPortalClose}
         >
           {menuTreeNodes.map((menu) => (
-            <ShortCutPortal
-              key={menu._id}
-              portal={menu}
-              menuTreeNodes={menu.children}
-              onPrevPortalClick={onPortalClose}
-            />
+            <ShortCutPortal key={menu._id} portal={menu} menuTreeNodes={menu.children} onPrevPortalClick={onPortalClose} />
           ))}
         </Menu>
       )}
