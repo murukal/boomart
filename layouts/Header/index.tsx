@@ -29,6 +29,8 @@ import { logout } from '../../redux/userProfile/actions'
 import { onLogin } from '../../utils/account'
 import type { MenuTree } from '../../typings/menu'
 
+import { signIn } from 'next-auth/react'
+
 const Header = () => {
   const [menuTree, setMenuTree] = useState<MenuTree | null>()
   const [isUserProfileOpened, setIsUserProfileOpened] = useState(false)
@@ -125,7 +127,7 @@ const Header = () => {
               </Menu>
             </>
           ) : (
-            <Button variant='contained' onClick={onLogin}>
+            <Button variant='contained' onClick={() => signIn()}>
               Sign in
             </Button>
           )}

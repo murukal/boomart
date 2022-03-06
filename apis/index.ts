@@ -19,6 +19,8 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
   // 获取token信息
   const token = store.getState().userProfile.token
 
+  console.log('token====', token)
+
   if (token && config.headers) {
     config.headers['Authorization'] = `Bearer ${token}`
   }
@@ -50,7 +52,8 @@ instance.interceptors.response.use(
 /** 生成一个访问请求对象 access request object */
 const arq = {
   /** get */
-  get: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => (await instance.get(url, config)).data,
+  get: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
+    (await instance.get(url, config)).data,
 
   /** post */
   post: async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
@@ -61,7 +64,8 @@ const arq = {
     (await instance.patch(url, data, config)).data,
 
   /** delete */
-  delete: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => (await instance.delete(url, config)).data
+  delete: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
+    (await instance.delete(url, config)).data
 }
 
 export default arq

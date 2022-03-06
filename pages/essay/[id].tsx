@@ -9,7 +9,7 @@ import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from
 import dayjs from 'dayjs'
 import ReactMarkdown from 'react-markdown'
 // project
-import Triggers from '../../components/Essay/Triggers'
+import Toggles from '../../components/Essay/Toggles'
 import Comments from '../../components/Essay/Comments'
 import { getEssay } from '../../apis/essay'
 import type { Essay } from '../../typings/essay'
@@ -78,7 +78,7 @@ const Essay = (props: Props) => {
           </Typography>
         ))}
 
-        <Triggers className='ml-auto' essayId={essay._id} />
+        <Toggles className='ml-auto' essayId={essay._id} />
       </Box>
 
       {/* 关于作者 */}

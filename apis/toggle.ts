@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import arq from '.'
 import type { CreateToggle, TopQuery, TopResults } from '../typings/toggle'
 
-const url = '/api/trigger-event'
+const url = '/api/toggle'
 
 export const create = (data: CreateToggle) => arq.post(url, data)
 
@@ -16,7 +16,7 @@ export const getEssayBrowseTop = (query: TopQuery) => {
   return arq.get<TopResults>(`${url}/top`, {
     params: {
       targetType: 'Essay',
-      triggerType: 'BROWSE',
+      toggleType: 'BROWSE',
       from: +from,
       to: +to,
       limit: query.limit

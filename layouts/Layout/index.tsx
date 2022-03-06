@@ -15,6 +15,7 @@ import type { Props } from './assets'
 
 const Layout = (props: Props) => {
   const [ps, setPs] = useState<PerfectScrollbar>()
+  const [scrollTop, setScrollTop] = useState(0)
 
   const dispatch = useDispatch()
 
@@ -26,7 +27,14 @@ const Layout = (props: Props) => {
     })
 
     // 初始化渲染滚动条
-    setPs(new PerfectScrollbar('#layout'))
+    const current = new PerfectScrollbar('#layout')
+
+    // 设置滚动条的监听事件
+    current.element.addEventListener('ps-scroll-y', (e) => {
+      setScrollTop((e.target as any).scrollTop)
+    })
+
+    setPs(current)
 
     return () => {
       ps?.destroy()
@@ -63,7 +71,8 @@ const Layout = (props: Props) => {
         sx={{
           position: 'fixed',
           bottom: 50,
-          right: 50
+          right: 50,
+          display: scrollTop > 300 ? 'inline-flex' : 'none'
         }}
         size='small'
         color='primary'

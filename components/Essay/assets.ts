@@ -13,7 +13,7 @@ export const onFetchLatest = async (page: number = 1) => {
       limit: 4,
       page
     },
-    populate: ['tags', 'createdBy']
+    populate: ['tags', 'createdBy', 'isThumbUp', 'isFavorite']
   })
 
   return {

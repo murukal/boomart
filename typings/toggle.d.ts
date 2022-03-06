@@ -7,7 +7,7 @@ export type Type = 'THUMBUP' | 'FAVORITE' | 'BROWSE' | 'COMMENT'
 export interface Toggle {
   _id: string
   createdBy: string | User
-  targetType: 'Essay'
+  targetType: 'essay'
   target: string | Essay
   type: Type
 }
