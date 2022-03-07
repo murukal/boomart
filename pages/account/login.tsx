@@ -1,17 +1,32 @@
 // mui
-import { Container, Box, Paper, TextField, Typography, Grid, FormControlLabel, Checkbox, Button, Divider } from '@mui/material'
+import {
+  Container,
+  Box,
+  Paper,
+  TextField,
+  Typography,
+  Grid,
+  FormControlLabel,
+  Checkbox,
+  Button,
+  Divider
+} from '@mui/material'
 import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
 
 const Login = () => {
   const [keyword, setKeyword] = useState('')
   const [password, setPassword] = useState('')
 
+  const router = useRouter()
+
   /** 登陆 */
   const onLogin = () => {
     signIn('credentials', {
       keyword,
-      password
+      password,
+      callbackUrl: router.query.callbackUrl?.toString() || '/'
     })
   }
 

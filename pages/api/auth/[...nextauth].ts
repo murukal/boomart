@@ -2,8 +2,8 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 // project
-import { login } from '../../../apis/account'
-import type { Login } from '../../../typings/user'
+import { getUser, login } from '../../../apis/account'
+import type { Login, User } from '../../../typings/user'
 
 export default NextAuth({
   providers: [
@@ -20,14 +20,14 @@ export default NextAuth({
         const { data: token } = await login(credentials as Login)
 
         // 利用返回的token获取用户信息
-        // const { data: user } = await ar.get<User>('/api/authentication', {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`
-        //   }
-        // })
+        const { data: user } = await getUser({
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
 
         return {
-          // ...user,
+          ...user,
           token
         }
       }
@@ -36,8 +36,18 @@ export default NextAuth({
 
   callbacks: {
     signIn: async ({ user, credentials }) => {
+      console.log('user===', user)
+
       return true
     },
+
+    redirect({ url, baseUrl }) {
+      console.log('url=====', url)
+      console.log('url=====', baseUrl)
+
+      return url
+    },
+
     async jwt({ token, user, account, profile, isNewUser }) {
       return {
         name: '1232131'

@@ -127,10 +127,19 @@ const Home = (props: Props) => {
       </Box>
 
       {/* 热门榜单 */}
-      <Hot className='py-8' browseTopResults={props.browseTopResults} likeTopResults={props.likeTopResults} onClick={onGo2Essay} />
+      <Hot
+        className='py-8'
+        browseTopResults={props.browseTopResults}
+        likeTopResults={props.likeTopResults}
+        onClick={onGo2Essay}
+      />
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest className='bg-gray-50 py-8' essays={props.latestResult.essays} totalPages={props.latestResult.totalPages} />
+      <Latest
+        className='bg-gray-50 py-8'
+        essays={props.latestResult.essays}
+        totalPages={props.latestResult.totalPages}
+      />
     </>
   )
 }
