@@ -6,7 +6,6 @@ import type { Props } from './assets'
 import type { Type as ToggleType } from '../../../typings/toggle'
 import { create } from '../../../apis/toggle'
 import { useSelector } from 'react-redux'
-import { onLogin } from '../../../utils/account'
 
 const Toggles = (props: Props) => {
   const isLogin = useSelector((state) => state.userProfile.isLogin)
@@ -14,7 +13,6 @@ const Toggles = (props: Props) => {
   const onToggle = (type: ToggleType) => async () => {
     // 鉴权
     if (!isLogin) {
-      onLogin()
       return
     }
 

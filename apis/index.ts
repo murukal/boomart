@@ -12,25 +12,7 @@ const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL
 })
 
-/**
- * 请求拦截器
- */
-instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  // 获取token信息
-  const token = store.getState().userProfile.token
-
-  console.log('token====', token)
-
-  if (token && config.headers) {
-    config.headers['Authorization'] = `Bearer ${token}`
-  }
-
-  return config
-})
-
-/**
- * 结果拦截器
- */
+/** 结果拦截器 */
 instance.interceptors.response.use(
   // http res拦截器
   (res) => res,
@@ -50,10 +32,9 @@ instance.interceptors.response.use(
 )
 
 /** 生成一个访问请求对象 access request object */
-const arq = {
+const requests = {
   /** get */
-  get: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
-    (await instance.get(url, config)).data,
+  get: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => (await instance.get(url, config)).data,
 
   /** post */
   post: async <T = any, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
@@ -64,8 +45,7 @@ const arq = {
     (await instance.patch(url, data, config)).data,
 
   /** delete */
-  delete: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> =>
-    (await instance.delete(url, config)).data
+  delete: async <T = any, D = any>(url: string, config?: AxiosRequestConfig<D>): Promise<ApiResponse<T>> => (await instance.delete(url, config)).data
 }
 
-export default arq
+export default requests

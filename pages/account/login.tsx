@@ -1,16 +1,5 @@
 // mui
-import {
-  Container,
-  Box,
-  Paper,
-  TextField,
-  Typography,
-  Grid,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  Divider
-} from '@mui/material'
+import { Container, Box, Paper, TextField, Typography, Grid, FormControlLabel, Checkbox, Button, Divider } from '@mui/material'
 import { signIn } from 'next-auth/react'
 import { ChangeEvent, useState } from 'react'
 
@@ -21,7 +10,6 @@ const Login = () => {
   /** 登陆 */
   const onLogin = () => {
     signIn('credentials', {
-      callbackUrl: 'http://localhost:3000',
       keyword,
       password
     })

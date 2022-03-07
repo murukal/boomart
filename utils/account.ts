@@ -1,9 +1,6 @@
-// third
-import { stringify } from 'qs'
+import { getSession } from 'next-auth/react'
 
-export const onLogin = () => {
-  const params = {
-    redirect: window.location.href
-  }
-  window.location.href = `http://localhost:8000/account/login?${stringify(params)}`
+/** 获取next-auth中的jwt token */
+export const useSessionHeaders = () => {
+  // getSession
 }

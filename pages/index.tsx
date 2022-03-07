@@ -16,6 +16,7 @@ import type { TopResults } from '../typings/toggle'
 import type { LatestResult } from '../components/Essay/assets'
 import { getCsrfToken, getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
+import { useSelector } from 'react-redux'
 
 interface Props {
   latestResult: LatestResult
@@ -126,19 +127,10 @@ const Home = (props: Props) => {
       </Box>
 
       {/* 热门榜单 */}
-      <Hot
-        className='py-8'
-        browseTopResults={props.browseTopResults}
-        likeTopResults={props.likeTopResults}
-        onClick={onGo2Essay}
-      />
+      <Hot className='py-8' browseTopResults={props.browseTopResults} likeTopResults={props.likeTopResults} onClick={onGo2Essay} />
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest
-        className='bg-gray-50 py-8'
-        essays={props.latestResult.essays}
-        totalPages={props.latestResult.totalPages}
-      />
+      <Latest className='bg-gray-50 py-8' essays={props.latestResult.essays} totalPages={props.latestResult.totalPages} />
     </>
   )
 }
@@ -148,10 +140,6 @@ export default Home
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const latestResult = await onFetchLatest()
   const browseTopResults = (await getEssayBrowseTop({ limit: 4 })).data || []
-
-  const csrfToken = await getSession(context)
-
-  console.log('csrfToken===', csrfToken)
 
   return {
     props: {
