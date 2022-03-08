@@ -34,9 +34,9 @@ const Footer = (props: Props) => {
             {/* chips */}
             <TagChips />
           </Grid>
-          {/* <Grid item xs={4}>
+          <Grid item xs={4}>
             <Typography sx={getTitleStyle}>newsletter</Typography>
-          </Grid> */}
+          </Grid>
         </Grid>
 
         <Divider className='my-7' />

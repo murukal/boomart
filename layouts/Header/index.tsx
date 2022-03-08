@@ -4,31 +4,17 @@ import type { SyntheticEvent } from 'react'
 // next
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { signIn, useSession } from 'next-auth/react'
 // redux
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 // mui
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Tabs,
-  Tab,
-  Avatar,
-  Menu,
-  MenuItem,
-  Typography,
-  IconButton
-} from '@mui/material'
+import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography, IconButton } from '@mui/material'
 import { Search, Facebook, Twitter, GitHub, Notes, Home } from '@mui/icons-material'
 // project
 import logo from '../../public/logo.png'
 import ShortcutPortal from '../../components/Navigator/ShortcutPortal'
 import { getMenuTrees } from '../../apis/menu'
-import { logout } from '../../redux/userProfile/actions'
 import type { MenuTree } from '../../typings/menu'
-
-import { signIn } from 'next-auth/react'
 
 const Header = () => {
   const [menuTree, setMenuTree] = useState<MenuTree | null>()
@@ -37,8 +23,7 @@ const Header = () => {
   const userProfileEl = useRef(null)
   const router = useRouter()
   const tags = useSelector((state) => state.tags)
-  const userProfile = useSelector((state) => state.userProfile)
-  const dispatch = useDispatch()
+  const { data: session } = useSession()
 
   /** 搜索 */
   const onSearch = () => {
@@ -46,6 +31,7 @@ const Header = () => {
   }
 
   const onFetch = async () => {
+    // 菜单树
     setMenuTree((await getMenuTrees(['BOOMART'])).data?.at(0))
   }
 
@@ -65,9 +51,7 @@ const Header = () => {
   }
 
   /** 退出登陆 */
-  const onLogout = () => {
-    dispatch(logout())
-  }
+  const onLogout = () => {}
 
   /** tab 切换 */
   const onTabChange = (event: SyntheticEvent, value: string) => {
@@ -75,16 +59,37 @@ const Header = () => {
   }
 
   /** tabs */
-  const tabs = useMemo(
-    () => tags.map((tag) => <Tab key={tag._id} label={tag.name} value={`/category/${tag._id}`} />),
-    [tags]
-  )
+  const tabs = useMemo(() => tags.map((tag) => <Tab key={tag._id} label={tag.name} value={`/category/${tag._id}`} />), [tags])
 
   /** 选中 tab */
   const tabValue = useMemo(
     () => (tags.length ? (['/category/[id]', '/'].includes(router.pathname) ? router.asPath : false) : '/'),
     [tags, router.asPath]
   )
+
+  /**
+   * 登录：用户头像
+   * 未登录：登录按钮
+   */
+  const authentication = useMemo(() => {
+    if (!session)
+      return (
+        <Button variant='contained' onClick={() => signIn(undefined, { callbackUrl: router.asPath })}>
+          Sign in
+        </Button>
+      )
+
+    return (
+      <>
+        <Avatar ref={userProfileEl} className='ml-2 w-8 h-8' src={session.user?.image || undefined} onClick={onUserProfileOpen} />
+        <Menu anchorEl={userProfileEl.current} open={isUserProfileOpened} onClose={onUserProfileClose}>
+          <MenuItem onClick={onLogout}>
+            <Typography color='primary'>注销</Typography>
+          </MenuItem>
+        </Menu>
+      </>
+    )
+  }, [session])
 
   return (
     <>
@@ -110,26 +115,9 @@ const Header = () => {
           </Button>
 
           <Divider className='mx-3 h-5' orientation='vertical' />
-          {/* 已登陆显示用户头像 */}
-          {userProfile.isLogin ? (
-            <>
-              <Avatar
-                ref={userProfileEl}
-                className='ml-2 w-8 h-8'
-                src={userProfile.user?.avatar}
-                onClick={onUserProfileOpen}
-              />
-              <Menu anchorEl={userProfileEl.current} open={isUserProfileOpened} onClose={onUserProfileClose}>
-                <MenuItem onClick={onLogout}>
-                  <Typography color='primary'>注销</Typography>
-                </MenuItem>
-              </Menu>
-            </>
-          ) : (
-            <Button variant='contained' onClick={() => signIn(undefined, { callbackUrl: router.asPath })}>
-              Sign in
-            </Button>
-          )}
+
+          {/* 认证信息 */}
+          {authentication}
         </Box>
       </Container>
 

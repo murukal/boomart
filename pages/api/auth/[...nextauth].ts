@@ -27,7 +27,10 @@ export default NextAuth({
         })
 
         return {
-          ...user,
+          id: user?._id,
+          name: user?.username,
+          email: user?.email,
+          image: user?.avatar,
           token
         }
       }
@@ -35,23 +38,23 @@ export default NextAuth({
   ],
 
   callbacks: {
-    signIn: async ({ user, credentials }) => {
-      console.log('user===', user)
-
+    /** 登录后的回调 */
+    signIn: async () => {
       return true
     },
 
-    redirect({ url, baseUrl }) {
-      console.log('url=====', url)
-      console.log('url=====', baseUrl)
-
-      return url
+    /** 传递jwt */
+    async jwt({ token, user }) {
+      if (user) {
+        token.accessToken = user.token
+      }
+      return token
     },
 
-    async jwt({ token, user, account, profile, isNewUser }) {
-      return {
-        name: '1232131'
-      }
+    /** 将jwt中的token传递给session */
+    async session({ session, token }) {
+      session.accessToken = token.accessToken
+      return session
     }
   },
 
