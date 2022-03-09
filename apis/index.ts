@@ -102,10 +102,8 @@ export const apiKeys = {
 /** api合集 */
 export const apis = {
   /** 请求最新文章 */
-  [apiKeys.essay.latest.fullKey]: (key: string, page: number) => {
-    console.log('page++++', page)
-
-    return requests.get<PaginateResult<Essay>>('/api/essay', {
+  [apiKeys.essay.latest.fullKey]: (key: string, page: number) =>
+    requests.get<PaginateResult<Essay>>('/api/essay', {
       params: {
         pagination: {
           limit: 4,
@@ -114,5 +112,4 @@ export const apis = {
         populate: ['tags', 'createdBy', 'isThumbUp', 'isFavorite']
       }
     })
-  }
 }

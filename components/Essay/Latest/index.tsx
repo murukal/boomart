@@ -6,20 +6,17 @@ import { Box, Container, Grid, Typography, Divider, Pagination } from '@mui/mate
 import Wrapper from '../Wrapper'
 import type { Props } from './assets'
 import useSWR from 'swr'
-import { apis } from '../../../apis'
+import { apiKeys } from '../../../apis'
+import { ApiResponse, PaginateResult } from '../../../typings/api'
+import { Essay } from '../../../typings/essay'
 
 const Latest = (props: Props) => {
-  const router = useRouter()
-  const { data: latestResult } = useSWR(['/api/essay/latest', 1], apis['/api/essay/latest'])
+  // hooks
+  const { data: latestResult } = useSWR<ApiResponse<PaginateResult<Essay>>>([apiKeys.essay.latest.key, 1])
+
+  // 读取变量
   const essyas = latestResult?.data?.docs || []
   const totalPages = latestResult?.data?.totalPages || 0
-
-  console.log('data====', latestResult)
-
-  /** 路由跳转 */
-  const onGo2Essay = (id: string) => () => {
-    router.push(`/essay/${id}`)
-  }
 
   return (
     <Box className={props.className}>

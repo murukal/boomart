@@ -8,15 +8,14 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
 // third
 import { CacheProvider } from '@emotion/react'
-import { SWRConfig } from 'swr'
+import { SWRConfig, unstable_serialize } from 'swr'
 // project
 import { createEmotionCache } from '../utils/ui'
 import theme from '../theme'
 import Layout from '../layouts/Layout'
 import store from '../redux'
 import boomartUrl from '../public/boomart.ico'
-import requests, { withAuthorization } from '../apis'
-import type { FetchParams } from '../apis'
+import requests, { withAuthorization, apis } from '../apis'
 // styles
 import '../styles/index.css'
 
@@ -26,16 +25,13 @@ const App = (props: AppProps) => {
     pageProps: { session, fallback, ...pageProps }
   } = props
 
-  console.log('fallback====', fallback)
-
   const emotionCache = createEmotionCache()
 
   /** 请求函数 */
-  const fetcher = async (url: string, params: FetchParams, method?: keyof typeof requests) =>
-    requests[method || 'get'](url, {
-      ...params,
-      headers: withAuthorization(session?.accessToken, params.headers)
-    })
+  function fetcher() {
+    const params = Array.from(arguments)
+    return apis[unstable_serialize(params)].apply(undefined, params as any)
+  }
 
   /** createElement */
   return (
