@@ -1,9 +1,10 @@
 // next
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { withAuthorization } from '../../../apis'
 // project
 import { getUser, login } from '../../../apis/account'
-import type { Login, User } from '../../../typings/user'
+import type { Login } from '../../../typings/user'
 
 export default NextAuth({
   providers: [
@@ -17,13 +18,13 @@ export default NextAuth({
       // 验证逻辑
       async authorize(credentials) {
         // 验证账号密码
-        const { data: token } = await login(credentials as Login)
+        const { data: token } = await login({
+          data: credentials as Login
+        })
 
         // 利用返回的token获取用户信息
         const { data: user } = await getUser({
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: withAuthorization(token)
         })
 
         return {

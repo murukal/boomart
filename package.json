@@ -28,7 +28,8 @@
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
     "sharp": "^0.29.3",
-    "swiper": "^8.0.3"
+    "swiper": "^8.0.3",
+    "swr": "^1.2.2"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.1.0",

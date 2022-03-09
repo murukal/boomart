@@ -1,27 +1,20 @@
-// react
-import { useState } from 'react'
-import type { ChangeEvent } from 'react'
 // nextjs
 import { useRouter } from 'next/router'
 // mui
 import { Box, Container, Grid, Typography, Divider, Pagination } from '@mui/material'
 // project
 import Wrapper from '../Wrapper'
-import { onFetchLatest } from '../assets'
 import type { Props } from './assets'
+import useSWR from 'swr'
+import { apis } from '../../../apis'
 
 const Latest = (props: Props) => {
-  const [essays, setEssays] = useState(props.essays)
-  const [totalPages, setTotalPages] = useState(props.totalPages)
-
   const router = useRouter()
+  const { data: latestResult } = useSWR(['/api/essay/latest', 1], apis['/api/essay/latest'])
+  const essyas = latestResult?.data?.docs || []
+  const totalPages = latestResult?.data?.totalPages || 0
 
-  /** 跳转分页 */
-  const onPageChange = async (event: ChangeEvent<unknown>, page: number) => {
-    const { essays, totalPages } = await onFetchLatest(page)
-    setEssays(essays)
-    setTotalPages(totalPages)
-  }
+  console.log('data====', latestResult)
 
   /** 路由跳转 */
   const onGo2Essay = (id: string) => () => {
@@ -37,12 +30,12 @@ const Latest = (props: Props) => {
             <Divider className='mt-2.5' />
 
             {/* 文章列表 */}
-            {essays.map((essay) => (
+            {essyas.map((essay) => (
               <Wrapper key={essay._id} essay={essay} />
             ))}
 
             {/* 分页 */}
-            <Pagination className='mt-7' count={totalPages} color='primary' onChange={onPageChange} />
+            <Pagination className='mt-7' count={totalPages} color='primary' />
           </Grid>
 
           <Grid item xs={4}>

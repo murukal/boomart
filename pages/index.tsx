@@ -11,18 +11,11 @@ import Hot from '../components/Essay/Hot'
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { getEssayBrowseTop } from '../apis/toggle'
-import { onFetchLatest } from '../components/Essay/assets'
-import type { TopResults } from '../typings/toggle'
-import type { LatestResult } from '../components/Essay/assets'
 import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
+import { apiKeys, apis } from '../apis'
 
-interface Props {
-  latestResult: LatestResult
-  browseTopResults: TopResults
-  likeTopResults: TopResults
-}
-
-const Home = (props: Props) => {
+const Home = () => {
   const router = useRouter()
   const ref = createRef<HTMLSpanElement>()
 
@@ -33,7 +26,7 @@ const Home = (props: Props) => {
   useEffect(() => {
     // 返回的函数传递给Effect，取消订阅
     return setTypedUI(ref)
-  }, [props])
+  }, [])
 
   return (
     <>
@@ -124,10 +117,15 @@ const Home = (props: Props) => {
       </Box>
 
       {/* 热门榜单 */}
-      <Hot className='py-8' browseTopResults={props.browseTopResults} likeTopResults={props.likeTopResults} onClick={onGo2Essay} />
+      {/* <Hot
+        className='py-8'
+        browseTopResults={props.browseTopResults}
+        likeTopResults={props.likeTopResults}
+        onClick={onGo2Essay}
+      /> */}
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest className='bg-gray-50 py-8' essays={props.latestResult.essays} totalPages={props.latestResult.totalPages} />
+      <Latest className='bg-gray-50 py-8' />
     </>
   )
 }
@@ -135,14 +133,22 @@ const Home = (props: Props) => {
 export default Home
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const latestResult = await onFetchLatest()
+  // 服务端获取认证信息
+  const session = await getSession(context)
+
+  // 获取文章列表
+  // const {} : latestResult = await getEssays({
+  //   params: getFetchLatestParams()
+  // })
+
   const browseTopResults = (await getEssayBrowseTop({ limit: 4 })).data || []
 
   return {
     props: {
-      latestResult,
-      browseTopResults,
-      likeTopResults: []
+      session,
+      fallback: {
+        [apiKeys.essay.latest.fullKey]: await apis[apiKeys.essay.latest.fullKey](apiKeys.essay.latest.key, 1)
+      }
     }
   }
 }

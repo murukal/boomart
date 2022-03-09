@@ -1,12 +1,12 @@
 // project
-import { AxiosRequestConfig } from 'axios'
 import requests from '.'
 import type { Login, User } from '../typings/user'
+import type { FetchParams } from '.'
 
 const url = '/api/authentication'
 
 /** 查询用户信息 */
-export const getUser = (config: AxiosRequestConfig) => requests.get<User>('/api/authentication', config)
+export const getUser = (params: FetchParams) => requests.get<User>(url, params)
 
 /** 登录 */
-export const login = (data: Login) => requests.post<string>(`${url}/login`, data)
+export const login = (params: FetchParams<Login>) => requests.post<string>(`${url}/login`, params)
