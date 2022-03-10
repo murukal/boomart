@@ -10,6 +10,9 @@ export interface Essay {
   createdAt: string
   tags: Array<Tag | string>
   cover?: string
+
+  isThumbUp?: boolean
+  isFavorite?: boolean
 }
 
 export interface CreateEssay extends Omit<Essay, '_id' | 'createdBy'> {}
@@ -20,9 +23,3 @@ export interface PublishRecord {
   _id: number
   count: number
 }
-
-export type CreativeTop5 = {
-  _id: string
-  count: number
-  users: User[]
-}[]

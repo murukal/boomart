@@ -5,17 +5,9 @@ import { ThumbUp, Favorite, Comment } from '@mui/icons-material'
 import type { Props } from './assets'
 import type { Type as ToggleType } from '../../../typings/toggle'
 import { create } from '../../../apis/toggle'
-import { useSelector } from 'react-redux'
 
 const Toggles = (props: Props) => {
-  const isLogin = useSelector((state) => state.userProfile.isLogin)
-
   const onToggle = (type: ToggleType) => async () => {
-    // 鉴权
-    if (!isLogin) {
-      return
-    }
-
     const res = await create({
       target: props.essayId,
       targetType: 'essay',

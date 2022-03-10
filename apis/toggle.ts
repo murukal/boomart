@@ -6,7 +6,10 @@ import type { CreateToggle, TopQuery, TopResults } from '../typings/toggle'
 
 const url = '/api/toggle'
 
-export const create = (data: CreateToggle) => requests.post(url, data)
+export const create = (data: CreateToggle) =>
+  requests.post(url, {
+    data
+  })
 
 /** 获取文章浏览量榜单 */
 export const getEssayBrowseTop = (query: TopQuery) => {

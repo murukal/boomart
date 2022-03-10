@@ -2,16 +2,14 @@
 import axios from 'axios'
 import { stringify } from 'qs'
 import type { AxiosResponse } from 'axios'
-// third
-import { unstable_serialize, Key } from 'swr'
 // project
-import type { ApiResponse, PaginateResult, QueryOptions } from '../typings/api'
-import type { Essay } from '../typings/essay'
+import type { ApiResponse, QueryOptions } from '../typings/api'
 
 // 生成一个axios实例
 const instance = axios.create({
   paramsSerializer: stringify,
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  withCredentials: true
 })
 
 /** 结果拦截器 */
@@ -86,30 +84,5 @@ export const withAuthorization = (token?: string | null, headers?: Record<string
   return current
 }
 
-/** key构造器 */
-export const generator = (keys: [string, ...(string | number)[]]) => ({
-  key: keys.at(0) as string,
-  fullKey: unstable_serialize(keys)
-})
-
-/** apis keys */
-export const apiKeys = {
-  essay: {
-    latest: generator(['/api/essay/latest', 1])
-  }
-}
-
-/** api合集 */
-export const apis = {
-  /** 请求最新文章 */
-  [apiKeys.essay.latest.fullKey]: (key: string, page: number) =>
-    requests.get<PaginateResult<Essay>>('/api/essay', {
-      params: {
-        pagination: {
-          limit: 4,
-          page
-        },
-        populate: ['tags', 'createdBy', 'isThumbUp', 'isFavorite']
-      }
-    })
-}
+/** 获取jwt秘钥api */
+export const getJwtSecret = () => requests.get<string>('/api/jwt-secret')

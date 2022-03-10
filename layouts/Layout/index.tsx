@@ -10,7 +10,7 @@ import PerfectScrollbar from 'perfect-scrollbar'
 // project
 import Header from '../Header'
 import Footer from '../Footer'
-import { fetch } from '../../redux/tags/actions'
+import { fetch } from '../../redux/tags/action'
 import type { Props } from './assets'
 
 const Layout = (props: Props) => {

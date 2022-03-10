@@ -51,7 +51,7 @@ const Wrapper = (props: Props) => {
         <Signature className='mt-5' essay={essay} />
       </CardContent>
 
-      <Markers />
+      <Markers isFavorite={essay.isFavorite} isThumbUp={essay.isThumbUp} />
     </Card>
   )
 }

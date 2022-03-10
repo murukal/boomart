@@ -1,22 +1,30 @@
-// nextjs
-import { useRouter } from 'next/router'
+// react
+import { useState } from 'react'
+import type { ChangeEvent } from 'react'
 // mui
 import { Box, Container, Grid, Typography, Divider, Pagination } from '@mui/material'
+// third
+import useSWR from 'swr'
 // project
 import Wrapper from '../Wrapper'
+import { getLatest } from '../../../apis/essay'
 import type { Props } from './assets'
-import useSWR from 'swr'
-import { apiKeys } from '../../../apis'
-import { ApiResponse, PaginateResult } from '../../../typings/api'
-import { Essay } from '../../../typings/essay'
 
 const Latest = (props: Props) => {
-  // hooks
-  const { data: latestResult } = useSWR<ApiResponse<PaginateResult<Essay>>>([apiKeys.essay.latest.key, 1])
+  /** state */
+  const [page, setPage] = useState(1)
 
-  // 读取变量
+  /** hooks */
+  const { data: latestResult } = useSWR(['/api/essay/latest', page], (key: string, page: number) => getLatest(page))
+
+  /** 变量 */
   const essyas = latestResult?.data?.docs || []
   const totalPages = latestResult?.data?.totalPages || 0
+
+  /** 事件 */
+  const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
+    setPage(page)
+  }
 
   return (
     <Box className={props.className}>
@@ -32,7 +40,7 @@ const Latest = (props: Props) => {
             ))}
 
             {/* 分页 */}
-            <Pagination className='mt-7' count={totalPages} color='primary' />
+            <Pagination className='mt-7' count={totalPages} color='primary' onChange={onPageChange} />
           </Grid>
 
           <Grid item xs={4}>

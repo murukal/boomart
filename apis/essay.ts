@@ -1,27 +1,26 @@
 // project
-import requests, { FetchParams } from '.'
-import type { PaginateResult, QueryOptions } from '../typings/api'
-import type { Essay, CreativeTop5 } from '../typings/essay'
+import { getToken } from 'next-auth/jwt'
+import requests, { FetchParams, withAuthorization } from '.'
+import type { PaginateResult } from '../typings/api'
+import type { Essay } from '../typings/essay'
 
 const url = '/api/essay'
 
+/** 查询多个文章 */
 export const getEssays = (params: FetchParams) => requests.get<PaginateResult<Essay>>(url, params)
 
+/** 查询单个文章 */
 export const getEssay = (id: string) => requests.get<Essay>(`${url}/${id}`)
 
-export const getCreativeTop5 = () => requests.get<CreativeTop5>(`${url}/creative-top5`)
-
-/** 获取最新文章的参数构造函数 */
-export const getFetchLatestParams = (page: number = 1) => ({
-  params: {
-    pagination: {
-      limit: 4,
-      page
-    },
-    populate: ['tags', 'createdBy', 'isThumbUp', 'isFavorite']
-  }
-})
-
-const apis = {}
-
-export default apis
+/** 查询最近的4篇文章 */
+export const getLatest = async (page: number = 1) => {
+  return await requests.get<PaginateResult<Essay>>('/api/essay', {
+    params: {
+      pagination: {
+        limit: 4,
+        page
+      },
+      populate: ['tags', 'createdBy', 'isThumbUp', 'isFavorite']
+    }
+  })
+}

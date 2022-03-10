@@ -3,25 +3,21 @@ import { createRef, useEffect } from 'react'
 // next
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { getSession } from 'next-auth/react'
+// third
+import { unstable_serialize } from 'swr'
 // mui
 import { Box, Container, Typography, Input, Button } from '@mui/material'
 // project
 import Latest from '../components/Essay/Latest'
-import Hot from '../components/Essay/Hot'
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
-import { getEssayBrowseTop } from '../apis/toggle'
 import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
-import { apiKeys, apis } from '../apis'
+import { getLatest } from '../apis/essay'
+import { getToken } from 'next-auth/jwt'
 
 const Home = () => {
-  const router = useRouter()
   const ref = createRef<HTMLSpanElement>()
-
-  const onGo2Essay = (id: string) => () => {
-    router.push(`/essay/${id}`)
-  }
 
   useEffect(() => {
     // 返回的函数传递给Effect，取消订阅
@@ -58,7 +54,7 @@ const Home = () => {
                 fontWeight: 900
               }}
             >
-              Halo, I’m{' '}
+              Halo, I’m
               <Typography
                 variant='h2'
                 style={{
@@ -132,22 +128,11 @@ const Home = () => {
 
 export default Home
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  // 服务端获取认证信息
-  const session = await getSession(context)
-
-  // 获取文章列表
-  // const {} : latestResult = await getEssays({
-  //   params: getFetchLatestParams()
-  // })
-
-  const browseTopResults = (await getEssayBrowseTop({ limit: 4 })).data || []
-
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
-      session,
       fallback: {
-        [apiKeys.essay.latest.fullKey]: await apis[apiKeys.essay.latest.fullKey](apiKeys.essay.latest.key, 1)
+        [unstable_serialize(['/api/essay/latest', 1])]: await getLatest(1)
       }
     }
   }
