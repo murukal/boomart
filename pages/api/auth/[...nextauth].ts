@@ -5,8 +5,8 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 // third
 import { sign, decode } from 'jsonwebtoken'
 // project
-import { getUser, login } from '../../../apis/account'
-import { getJwtSecret, withAuthorization } from '../../../apis'
+import { login } from '../../../apis/account'
+import { getJwtSecret } from '../../../apis'
 import type { Login, User } from '../../../typings/user'
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
@@ -35,14 +35,14 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             data: credentials as Login
           })
 
-          // 利用返回的token获取用户信息
-          const { data: user } = await getUser(withAuthorization(token))
+          // token 解码 获取用户信息
+          const payload = decode(token as string, { json: true })
 
           return {
-            id: user?._id,
-            name: user?.username,
-            email: user?.email,
-            image: user?.avatar
+            id: payload?._id,
+            name: payload?.username,
+            email: payload?.email,
+            image: payload?.avatar
           }
         }
       })

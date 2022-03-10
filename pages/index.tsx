@@ -1,20 +1,18 @@
 // react
 import { createRef, useEffect } from 'react'
 // next
-import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { getSession } from 'next-auth/react'
 // third
 import { unstable_serialize } from 'swr'
 // mui
 import { Box, Container, Typography, Input, Button } from '@mui/material'
 // project
+import Hot from '../components/Essay/Hot'
 import Latest from '../components/Essay/Latest'
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { GetServerSideProps } from 'next'
 import { getLatest } from '../apis/essay'
-import { getToken } from 'next-auth/jwt'
 
 const Home = () => {
   const ref = createRef<HTMLSpanElement>()
@@ -113,12 +111,7 @@ const Home = () => {
       </Box>
 
       {/* 热门榜单 */}
-      {/* <Hot
-        className='py-8'
-        browseTopResults={props.browseTopResults}
-        likeTopResults={props.likeTopResults}
-        onClick={onGo2Essay}
-      /> */}
+      <Hot className='py-8' />
 
       {/* 最近发布 文章 + 评论列表 */}
       <Latest className='bg-gray-50 py-8' />

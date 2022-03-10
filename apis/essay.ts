@@ -1,6 +1,5 @@
 // project
-import { getToken } from 'next-auth/jwt'
-import requests, { FetchParams, withAuthorization } from '.'
+import requests, { FetchParams } from '.'
 import type { PaginateResult } from '../typings/api'
 import type { Essay } from '../typings/essay'
 

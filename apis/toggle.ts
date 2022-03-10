@@ -18,7 +18,7 @@ export const getEssayBrowseTop = (query: TopQuery) => {
 
   return requests.get<TopResults>(`${url}/top`, {
     params: {
-      targetType: 'Essay',
+      targetType: 'essay',
       toggleType: 'BROWSE',
       from: +from,
       to: +to,

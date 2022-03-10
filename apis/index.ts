@@ -78,11 +78,5 @@ export interface FetchParams<T = Record<string, any>> {
   data?: T
 }
 
-export const withAuthorization = (token?: string | null, headers?: Record<string, string>) => {
-  const current = { ...headers }
-  if (token) current['Authorization'] = `Bearer ${token}`
-  return current
-}
-
 /** 获取jwt秘钥api */
 export const getJwtSecret = () => requests.get<string>('/api/jwt-secret')

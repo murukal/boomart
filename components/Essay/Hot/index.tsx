@@ -18,13 +18,15 @@ import type { Tag } from '../../../typings/tag'
 
 const Hot = (props: Props) => {
   // 抽离tags
-  const hotTags = useMemo<Tag[]>(() => {
-    const tags = [...props.browseTopResults, ...props.likeTopResults].reduce((previous, topResult) => {
-      return previous.concat(topResult.target.tags as Tag[])
-    }, [] as Tag[])
+  // const hotTags = useMemo<Tag[]>(() => {
+  //   const tags = [...props.browseTopResults, ...props.likeTopResults].reduce((previous, topResult) => {
+  //     return previous.concat(topResult.target.tags as Tag[])
+  //   }, [] as Tag[])
 
-    return uniqBy(tags, '_id')
-  }, [props.browseTopResults, props.likeTopResults])
+  //   return uniqBy(tags, '_id')
+  // }, [props.browseTopResults, props.likeTopResults])
+
+  const hotTags: Tag[] = []
 
   return (
     <Container className={props.className}>
@@ -86,7 +88,11 @@ const Hot = (props: Props) => {
                     <Tags className='mb-3' tags={tags} />
 
                     {/* 文章标题 */}
-                    <Typography className='cursor-pointer' variant='h5' onClick={props.onClick && props.onClick(topResult.target._id)}>
+                    <Typography
+                      className='cursor-pointer'
+                      variant='h5'
+                      onClick={props.onClick && props.onClick(topResult.target._id)}
+                    >
                       {topResult.target.title}
                     </Typography>
 
