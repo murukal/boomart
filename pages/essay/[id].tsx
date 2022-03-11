@@ -1,5 +1,5 @@
 // react
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 // next
 import Link from 'next/link'
 import type { GetServerSideProps } from 'next'
@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown'
 import Toggles from '../../components/Essay/Toggles'
 import Comments from '../../components/Essay/Comments'
 import { getEssay } from '../../apis/essay'
+import { create } from '../../apis/toggle'
 import type { Essay } from '../../typings/essay'
 import type { User } from '../../typings/user'
 import type { Tag } from '../../typings/tag'
@@ -30,6 +31,15 @@ const Essay = (props: Props) => {
   const cover = useMemo(() => {
     return essay.cover || (essay.tags[0] as Tag | undefined)?.cover || ''
   }, [essay])
+
+  /** 页面渲染触发 */
+  useEffect(() => {
+    create({
+      target: essay._id,
+      targetType: 'essay',
+      type: 'BROWSE'
+    })
+  }, [])
 
   return (
     <Container className='p-12'>
@@ -111,9 +121,7 @@ const Essay = (props: Props) => {
 export default Essay
 
 /** 服务端渲染 */
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params } = context
-
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { data: essay } = await getEssay(params?.id as string)
 
   // 文章未找到，返回404

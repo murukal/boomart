@@ -16,6 +16,7 @@ export interface CreateToggle extends Omit<Toggle, '_id' | 'createdBy'> {}
 
 export interface TopQuery {
   limit: number
+  type: Type
 }
 
 export type TopResults = {

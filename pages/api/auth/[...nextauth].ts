@@ -68,8 +68,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     },
 
     jwt: {
-      encode: async ({ token, secret }) =>
-        sign(
+      encode: async ({ token, secret }) => {
+        return sign(
           {
             _id: token?.sub,
             username: token?.name,
@@ -77,8 +77,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             avatar: token?.picture
           } as User,
           secret
-        ),
-
+        )
+      },
       decode: async ({ token }) => {
         const payload = decode(token as string, {
           json: true

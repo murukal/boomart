@@ -13,6 +13,7 @@ import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { GetServerSideProps } from 'next'
 import { getLatest } from '../apis/essay'
+import { getEssayTop } from '../apis/toggle'
 
 const Home = () => {
   const ref = createRef<HTMLSpanElement>()
@@ -57,7 +58,8 @@ const Home = () => {
                 variant='h2'
                 style={{
                   color: '#5869DA',
-                  fontWeight: 900
+                  fontWeight: 900,
+                  marginLeft: 12
                 }}
                 component='span'
               >
@@ -125,7 +127,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       fallback: {
-        [unstable_serialize(['/api/essay/latest', 1])]: await getLatest(1)
+        [unstable_serialize(['/api/essay/latest', 1])]: await getLatest(1),
+        '/api/toggle/top/browse/4': await getEssayTop({
+          limit: 4,
+          type: 'BROWSE'
+        }),
+        '/api/toggle/top/thumb-up/3': await getEssayTop({
+          limit: 3,
+          type: 'THUMBUP'
+        })
       }
     }
   }

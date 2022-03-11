@@ -6,28 +6,31 @@ import { useRouter } from 'next/router'
 import type { GetServerSideProps } from 'next'
 // mui
 import { Pagination, Container } from '@mui/material'
+// third
+import useSWR, { unstable_serialize } from 'swr'
 // project
 import Wrapper from '../../components/Essay/Wrapper'
-import { getEssays } from '../../apis/essay'
-import type { Essay } from '../../typings/essay'
+import { getTagEssays } from '../../apis/essay'
 
-interface Props {
-  essays: Essay[]
-  totalPages: number
-}
+const Category = () => {
+  const [page, setPage] = useState(1)
 
-const Category = (props: Props) => {
-  const [totalPages, setTotalPages] = useState(props.totalPages)
-
+  // hooks
   const router = useRouter()
+  const { data: tagEssaysRes } = useSWR(['/api/essay/tag', router.query.id, page], (key, tagId: string, page: number) => getTagEssays(tagId, page))
+
+  // 分页发生变更的回调事件
+  const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
+    setPage(page)
+  }
 
   return (
     <Container>
-      {props.essays.map((essay) => (
+      {(tagEssaysRes?.data?.docs || []).map((essay) => (
         <Wrapper key={essay._id} essay={essay} />
       ))}
 
-      <Pagination className='mt-7' count={totalPages} color='primary' />
+      <Pagination className='mt-7' count={tagEssaysRes?.data?.totalPages} color='primary' onChange={onPageChange} />
     </Container>
   )
 }
@@ -36,11 +39,11 @@ export default Category
 
 /** 服务端渲染 */
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  // 请求成功
   return {
     props: {
-      essays: [],
-      totalPages: 0
+      fallback: {
+        [unstable_serialize(['/api/essay/tag', params?.id, 1])]: await getTagEssays(params?.id as string)
+      }
     }
   }
 }

@@ -12,16 +12,16 @@ export const create = (data: CreateToggle) =>
   })
 
 /** 获取文章浏览量榜单 */
-export const getEssayBrowseTop = (query: TopQuery) => {
+export const getEssayTop = (query: TopQuery) => {
   const to = dayjs()
   const from = to.subtract(1, 'M')
 
   return requests.get<TopResults>(`${url}/top`, {
     params: {
       targetType: 'essay',
-      toggleType: 'BROWSE',
       from: +from,
       to: +to,
+      type: query.type,
       limit: query.limit
     }
   })

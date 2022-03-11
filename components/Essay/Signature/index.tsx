@@ -28,7 +28,7 @@ const Signature = (props: Props) => {
       >
         {dayjs(props.essay.createdAt).format('D MMM')}
       </Typography>
-      <Typography component='span' sx={textStyle}>{`By ${createdBy.username}`}</Typography>
+      <Typography component='span' sx={textStyle}>{`By ${createdBy?.username}`}</Typography>
     </Box>
   )
 }

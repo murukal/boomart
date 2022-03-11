@@ -1,5 +1,5 @@
 import getInitialState from './store'
-import type { Action } from './actions'
+import type { Action } from './action'
 
 const reducer = (state = getInitialState(), action: Action) => {
   switch (action.type) {

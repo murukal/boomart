@@ -19,7 +19,20 @@ export const getLatest = async (page: number = 1) => {
         limit: 4,
         page
       },
-      populate: ['tags', 'createdBy', 'isThumbUp', 'isFavorite']
+      populate: ['tags', 'createdBy']
     }
   })
 }
+
+/** 查询对应tag的文章列表 */
+export const getTagEssays = (tagId: string, page: number = 1) =>
+  requests.get<PaginateResult<Essay>>('/api/essay', {
+    params: {
+      pagination: {
+        limit: 10,
+        page
+      },
+      populate: ['tags', 'createdBy'],
+      tags: tagId
+    }
+  })

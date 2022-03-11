@@ -7,7 +7,6 @@ import { Card, CardMedia, CardContent, Typography } from '@mui/material'
 // project
 import Tags from '../Tags'
 import Signature from '../Signature'
-import Markers from '../Markers'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
 
@@ -16,30 +15,45 @@ const Wrapper = (props: Props) => {
   const essay = useMemo(() => props.essay, [props.essay])
   const tags = useMemo(() => props.essay.tags as Tag[], [props.essay])
 
+  /** 默认卡片大小 */
+  const type = useMemo(() => props.type || 'horizontal', [props.type])
+
   /** 路由跳转 */
   const onGo2Essay = (id: string) => () => {
     router.push(`/essay/${id}`)
   }
 
+  /** 根据 type 生成卡片的style */
+  const styles = useMemo(() => {
+    return {
+      cardStyles: {
+        className: type === 'horizontal' ? 'flex bg-gray-50 mt-7' : undefined,
+        elevation: type === 'horizontal' ? 0 : undefined
+      },
+      coverStyles: {
+        className: `cursor-pointer ${type === 'horizontal' ? 'rounded-r' : ''}`,
+        height: type === 'horizontal' ? 150 : 200,
+        style: type === 'horizontal' ? { flex: 1 } : undefined
+      },
+      contentStyles: {
+        className: type === 'horizontal' ? 'px-4 self-center' : 'p-7',
+        style: type === 'horizontal' ? { flex: 2 } : undefined
+      }
+    }
+  }, [type])
+
   return (
-    <Card className='flex mt-7 bg-gray-50' key={essay._id} elevation={0}>
+    <Card className={styles.cardStyles.className} key={essay._id} elevation={styles.cardStyles.elevation}>
       <CardMedia
-        className='rounded-r cursor-pointer'
+        className={styles.coverStyles.className}
+        style={styles.coverStyles.style}
+        height={styles.coverStyles.height}
         component='img'
-        height={150}
         image={essay.cover || tags.at(0)?.cover}
         alt={essay.title}
-        sx={{
-          flex: 1
-        }}
         onClick={onGo2Essay(essay._id)}
       />
-      <CardContent
-        className='px-4 self-center'
-        sx={{
-          flex: 2
-        }}
-      >
+      <CardContent className={styles.contentStyles.className} style={styles.contentStyles.style}>
         <Tags className='mb-3' tags={tags} />
 
         {/* 文章标题 */}
@@ -50,8 +64,6 @@ const Wrapper = (props: Props) => {
         {/* 文章署名 */}
         <Signature className='mt-5' essay={essay} />
       </CardContent>
-
-      <Markers isFavorite={essay.isFavorite} isThumbUp={essay.isThumbUp} />
     </Card>
   )
 }

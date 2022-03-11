@@ -4,29 +4,47 @@ import { useMemo } from 'react'
 import { Container, Grid, Typography, Paper, Card, CardMedia, CardContent, Box } from '@mui/material'
 import { LabelOutlined } from '@mui/icons-material'
 // third
+import useSWR from 'swr'
 import { Autoplay, EffectFade, Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { uniqBy } from 'lodash'
 // project
-import Tags from '../Tags'
-import Signature from '../Signature'
-import Markers from '../Markers'
+import Wrapper from '../Wrapper'
 import { getHotTagStyle } from './assets'
+import { getEssayTop } from '../../../apis/toggle'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
 
 const Hot = (props: Props) => {
+  /** 请求浏览量最高的4篇文章 */
+  const { data: browseTopRes } = useSWR('/api/toggle/top/browse/4', () =>
+    getEssayTop({
+      limit: 4,
+      type: 'BROWSE'
+    })
+  )
+
+  const browseTopResults = useMemo(() => browseTopRes?.data || [], [browseTopRes])
+
+  /** 请求点赞量最高的4篇文章 */
+  const { data: thumbUpTopRes } = useSWR('/api/toggle/top/thumb-up/3', () =>
+    getEssayTop({
+      limit: 3,
+      type: 'THUMBUP'
+    })
+  )
+
+  const thumbUpTopResults = useMemo(() => thumbUpTopRes?.data || [], [thumbUpTopRes])
+
   // 抽离tags
-  // const hotTags = useMemo<Tag[]>(() => {
-  //   const tags = [...props.browseTopResults, ...props.likeTopResults].reduce((previous, topResult) => {
-  //     return previous.concat(topResult.target.tags as Tag[])
-  //   }, [] as Tag[])
+  const hotTags = useMemo<Tag[]>(() => {
+    const tags = [...browseTopResults, ...thumbUpTopResults].reduce((previous, topResult) => {
+      return previous.concat(topResult.target.tags as Tag[])
+    }, [] as Tag[])
 
-  //   return uniqBy(tags, '_id')
-  // }, [props.browseTopResults, props.likeTopResults])
-
-  const hotTags: Tag[] = []
+    return uniqBy(tags, '_id')
+  }, [browseTopResults, thumbUpTopResults])
 
   return (
     <Container className={props.className}>
@@ -52,60 +70,29 @@ const Hot = (props: Props) => {
           <Swiper
             className='h-full'
             modules={[Autoplay, EffectFade, Navigation]}
-            // slidesPerView={1}
             onSlideChange={() => console.log('slide change')}
-            // onSwiper={(swiper) => console.log(swiper)}
             autoplay={true}
             effect='fade'
-            // navigation={true}
+            navigation={true}
           >
-            {[0, 1, 2, 3].map((item) => (
-              <SwiperSlide className='flex justify-center items-center' key={item}>
-                <Paper className='bg-red-500 h-full flex-1' elevation={1}></Paper>
+            {thumbUpTopResults.map((topResult) => (
+              <SwiperSlide className='flex justify-center items-center' key={topResult._id}>
+                <CardMedia
+                  component='img'
+                  image={topResult.target.cover || (topResult.target.tags as Tag[]).at(0)?.cover}
+                  alt={topResult.target.title}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </Grid>
 
         {/* 排名后4 */}
-        {props.browseTopResults.map((topResult) => {
-          // 断言获取标签
-          const tags = topResult.target.tags as Tag[]
-
-          return (
-            <Grid key={topResult.target._id} item xs={4}>
-              <Card>
-                <CardMedia
-                  className='cursor-pointer'
-                  component='img'
-                  height='200'
-                  image={topResult.target.cover || tags[0]?.cover}
-                  alt={topResult.target.title}
-                  onClick={props.onClick && props.onClick(topResult.target._id)}
-                />
-                <Box className='flex justify-between'>
-                  <CardContent className='p-7'>
-                    <Tags className='mb-3' tags={tags} />
-
-                    {/* 文章标题 */}
-                    <Typography
-                      className='cursor-pointer'
-                      variant='h5'
-                      onClick={props.onClick && props.onClick(topResult.target._id)}
-                    >
-                      {topResult.target.title}
-                    </Typography>
-
-                    {/* 文章署名 */}
-                    <Signature className='mt-5' essay={topResult.target} />
-                  </CardContent>
-
-                  <Markers />
-                </Box>
-              </Card>
-            </Grid>
-          )
-        })}
+        {browseTopResults.map((topResult) => (
+          <Grid key={topResult.target._id} item xs={4}>
+            <Wrapper essay={topResult.target} type='vertical' />
+          </Grid>
+        ))}
       </Grid>
     </Container>
   )
