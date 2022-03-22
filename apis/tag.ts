@@ -1,10 +1,29 @@
-// project
-import requests from '.'
-import type { PaginateResult, QueryOptions } from '../typings/api'
-import type { Tag } from '../typings/tag'
+import { gql, TypedDocumentNode } from '@apollo/client'
+import { PaginateOutput, QueryParams } from '../typings/api'
+import { Tag } from '../typings/tag'
 
-const url = '/api/tag'
-
-export const getTags = () => requests.get<PaginateResult<Tag>>(url)
-
-export const getTagById = (id: string) => requests.get<Tag>(`${url}/${id}`)
+/**
+ * 查询多个标签
+ */
+export const TAGS: TypedDocumentNode<
+  {
+    tags: PaginateOutput<Tag>
+  },
+  QueryParams
+> = gql`
+  query Tags($paginateInput: PaginateInput) {
+    tags(paginateInput: $paginateInput) {
+      items {
+        id
+        createdAt
+        updatedAt
+        name
+        image
+      }
+      page
+      limit
+      total
+      pageCount
+    }
+  }
+`

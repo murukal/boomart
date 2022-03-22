@@ -1,19 +1,17 @@
-export interface Menu {
-  _id: string
-  description: string
-  sort: number
-  icon: string
-  to: string
-  componentPath: string
-  parent?: Menu | string
-  tenant: string
+export interface FilterInput {
+  parentId?: number
+  tenantId?: number
 }
 
-export interface MenuTreeNode extends Omit<Menu, 'parent' | 'tenant'> {
-  children?: MenuTreeNode[]
-}
+export interface Menu extends Core {
+  name: string
+  sortBy: number
+  icon?: string
+  tenantId?: number
+  parentId?: number
 
-export interface MenuTree {
-  tenantCode: string
-  nodes: MenuTreeNode[] | null
+  to?: string
+  component?: string
+
+  children?: Menu[]
 }

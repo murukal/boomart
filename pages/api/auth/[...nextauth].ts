@@ -5,13 +5,13 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 // third
 import { sign, decode } from 'jsonwebtoken'
 // project
-import { login } from '../../../apis/account'
+import { login } from '../../../apis/auth'
 import { getJwtSecret } from '../../../apis'
-import type { Login, User } from '../../../typings/user'
+import type { LoginInput, User } from '../../../typings/auth'
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   // 获取后端中存在的秘钥
-  const jwtSecret = (await getJwtSecret()).data
+  const jwtSecret = (await getJwtSecret()).data?.jwtSecret
 
   if (!jwtSecret) {
     res.status(500).send('JWT秘钥获取失败！')

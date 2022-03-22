@@ -1,82 +1,77 @@
 // third
-import axios from 'axios'
-import { stringify } from 'qs'
-import type { AxiosResponse } from 'axios'
+import {
+  ApolloClient,
+  ApolloError,
+  ApolloQueryResult,
+  createHttpLink,
+  FetchResult,
+  gql,
+  InMemoryCache,
+  MutationOptions,
+  NetworkStatus,
+  OperationVariables,
+  QueryOptions,
+  TypedDocumentNode
+} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 // project
-import type { ApiResponse, QueryOptions } from '../typings/api'
+import { GraphQLError } from 'graphql'
 
-// 生成一个axios实例
-const instance = axios.create({
-  paramsSerializer: stringify,
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  withCredentials: true
+const httpLink = createHttpLink({
+  uri: '/graphql'
 })
 
-/** 结果拦截器 */
-instance.interceptors.response.use(
-  // http res拦截器
-  (res) => res,
-
-  // http异常拦截器
-  (error): AxiosResponse<ApiResponse> => ({
-    status: error.response?.status,
-    statusText: error.response?.statusText,
-    headers: error.response?.headers,
-    config: error.response?.config,
-    data: {
-      code: error.response?.data?.code || -1,
-      message: error.response?.data?.message || null,
-      data: error.response?.data?.data || null
+const authLink = setContext((_, { headers }) => {
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers
     }
+  }
+})
+
+/**
+ * 生成一个graphql请求客户端对象
+ */
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+})
+
+export default client
+
+export const fetcher = {
+  /** 查询 */
+  query: <T = any, V = OperationVariables>(options: QueryOptions<V, T>) =>
+    client.query<T, V>(options).catch(
+      (error: ApolloError): ApolloQueryResult<null> => ({
+        data: null,
+        error,
+        loading: false,
+        networkStatus: NetworkStatus.error
+      })
+    ),
+
+  /** 变更 */
+  mutate: <T = any, V = OperationVariables>(options: MutationOptions<T, V>) =>
+    client.mutate<T, V>(options).catch(
+      (error: GraphQLError): FetchResult<T> => ({
+        data: null,
+        errors: [error]
+      })
+    )
+}
+
+/** 获取jwt秘钥 */
+const JWT_SECRET: TypedDocumentNode<{
+  jwtSecret: string
+}> = gql`
+  query {
+    rsaPublicKey
+  }
+`
+
+export const getJwtSecret = () =>
+  fetcher.query({
+    query: JWT_SECRET
   })
-)
-
-/** 生成一个访问请求对象 access request object */
-const requests = {
-  /** get */
-  get: async <T = any>(url: string, params?: FetchParams): Promise<ApiResponse<T>> =>
-    (
-      await instance.get(url, {
-        params: params?.params,
-        headers: params?.headers
-      })
-    ).data,
-
-  /** post */
-  post: async <T = any>(url: string, params?: FetchParams): Promise<ApiResponse<T>> =>
-    (
-      await instance.post(url, params?.data, {
-        headers: params?.headers
-      })
-    ).data,
-
-  /** patch */
-  patch: async <T = any>(url: string, params?: FetchParams): Promise<ApiResponse<T>> =>
-    (
-      await instance.patch(url, params?.data, {
-        headers: params?.headers
-      })
-    ).data,
-
-  /** delete */
-  delete: async <T = any>(url: string, params?: FetchParams): Promise<ApiResponse<T>> =>
-    (
-      await instance.delete(url, {
-        headers: params?.headers
-      })
-    ).data
-}
-
-export default requests
-
-export interface FetchParams<T = Record<string, any>> {
-  // 请求头
-  headers?: Record<string, string>
-  // 请求携带参数
-  params?: QueryOptions
-  // 请求体
-  data?: T
-}
-
-/** 获取jwt秘钥api */
-export const getJwtSecret = () => requests.get<string>('/api/jwt-secret')
