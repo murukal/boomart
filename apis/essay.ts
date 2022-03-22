@@ -1,15 +1,8 @@
 // project
-import requests, { FetchParams } from '.'
-import type { PaginateResult } from '../typings/api'
+import { gql, TypedDocumentNode } from '@apollo/client'
+import requests, { fetcher, FetchParams } from '.'
+import { PaginateOutput, QueryParams } from '../typings/api'
 import type { Essay } from '../typings/essay'
-
-const url = '/api/essay'
-
-/** 查询多个文章 */
-export const getEssays = (params: FetchParams) => requests.get<PaginateResult<Essay>>(url, params)
-
-/** 查询单个文章 */
-export const getEssay = (id: string) => requests.get<Essay>(`${url}/${id}`)
 
 /** 查询最近的4篇文章 */
 export const getLatest = async (page: number = 1) => {
@@ -36,3 +29,49 @@ export const getTagEssays = (tagId: string, page: number = 1) =>
       tags: tagId
     }
   })
+
+/**
+ * 查询单个文章
+ */
+const ESSAY: TypedDocumentNode<
+  {
+    essay: Essay
+  },
+  {
+    id: number
+  }
+> = gql`
+  query Essay($id: Int!) {
+    essay(id: $id) {
+      id
+    }
+  }
+`
+
+export const getEssay = (id: number) =>
+  fetcher.query({
+    query: ESSAY,
+    variables: {
+      id
+    }
+  })
+
+/**
+ * 查询多个文章
+ * 分页
+ * 每页4篇
+ */
+export const ESSAYS: TypedDocumentNode<
+  {
+    essays: PaginateOutput<Essay>
+  },
+  QueryParams
+> = gql`
+  query Essays($paginateInput: PaginateInput) {
+    essays(paginateInput: $paginateInput) {
+      items {
+        id
+      }
+    }
+  }
+`

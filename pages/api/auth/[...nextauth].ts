@@ -3,9 +3,9 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 // third
-import { sign, decode } from 'jsonwebtoken'
+import { JwtPayload, sign, verify } from 'jsonwebtoken'
 // project
-import { login } from '../../../apis/auth'
+import { login, whoAmI } from '../../../apis/auth'
 import { getJwtSecret } from '../../../apis'
 import type { LoginInput, User } from '../../../typings/auth'
 
@@ -31,18 +31,18 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         // 验证逻辑
         async authorize(credentials) {
           // 账号密码登录
-          const { data: token } = await login({
-            data: credentials as Login
-          })
+          const result = await login(credentials as LoginInput)
 
-          // token 解码 获取用户信息
-          const payload = decode(token as string, { json: true })
+          console.log('result===')
+
+          // 成功获取到token后，获取用户信息
+          const { data } = await whoAmI()
 
           return {
-            id: payload?._id,
-            name: payload?.username,
-            email: payload?.email,
-            image: payload?.avatar
+            id: data?.whoAmI.id,
+            name: data?.whoAmI.username,
+            email: data?.whoAmI.email,
+            image: data?.whoAmI.avatar
           }
         }
       })
@@ -71,25 +71,20 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       encode: async ({ token, secret }) => {
         return sign(
           {
-            _id: token?.sub,
-            username: token?.name,
-            email: token?.email,
-            avatar: token?.picture
-          } as User,
+            id: token?.sub
+          },
           secret
         )
       },
-      decode: async ({ token }) => {
-        const payload = decode(token as string, {
-          json: true
-        })
+
+      decode: async ({ token, secret }) => {
+        if (!token) return null
+
+        const payload = verify(token, secret) as JwtPayload
 
         // 返回token payload
         return {
-          sub: payload?._id,
-          name: payload?.username,
-          email: payload?.email,
-          picture: payload?.avatar
+          sub: payload.id
         }
       }
     },

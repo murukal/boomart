@@ -1,7 +1,6 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
-import { User } from 'next-auth'
 import { fetcher } from '.'
-import { LoginInput } from '../typings/auth'
+import type { LoginInput, User } from '../typings/auth'
 
 /**
  * 获取用户信息
