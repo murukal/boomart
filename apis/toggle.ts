@@ -1,28 +1,31 @@
-// third
-import dayjs from 'dayjs'
-// project
-import requests from '.'
-import type { CreateToggle, TopQuery, TopResults } from '../typings/toggle'
+const st = 'ssss'
 
-const url = '/api/toggle'
+export default st
+// // third
+// import dayjs from 'dayjs'
+// // project
+// import requests from '.'
+// import type { CreateToggle, TopQuery, TopResults } from '../typings/toggle'
 
-export const create = (data: CreateToggle) =>
-  requests.post(url, {
-    data
-  })
+// const url = '/api/toggle'
 
-/** 获取文章浏览量榜单 */
-export const getEssayTop = (query: TopQuery) => {
-  const to = dayjs()
-  const from = to.subtract(1, 'M')
+// export const create = (data: CreateToggle) =>
+//   requests.post(url, {
+//     data
+//   })
 
-  return requests.get<TopResults>(`${url}/top`, {
-    params: {
-      targetType: 'essay',
-      from: +from,
-      to: +to,
-      type: query.type,
-      limit: query.limit
-    }
-  })
-}
+// /** 获取文章浏览量榜单 */
+// export const getEssayTop = (query: TopQuery) => {
+//   const to = dayjs()
+//   const from = to.subtract(1, 'M')
+
+//   return requests.get<TopResults>(`${url}/top`, {
+//     params: {
+//       targetType: 'essay',
+//       from: +from,
+//       to: +to,
+//       type: query.type,
+//       limit: query.limit
+//     }
+//   })
+// }

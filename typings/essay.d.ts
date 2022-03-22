@@ -5,3 +5,7 @@ export interface Essay extends Core {
   content: string
   cover: string
 }
+
+export interface FilterInput {
+  tagIds?: number[]
+}

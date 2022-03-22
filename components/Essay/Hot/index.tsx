@@ -4,11 +4,9 @@ import { useMemo } from 'react'
 import { Container, Grid, Typography, Paper, Card, CardMedia, CardContent, Box } from '@mui/material'
 import { LabelOutlined } from '@mui/icons-material'
 // third
-import useSWR from 'swr'
 import { Autoplay, EffectFade, Navigation } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import { uniqBy } from 'lodash'
 // project
 import Wrapper from '../Wrapper'
 import { getHotTagStyle } from './assets'
@@ -38,13 +36,13 @@ const Hot = (props: Props) => {
   const thumbUpTopResults = useMemo(() => thumbUpTopRes?.data || [], [thumbUpTopRes])
 
   // 抽离tags
-  const hotTags = useMemo<Tag[]>(() => {
-    const tags = [...browseTopResults, ...thumbUpTopResults].reduce((previous, topResult) => {
-      return previous.concat(topResult.target.tags as Tag[])
-    }, [] as Tag[])
+  // const hotTags = useMemo<Tag[]>(() => {
+  //   const tags = [...browseTopResults, ...thumbUpTopResults].reduce((previous, topResult) => {
+  //     return previous.concat(topResult.target.tags as Tag[])
+  //   }, [] as Tag[])
 
-    return uniqBy(tags, '_id')
-  }, [browseTopResults, thumbUpTopResults])
+  //   return uniqBy(tags, '_id')
+  // }, [browseTopResults, thumbUpTopResults])
 
   return (
     <Container className={props.className}>

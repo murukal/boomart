@@ -1,34 +1,8 @@
 // project
 import { gql, TypedDocumentNode } from '@apollo/client'
-import requests, { fetcher, FetchParams } from '.'
+import requests, { fetcher } from '.'
 import { PaginateOutput, QueryParams } from '../typings/api'
-import type { Essay } from '../typings/essay'
-
-/** 查询最近的4篇文章 */
-export const getLatest = async (page: number = 1) => {
-  return await requests.get<PaginateResult<Essay>>('/api/essay', {
-    params: {
-      pagination: {
-        limit: 4,
-        page
-      },
-      populate: ['tags', 'createdBy']
-    }
-  })
-}
-
-/** 查询对应tag的文章列表 */
-export const getTagEssays = (tagId: string, page: number = 1) =>
-  requests.get<PaginateResult<Essay>>('/api/essay', {
-    params: {
-      pagination: {
-        limit: 10,
-        page
-      },
-      populate: ['tags', 'createdBy'],
-      tags: tagId
-    }
-  })
+import type { Essay, FilterInput } from '../typings/essay'
 
 /**
  * 查询单个文章
@@ -58,14 +32,12 @@ export const getEssay = (id: number) =>
 
 /**
  * 查询多个文章
- * 分页
- * 每页4篇
  */
 export const ESSAYS: TypedDocumentNode<
   {
     essays: PaginateOutput<Essay>
   },
-  QueryParams
+  QueryParams<FilterInput>
 > = gql`
   query Essays($paginateInput: PaginateInput) {
     essays(paginateInput: $paginateInput) {
@@ -75,3 +47,24 @@ export const ESSAYS: TypedDocumentNode<
     }
   }
 `
+
+/**
+ * 查询多个文章
+ * 分页
+ * 每页4篇
+ */
+export const getEssays = (page: number = 1, limit: number = 4, tagId?: number) =>
+  fetcher.query({
+    query: ESSAYS,
+    variables: {
+      paginateInput: {
+        page,
+        limit: 4
+      },
+      filterInput: {
+        ...(tagId && {
+          tagIds: [tagId]
+        })
+      }
+    }
+  })

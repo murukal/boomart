@@ -13,28 +13,19 @@ import {
   QueryOptions,
   TypedDocumentNode
 } from '@apollo/client'
-import { setContext } from '@apollo/client/link/context'
 // project
 import { GraphQLError } from 'graphql'
 
-const httpLink = createHttpLink({
-  uri: '/graphql'
-})
-
-const authLink = setContext((_, { headers }) => {
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers
-    }
-  }
+const link = createHttpLink({
+  uri: '/graphql',
+  credentials: 'same-origin'
 })
 
 /**
  * 生成一个graphql请求客户端对象
  */
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: link,
   cache: new InMemoryCache()
 })
 

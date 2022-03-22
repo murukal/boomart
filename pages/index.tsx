@@ -2,8 +2,6 @@
 import { createRef, useEffect } from 'react'
 // next
 import Image from 'next/image'
-// third
-import { unstable_serialize } from 'swr'
 // mui
 import { Box, Container, Typography, Input, Button } from '@mui/material'
 // project
@@ -12,8 +10,7 @@ import Latest from '../components/Essay/Latest'
 import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { GetServerSideProps } from 'next'
-import { getLatest } from '../apis/essay'
-import { getEssayTop } from '../apis/toggle'
+import { getEssays } from '../apis/essay'
 
 const Home = () => {
   const ref = createRef<HTMLSpanElement>()
@@ -126,17 +123,9 @@ export default Home
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
-      fallback: {
-        [unstable_serialize(['/api/essay/latest', 1])]: await getLatest(1),
-        '/api/toggle/top/browse/4': await getEssayTop({
-          limit: 4,
-          type: 'BROWSE'
-        }),
-        '/api/toggle/top/thumb-up/3': await getEssayTop({
-          limit: 3,
-          type: 'THUMBUP'
-        })
-      }
+      latestEssays: (await getEssays()).data?.essays,
+      topBrowseEssays: [],
+      topThumbUpEssays: []
     }
   }
 }

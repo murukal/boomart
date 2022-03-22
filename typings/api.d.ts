@@ -10,6 +10,14 @@ export interface PaginateOutput<T> {
 }
 
 /**
+ * 分页参数
+ */
+export interface PaginateInput {
+  page?: number
+  limit: number
+}
+
+/**
  * 查询的通用参数
  */
 export interface QueryParams<F = Record<string, any>> {

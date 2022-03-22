@@ -6,18 +6,14 @@ import { useRouter } from 'next/router'
 import type { GetServerSideProps } from 'next'
 // mui
 import { Pagination, Container } from '@mui/material'
-// third
-import useSWR, { unstable_serialize } from 'swr'
 // project
 import Wrapper from '../../components/Essay/Wrapper'
-import { getTagEssays } from '../../apis/essay'
+import { getEssays } from '../../apis/essay'
+import { Essay } from '../../typings/essay'
 
 const Category = () => {
   const [page, setPage] = useState(1)
-
-  // hooks
-  const router = useRouter()
-  const { data: tagEssaysRes } = useSWR(['/api/essay/tag', router.query.id, page], (key, tagId: string, page: number) => getTagEssays(tagId, page))
+  const tagEssays: Essay[] = []
 
   // 分页发生变更的回调事件
   const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
@@ -26,11 +22,11 @@ const Category = () => {
 
   return (
     <Container>
-      {(tagEssaysRes?.data?.docs || []).map((essay) => (
-        <Wrapper key={essay._id} essay={essay} />
+      {tagEssays.map((essay) => (
+        <Wrapper key={essay.id} essay={essay} />
       ))}
 
-      <Pagination className='mt-7' count={tagEssaysRes?.data?.totalPages} color='primary' onChange={onPageChange} />
+      <Pagination className='mt-7' count={10} color='primary' onChange={onPageChange} />
     </Container>
   )
 }
@@ -41,9 +37,7 @@ export default Category
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
     props: {
-      fallback: {
-        [unstable_serialize(['/api/essay/tag', params?.id, 1])]: await getTagEssays(params?.id as string)
-      }
+      tagEssays: params?.id ? (await getEssays(1, 10, Number(params?.id))).data?.essays : []
     }
   }
 }

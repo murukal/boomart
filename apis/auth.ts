@@ -5,7 +5,7 @@ import type { LoginInput, User } from '../typings/auth'
 /**
  * 获取用户信息
  */
-const WHO_AM_I: TypedDocumentNode<{
+export const WHO_AM_I: TypedDocumentNode<{
   whoAmI: User
 }> = gql`
   query {
@@ -17,11 +17,6 @@ const WHO_AM_I: TypedDocumentNode<{
     }
   }
 `
-
-export const whoAmI = async () =>
-  await fetcher.query({
-    query: WHO_AM_I
-  })
 
 /**
  * 登陆

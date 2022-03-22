@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
 // third
 import { CacheProvider } from '@emotion/react'
-import { SWRConfig } from 'swr'
 // project
 import { createEmotionCache } from '../utils/ui'
 import theme from '../theme'
@@ -21,34 +20,28 @@ import '../styles/index.css'
 const App = (props: AppProps) => {
   const {
     Component,
-    pageProps: { session, fallback, ...pageProps }
+    pageProps: { session, ...pageProps }
   } = props
 
   const emotionCache = createEmotionCache()
 
   /** createElement */
   return (
-    <SWRConfig
-      value={{
-        fallback
-      }}
-    >
-      <SessionProvider session={session}>
-        <CacheProvider value={emotionCache}>
-          <Provider store={store}>
-            <ThemeProvider theme={theme}>
-              <Head>
-                <title>番土番土</title>
-                <link rel='icon' href={boomartUrl.src} />
-              </Head>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </ThemeProvider>
-          </Provider>
-        </CacheProvider>
-      </SessionProvider>
-    </SWRConfig>
+    <SessionProvider session={session}>
+      <CacheProvider value={emotionCache}>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <Head>
+              <title>番土番土</title>
+              <link rel='icon' href={boomartUrl.src} />
+            </Head>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </Provider>
+      </CacheProvider>
+    </SessionProvider>
   )
 }
 

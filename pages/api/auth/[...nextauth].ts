@@ -5,8 +5,8 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 // third
 import { JwtPayload, sign, verify } from 'jsonwebtoken'
 // project
-import { login, whoAmI } from '../../../apis/auth'
-import { getJwtSecret } from '../../../apis'
+import { login, WHO_AM_I } from '../../../apis/auth'
+import { fetcher, getJwtSecret } from '../../../apis'
 import type { LoginInput, User } from '../../../typings/auth'
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
@@ -33,10 +33,15 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           // 账号密码登录
           const result = await login(credentials as LoginInput)
 
-          console.log('result===')
-
           // 成功获取到token后，获取用户信息
-          const { data } = await whoAmI()
+          const { data } = await fetcher.mutate({
+            mutation: WHO_AM_I,
+            context: {
+              headers: {
+                Authorization: `Bearer ${result.data?.login}`
+              }
+            }
+          })
 
           return {
             id: data?.whoAmI.id,
