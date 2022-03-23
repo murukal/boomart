@@ -1,31 +1,35 @@
-const st = 'ssss'
+import { gql, TypedDocumentNode } from '@apollo/client'
+import dayjs from 'dayjs'
+import { fetcher } from '.'
+import { TargetType, TopInput, Type } from '../typings/toggle'
 
-export default st
-// // third
-// import dayjs from 'dayjs'
-// // project
-// import requests from '.'
-// import type { CreateToggle, TopQuery, TopResults } from '../typings/toggle'
+const TOP_ESSAY_IDS: TypedDocumentNode<
+  {
+    essayTopIds: number[]
+  },
+  {
+    topInput: TopInput
+  }
+> = gql`
+  query TopEssayIds($topInput: TopInput!) {
+    topEssayIds(topInput: $topInput)
+  }
+`
 
-// const url = '/api/toggle'
+export const getTopEssayIds = (type: Type) => {
+  const to = dayjs()
+  const from = to.subtract(1, 'M')
 
-// export const create = (data: CreateToggle) =>
-//   requests.post(url, {
-//     data
-//   })
-
-// /** 获取文章浏览量榜单 */
-// export const getEssayTop = (query: TopQuery) => {
-//   const to = dayjs()
-//   const from = to.subtract(1, 'M')
-
-//   return requests.get<TopResults>(`${url}/top`, {
-//     params: {
-//       targetType: 'essay',
-//       from: +from,
-//       to: +to,
-//       type: query.type,
-//       limit: query.limit
-//     }
-//   })
-// }
+  return fetcher.query({
+    query: TOP_ESSAY_IDS,
+    variables: {
+      topInput: {
+        from: from.toDate(),
+        to: to.toDate(),
+        limit: 4,
+        targetType: TargetType.essay,
+        type
+      }
+    }
+  })
+}

@@ -11,6 +11,8 @@ import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { GetServerSideProps } from 'next'
 import { getEssays } from '../apis/essay'
+import { getTopEssayIds } from '../apis/toggle'
+import { Type } from '../typings/toggle'
 
 const Home = () => {
   const ref = createRef<HTMLSpanElement>()
@@ -121,6 +123,9 @@ const Home = () => {
 export default Home
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  // 获取浏览量最高的博客
+  const browseTopEssayIds = getTopEssayIds(Type.browse)
+
   return {
     props: {
       latestEssays: (await getEssays()).data?.essays,
