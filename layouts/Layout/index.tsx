@@ -10,8 +10,8 @@ import PerfectScrollbar from 'perfect-scrollbar'
 // project
 import Header from '../Header'
 import Footer from '../Footer'
-import { fetch } from '../../redux/tags/action'
 import type { Props } from './assets'
+import { setTags } from '../../redux/tags/action'
 
 const Layout = (props: Props) => {
   const [ps, setPs] = useState<PerfectScrollbar>()
@@ -22,9 +22,7 @@ const Layout = (props: Props) => {
   /** 渲染 */
   useEffect(() => {
     // 获取tags存入redux
-    fetch().then((res) => {
-      dispatch(res)
-    })
+    setTags().then((action) => dispatch(action))
 
     // 初始化渲染滚动条
     const current = new PerfectScrollbar('#layout')

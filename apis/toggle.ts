@@ -1,7 +1,20 @@
-import { gql, TypedDocumentNode } from '@apollo/client'
+// third
 import dayjs from 'dayjs'
+import { gql } from '@apollo/client'
+import type { TypedDocumentNode } from '@apollo/client'
+// project
 import { fetcher } from '.'
-import { TargetType, TopInput, Type } from '../typings/toggle'
+import type { TopInput } from '../typings/toggle'
+
+export enum Type {
+  browse = 'browse',
+  like = 'like',
+  collect = 'collect'
+}
+
+export enum TargetType {
+  essay = 'essay'
+}
 
 const TOP_ESSAY_IDS: TypedDocumentNode<
   {

@@ -9,7 +9,7 @@ const Tags = (props: Props) => {
     <Box className={props.className}>
       {props.tags.map((tag) => (
         <Typography
-          key={tag._id}
+          key={tag.id}
           className='mr-2.5'
           component='span'
           sx={{

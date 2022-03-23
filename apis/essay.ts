@@ -1,7 +1,7 @@
 // project
 import { gql, TypedDocumentNode } from '@apollo/client'
 import requests, { fetcher } from '.'
-import { PaginateOutput, QueryParams } from '../typings/api'
+import { PaginateInput, PaginateOutput, QueryParams } from '../typings/api'
 import type { Essay, FilterInput } from '../typings/essay'
 
 /**
@@ -43,7 +43,18 @@ export const ESSAYS: TypedDocumentNode<
     essays(paginateInput: $paginateInput) {
       items {
         id
+        title
+        cover
+        tags {
+          id
+          name
+          image
+        }
+        createdBy {
+          username
+        }
       }
+      pageCount
     }
   }
 `
@@ -53,18 +64,17 @@ export const ESSAYS: TypedDocumentNode<
  * 分页
  * 每页4篇
  */
-export const getEssays = (page: number = 1, limit: number = 4, tagId?: number) =>
+export const getEssays = (
+  filterInput?: FilterInput,
+  paginateInput: PaginateInput = {
+    page: 1,
+    limit: 4
+  }
+) =>
   fetcher.query({
     query: ESSAYS,
     variables: {
-      paginateInput: {
-        page,
-        limit: 4
-      },
-      filterInput: {
-        ...(tagId && {
-          tagIds: [tagId]
-        })
-      }
+      paginateInput,
+      filterInput
     }
   })

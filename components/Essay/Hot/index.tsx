@@ -1,7 +1,7 @@
 // react
 import { useMemo } from 'react'
 // mui
-import { Container, Grid, Typography, Paper, Card, CardMedia, CardContent, Box } from '@mui/material'
+import { Container, Grid, Typography, CardMedia } from '@mui/material'
 import { LabelOutlined } from '@mui/icons-material'
 // third
 import { Autoplay, EffectFade, Navigation } from 'swiper'
@@ -10,39 +10,22 @@ import 'swiper/css'
 // project
 import Wrapper from '../Wrapper'
 import { getHotTagStyle } from './assets'
-import { getEssayTop } from '../../../apis/toggle'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
+import type { Essay } from '../../../typings/essay'
 
 const Hot = (props: Props) => {
-  /** 请求浏览量最高的4篇文章 */
-  const { data: browseTopRes } = useSWR('/api/toggle/top/browse/4', () =>
-    getEssayTop({
-      limit: 4,
-      type: 'BROWSE'
-    })
-  )
-
-  const browseTopResults = useMemo(() => browseTopRes?.data || [], [browseTopRes])
-
-  /** 请求点赞量最高的4篇文章 */
-  const { data: thumbUpTopRes } = useSWR('/api/toggle/top/thumb-up/3', () =>
-    getEssayTop({
-      limit: 3,
-      type: 'THUMBUP'
-    })
-  )
-
-  const thumbUpTopResults = useMemo(() => thumbUpTopRes?.data || [], [thumbUpTopRes])
+  const browseTopEssays = useMemo(() => props.browseTopEssays || [], [props.browseTopEssays])
+  const likeTopEssays = useMemo(() => props.likeTopEssays || [], [props.likeTopEssays])
 
   // 抽离tags
-  // const hotTags = useMemo<Tag[]>(() => {
-  //   const tags = [...browseTopResults, ...thumbUpTopResults].reduce((previous, topResult) => {
-  //     return previous.concat(topResult.target.tags as Tag[])
-  //   }, [] as Tag[])
+  const hotTagNames = useMemo(() => {
+    const tagNames = [...browseTopEssays, ...likeTopEssays].reduce<string[]>((previous, essay) => {
+      return previous.concat(essay.tags.map((tag) => tag.name))
+    }, [])
 
-  //   return uniqBy(tags, '_id')
-  // }, [browseTopResults, thumbUpTopResults])
+    return [...new Set(tagNames)]
+  }, [browseTopEssays, likeTopEssays])
 
   return (
     <Container className={props.className}>
@@ -57,9 +40,9 @@ const Hot = (props: Props) => {
 
           <Typography className='ml-1'>热门标签：</Typography>
 
-          {hotTags.map((tag) => (
-            <Typography sx={getHotTagStyle} key={tag._id} component='span' color={(theme) => theme.palette.muted?.main}>
-              {tag.name}
+          {hotTagNames.map((tagName) => (
+            <Typography sx={getHotTagStyle} key={tagName} component='span' color={(theme) => theme.palette.muted?.main}>
+              {tagName}
             </Typography>
           ))}
         </Grid>
@@ -73,12 +56,12 @@ const Hot = (props: Props) => {
             effect='fade'
             navigation={true}
           >
-            {thumbUpTopResults.map((topResult) => (
-              <SwiperSlide className='flex justify-center items-center' key={topResult._id}>
+            {([] as Essay[]).map((essay) => (
+              <SwiperSlide className='flex justify-center items-center' key={essay.id}>
                 <CardMedia
                   component='img'
-                  image={topResult.target.cover || (topResult.target.tags as Tag[]).at(0)?.cover}
-                  alt={topResult.target.title}
+                  image={essay.cover || (essay.tags as Tag[]).at(0)?.image}
+                  alt={essay.title}
                 />
               </SwiperSlide>
             ))}
@@ -86,9 +69,9 @@ const Hot = (props: Props) => {
         </Grid>
 
         {/* 排名后4 */}
-        {browseTopResults.map((topResult) => (
-          <Grid key={topResult.target._id} item xs={4}>
-            <Wrapper essay={topResult.target} type='vertical' />
+        {(props.browseTopEssays || []).map((essay) => (
+          <Grid key={essay.id} item xs={4}>
+            <Wrapper essay={essay} type='vertical' />
           </Grid>
         ))}
       </Grid>

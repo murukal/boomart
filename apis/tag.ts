@@ -1,11 +1,12 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
+import { fetcher } from '.'
 import { PaginateOutput, QueryParams } from '../typings/api'
 import { Tag } from '../typings/tag'
 
 /**
  * 查询多个标签
  */
-export const TAGS: TypedDocumentNode<
+const TAGS: TypedDocumentNode<
   {
     tags: PaginateOutput<Tag>
   },
@@ -15,15 +16,13 @@ export const TAGS: TypedDocumentNode<
     tags(paginateInput: $paginateInput) {
       items {
         id
-        createdAt
-        updatedAt
         name
-        image
       }
-      page
-      limit
-      total
-      pageCount
     }
   }
 `
+
+export const getTags = () =>
+  fetcher.query({
+    query: TAGS
+  })

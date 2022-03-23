@@ -3,23 +3,13 @@ import { useState } from 'react'
 import type { ChangeEvent } from 'react'
 // mui
 import { Box, Container, Grid, Typography, Divider, Pagination } from '@mui/material'
-// third
-import useSWR from 'swr'
 // project
 import Wrapper from '../Wrapper'
-import { getLatest } from '../../../apis/essay'
 import type { Props } from './assets'
 
 const Latest = (props: Props) => {
   /** state */
   const [page, setPage] = useState(1)
-
-  /** hooks */
-  const { data: latestResult } = useSWR(['/api/essay/latest', page], (key: string, page: number) => getLatest(page))
-
-  /** 变量 */
-  const essyas = latestResult?.data?.docs || []
-  const totalPages = latestResult?.data?.totalPages || 0
 
   /** 事件 */
   const onPageChange = (e: ChangeEvent<unknown>, page: number) => {
@@ -35,12 +25,12 @@ const Latest = (props: Props) => {
             <Divider className='mt-2.5' />
 
             {/* 文章列表 */}
-            {essyas.map((essay) => (
-              <Wrapper key={essay._id} essay={essay} />
+            {props.essays.map((essay) => (
+              <Wrapper key={essay.id} essay={essay} />
             ))}
 
             {/* 分页 */}
-            <Pagination className='mt-7' count={totalPages} color='primary' onChange={onPageChange} />
+            <Pagination className='mt-7' count={props.pageCount} color='primary' onChange={onPageChange} />
           </Grid>
 
           <Grid item xs={4}>

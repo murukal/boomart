@@ -3,7 +3,7 @@ import type { Action } from './action'
 
 const reducer = (state = getInitialState(), action: Action) => {
   switch (action.type) {
-    case 'FETCH':
+    case 'SET_TAGS':
       // 获取tags
       return action.data
     default:

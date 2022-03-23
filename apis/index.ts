@@ -17,7 +17,7 @@ import {
 import { GraphQLError } from 'graphql'
 
 const link = createHttpLink({
-  uri: '/graphql',
+  uri: `${process.env.NEXT_PUBLIC_BASE_URL}/graphql`,
   credentials: 'same-origin'
 })
 

@@ -8,18 +8,17 @@ import { Card, CardMedia, CardContent, Typography } from '@mui/material'
 import Tags from '../Tags'
 import Signature from '../Signature'
 import type { Props } from './assets'
-import type { Tag } from '../../../typings/tag'
 
 const Wrapper = (props: Props) => {
   const router = useRouter()
   const essay = useMemo(() => props.essay, [props.essay])
-  const tags = useMemo(() => props.essay.tags as Tag[], [props.essay])
+  const tags = useMemo(() => props.essay.tags, [props.essay])
 
   /** 默认卡片大小 */
   const type = useMemo(() => props.type || 'horizontal', [props.type])
 
   /** 路由跳转 */
-  const onGo2Essay = (id: string) => () => {
+  const onGo2Essay = (id: number) => () => {
     router.push(`/essay/${id}`)
   }
 
@@ -43,21 +42,21 @@ const Wrapper = (props: Props) => {
   }, [type])
 
   return (
-    <Card className={styles.cardStyles.className} key={essay._id} elevation={styles.cardStyles.elevation}>
+    <Card className={styles.cardStyles.className} key={essay.id} elevation={styles.cardStyles.elevation}>
       <CardMedia
         className={styles.coverStyles.className}
         style={styles.coverStyles.style}
         height={styles.coverStyles.height}
         component='img'
-        image={essay.cover || tags.at(0)?.cover}
+        image={essay.cover || tags.at(0)?.image}
         alt={essay.title}
-        onClick={onGo2Essay(essay._id)}
+        onClick={onGo2Essay(essay.id)}
       />
       <CardContent className={styles.contentStyles.className} style={styles.contentStyles.style}>
         <Tags className='mb-3' tags={tags} />
 
         {/* 文章标题 */}
-        <Typography className='cursor-pointer' variant='h5' onClick={onGo2Essay(essay._id)}>
+        <Typography className='cursor-pointer' variant='h5' onClick={onGo2Essay(essay.id)}>
           {essay.title}
         </Typography>
 

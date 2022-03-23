@@ -11,10 +11,17 @@ import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { GetServerSideProps } from 'next'
 import { getEssays } from '../apis/essay'
-import { getTopEssayIds } from '../apis/toggle'
-import { Type } from '../typings/toggle'
+import { getTopEssayIds, Type } from '../apis/toggle'
+import { PaginateOutput } from '../typings/api'
+import { Essay } from '../typings/essay'
 
-const Home = () => {
+interface Props {
+  latestEssayProps: PaginateOutput<Essay> | null
+  browseTopEssays: Essay[] | null
+  likeTopEssays: Essay[] | null
+}
+
+const Home = (props: Props) => {
   const ref = createRef<HTMLSpanElement>()
 
   useEffect(() => {
@@ -112,25 +119,43 @@ const Home = () => {
       </Box>
 
       {/* 热门榜单 */}
-      <Hot className='py-8' />
+      <Hot className='py-8' browseTopEssays={props.browseTopEssays} likeTopEssays={props.likeTopEssays} />
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest className='bg-gray-50 py-8' />
+      <Latest
+        className='bg-gray-50 py-8'
+        essays={props.latestEssayProps?.items || []}
+        pageCount={props.latestEssayProps?.pageCount || 0}
+      />
     </>
   )
 }
 
 export default Home
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  // 获取浏览量最高的博客
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  // 获取浏览量最高的文章
   const browseTopEssayIds = getTopEssayIds(Type.browse)
+  // 根据文章id获取文章
+  const browseTopEssayResult = getEssays({
+    ids: (await browseTopEssayIds).data?.essayTopIds
+  })
+
+  // 获取点赞量最高的文章
+  const likeTopEssayIds = getTopEssayIds(Type.like)
+  // 根据文章id获取文章
+  const likeTopEssayResult = getEssays({
+    ids: (await likeTopEssayIds).data?.essayTopIds
+  })
+
+  // 获取最近更新的文章
+  const latestEssayResult = await getEssays()
 
   return {
     props: {
-      latestEssays: (await getEssays()).data?.essays,
-      topBrowseEssays: [],
-      topThumbUpEssays: []
+      latestEssayProps: latestEssayResult.data?.essays || null,
+      browseTopEssays: (await browseTopEssayResult).data?.essays.items || null,
+      likeTopEssays: (await likeTopEssayResult).data?.essays.items || null
     }
   }
 }

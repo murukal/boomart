@@ -8,37 +8,40 @@ import { signIn, useSession } from 'next-auth/react'
 // redux
 import { useSelector } from 'react-redux'
 // mui
-import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography, IconButton } from '@mui/material'
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Tabs,
+  Tab,
+  Avatar,
+  Menu,
+  MenuItem,
+  Typography,
+  IconButton
+} from '@mui/material'
 import { Search, Facebook, Twitter, GitHub, Notes, Home } from '@mui/icons-material'
 // project
 import logo from '../../public/logo.png'
 import ShortcutPortal from '../../components/Navigator/ShortcutPortal'
-import { getMenuTrees } from '../../apis/menu'
-import type { MenuTree } from '../../typings/menu'
+import type { Menu as MenuType } from '../../typings/menu'
+import type { State } from '../../redux'
+import type { Tag } from '../../typings/tag'
 
 const Header = () => {
-  const [menuTree, setMenuTree] = useState<MenuTree | null>()
+  const [menus, setMenus] = useState<MenuType[] | null>()
   const [isUserProfileOpened, setIsUserProfileOpened] = useState(false)
 
   const userProfileEl = useRef(null)
   const router = useRouter()
-  const tags = useSelector((state) => state.tags)
+  const tags = useSelector<State, Tag[]>((state) => state.tags)
   const { data: session } = useSession()
 
   /** 搜索 */
   const onSearch = () => {
     router.push('/search')
   }
-
-  const onFetch = async () => {
-    // 菜单树
-    setMenuTree((await getMenuTrees(['BOOMART'])).data?.at(0))
-  }
-
-  /** 初次渲染请求 */
-  useEffect(() => {
-    onFetch()
-  }, [])
 
   /** 用户菜单关闭 */
   const onUserProfileClose = () => {
@@ -59,7 +62,10 @@ const Header = () => {
   }
 
   /** tabs */
-  const tabs = useMemo(() => tags.map((tag) => <Tab key={tag._id} label={tag.name} value={`/category/${tag._id}`} />), [tags])
+  const tabs = useMemo(
+    () => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />),
+    [tags]
+  )
 
   /** 选中 tab */
   const tabValue = useMemo(
@@ -81,7 +87,12 @@ const Header = () => {
 
     return (
       <>
-        <Avatar ref={userProfileEl} className='ml-2 w-8 h-8' src={session.user?.image || undefined} onClick={onUserProfileOpen} />
+        <Avatar
+          ref={userProfileEl}
+          className='ml-2 w-8 h-8'
+          src={session.user?.image || undefined}
+          onClick={onUserProfileOpen}
+        />
         <Menu anchorEl={userProfileEl.current} open={isUserProfileOpened} onClose={onUserProfileClose}>
           <MenuItem onClick={onLogout}>
             <Typography color='primary'>注销</Typography>
@@ -98,7 +109,7 @@ const Header = () => {
         <Image src={logo} alt='logo' />
 
         <Box className='flex items-center'>
-          <ShortcutPortal
+          {/* <ShortcutPortal
             menuTreeNodes={menuTree?.nodes}
             portal={{
               description: '传送门'
@@ -107,7 +118,7 @@ const Header = () => {
               horizontal: 'left',
               vertical: 'bottom'
             }}
-          />
+          /> */}
 
           <Divider className='mx-3 h-5' orientation='vertical' />
           <Button variant='text' startIcon={<Search />} onClick={onSearch}>

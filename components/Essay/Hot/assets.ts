@@ -1,8 +1,13 @@
 // mui
 import type { SxProps, Theme } from '@mui/material'
+// project
+import type { Essay } from '../../../typings/essay'
 
 export interface Props {
   className?: string
+
+  browseTopEssays: Essay[] | null
+  likeTopEssays: Essay[] | null
 }
 
 export const getHotTagStyle: SxProps<Theme> = (theme: Theme) => ({

@@ -1,12 +1,4 @@
-export enum Type {
-  browse = 'browse',
-  like = 'like',
-  collect = 'collect'
-}
-
-export enum TargetType {
-  essay = 'essay'
-}
+import { TargetType, Type } from '../apis/toggle'
 
 export interface TopInput {
   type: Type
