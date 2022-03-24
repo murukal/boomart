@@ -18,7 +18,7 @@ import { GraphQLError } from 'graphql'
 
 const link = createHttpLink({
   uri: `${process.env.NEXT_PUBLIC_BASE_URL}/graphql`,
-  credentials: 'same-origin'
+  credentials: 'include'
 })
 
 /**
@@ -58,7 +58,7 @@ const JWT_SECRET: TypedDocumentNode<{
   jwtSecret: string
 }> = gql`
   query {
-    rsaPublicKey
+    jwtSecret
   }
 `
 

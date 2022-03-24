@@ -4,7 +4,7 @@ import { gql } from '@apollo/client'
 import type { TypedDocumentNode } from '@apollo/client'
 // project
 import { fetcher } from '.'
-import type { TopInput } from '../typings/toggle'
+import type { CreateToggleInput, Toggle, TopInput } from '../typings/toggle'
 
 export enum Type {
   browse = 'browse',
@@ -16,6 +16,9 @@ export enum TargetType {
   essay = 'essay'
 }
 
+/**
+ * 查询榜单文章ids
+ */
 const TOP_ESSAY_IDS: TypedDocumentNode<
   {
     essayTopIds: number[]
@@ -46,3 +49,27 @@ export const getTopEssayIds = (type: Type) => {
     }
   })
 }
+
+/**
+ * 创建toggle
+ */
+const CREATE: TypedDocumentNode<
+  { createToggle: Toggle },
+  {
+    createToggleInput: CreateToggleInput
+  }
+> = gql`
+  mutation CreateToggle($createToggleInput: CreateToggleInput!) {
+    createToggle(createToggleInput: $createToggleInput) {
+      id
+    }
+  }
+`
+
+export const create = (createToggleInput: CreateToggleInput) =>
+  fetcher.mutate({
+    mutation: CREATE,
+    variables: {
+      createToggleInput
+    }
+  })

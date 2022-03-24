@@ -7,7 +7,6 @@ import { JwtPayload, sign, verify } from 'jsonwebtoken'
 // project
 import { login, WHO_AM_I } from '../../../apis/auth'
 import { fetcher, getJwtSecret } from '../../../apis'
-import type { LoginInput, User } from '../../../typings/auth'
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   // 获取后端中存在的秘钥
@@ -25,17 +24,33 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         // 表单名
         name: 'Loacl',
 
-        // 用于next-auth自动生成表单，其他场景无用
-        credentials: {},
+        // ts 用途
+        credentials: {
+          keyword: { label: 'keyword', type: 'text' },
+          password: { label: 'Password', type: 'password' }
+        },
 
         // 验证逻辑
         async authorize(credentials) {
-          // 账号密码登录
-          const result = await login(credentials as LoginInput)
+          // 没有认证信息
+          if (!credentials) return null
 
-          // 成功获取到token后，获取用户信息
-          const { data } = await fetcher.mutate({
-            mutation: WHO_AM_I,
+          // 账号密码登录
+          const result = await login({
+            keyword: credentials?.keyword,
+            password: credentials?.password
+          })
+
+          // 登录接口报错，返回异常
+          if (!result.data?.login)
+            return {
+              error: 'login'
+            }
+
+          // 根据拿到的token，请求用户信息
+          // 将token放到请求头里面
+          const { data, errors, error } = await fetcher.query({
+            query: WHO_AM_I,
             context: {
               headers: {
                 Authorization: `Bearer ${result.data?.login}`
@@ -43,11 +58,18 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             }
           })
 
+          if (!data?.whoAmI) {
+            return {
+              error: 'whoAmI'
+            }
+          }
+
           return {
-            id: data?.whoAmI.id,
-            name: data?.whoAmI.username,
-            email: data?.whoAmI.email,
-            image: data?.whoAmI.avatar
+            // 用户信息
+            id: data.whoAmI.id,
+            name: data.whoAmI.username,
+            email: data.whoAmI.email,
+            image: data.whoAmI.avatar
           }
         }
       })
@@ -57,7 +79,12 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 
     callbacks: {
       /** 登录后的回调 */
-      signIn: async () => {
+      signIn: async ({ user }) => {
+        // 存在异常码，重定向到登录页
+        if (user.error) {
+          return `/account/login?error=${user.error}`
+        }
+
         return true
       },
 
@@ -69,6 +96,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       /** 生成用户会话 */
       session: async ({ session }) => {
         return session
+      },
+
+      /** 回调url */
+      redirect(params) {
+        return params.url
       }
     },
 

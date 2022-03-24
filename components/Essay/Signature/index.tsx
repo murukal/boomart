@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 // project
 import { textStyle, subScriptStyle } from './assets'
 import type { Props } from './assets'
-import type { User } from '../../../typings/user'
+import type { User } from '../../../typings/auth'
 
 const Signature = (props: Props) => {
   const createdBy = useMemo<User>(() => {

@@ -8,19 +8,7 @@ import { signIn, useSession } from 'next-auth/react'
 // redux
 import { useSelector } from 'react-redux'
 // mui
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Tabs,
-  Tab,
-  Avatar,
-  Menu,
-  MenuItem,
-  Typography,
-  IconButton
-} from '@mui/material'
+import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography, IconButton } from '@mui/material'
 import { Search, Facebook, Twitter, GitHub, Notes, Home } from '@mui/icons-material'
 // project
 import logo from '../../public/logo.png'
@@ -36,7 +24,6 @@ const Header = () => {
   const userProfileEl = useRef(null)
   const router = useRouter()
   const tags = useSelector<State, Tag[]>((state) => state.tags)
-  const { data: session } = useSession()
 
   /** 搜索 */
   const onSearch = () => {
@@ -62,10 +49,7 @@ const Header = () => {
   }
 
   /** tabs */
-  const tabs = useMemo(
-    () => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />),
-    [tags]
-  )
+  const tabs = useMemo(() => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />), [tags])
 
   /** 选中 tab */
   const tabValue = useMemo(
@@ -73,34 +57,34 @@ const Header = () => {
     [tags, router.asPath]
   )
 
+  /** 进入登录页面 */
+  const onGo2Login = () => {
+    signIn(undefined, { callbackUrl: router.asPath })
+  }
+
   /**
    * 登录：用户头像
    * 未登录：登录按钮
    */
   const authentication = useMemo(() => {
-    if (!session)
-      return (
-        <Button variant='contained' onClick={() => signIn(undefined, { callbackUrl: router.asPath })}>
-          Sign in
-        </Button>
-      )
-
+    // if (!session)
     return (
-      <>
-        <Avatar
-          ref={userProfileEl}
-          className='ml-2 w-8 h-8'
-          src={session.user?.image || undefined}
-          onClick={onUserProfileOpen}
-        />
-        <Menu anchorEl={userProfileEl.current} open={isUserProfileOpened} onClose={onUserProfileClose}>
-          <MenuItem onClick={onLogout}>
-            <Typography color='primary'>注销</Typography>
-          </MenuItem>
-        </Menu>
-      </>
+      <Button variant='contained' onClick={onGo2Login}>
+        Sign in
+      </Button>
     )
-  }, [session])
+
+    // return (
+    //   <>
+    //     <Avatar ref={userProfileEl} className='ml-2 w-8 h-8' src={session.user?.image || undefined} onClick={onUserProfileOpen} />
+    //     <Menu anchorEl={userProfileEl.current} open={isUserProfileOpened} onClose={onUserProfileClose}>
+    //       <MenuItem onClick={onLogout}>
+    //         <Typography color='primary'>注销</Typography>
+    //       </MenuItem>
+    //     </Menu>
+    //   </>
+    // )
+  }, [])
 
   return (
     <>

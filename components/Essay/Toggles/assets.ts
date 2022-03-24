@@ -1,4 +1,4 @@
 export interface Props {
   className: string
-  essayId: string
+  essayId: number
 }

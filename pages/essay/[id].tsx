@@ -12,9 +12,9 @@ import ReactMarkdown from 'react-markdown'
 import Toggles from '../../components/Essay/Toggles'
 import Comments from '../../components/Essay/Comments'
 import { getEssay } from '../../apis/essay'
-import { create } from '../../apis/toggle'
+import { create, TargetType, Type } from '../../apis/toggle'
 import type { Essay } from '../../typings/essay'
-import type { User } from '../../typings/user'
+import type { User } from '../../typings/auth'
 import type { Tag } from '../../typings/tag'
 
 interface Props {
@@ -25,19 +25,19 @@ const Essay = (props: Props) => {
   const essay = useMemo(() => props.essay, [props.essay])
 
   const createdBy = useMemo(() => {
-    return essay.createdBy as User
+    return essay.createdBy
   }, [essay])
 
   const cover = useMemo(() => {
-    return essay.cover || (essay.tags[0] as Tag | undefined)?.cover || ''
+    return essay.cover || essay.tags.at(0)?.image
   }, [essay])
 
   /** 页面渲染触发 */
   useEffect(() => {
     create({
-      target: essay._id,
-      targetType: 'essay',
-      type: 'BROWSE'
+      targetId: essay.id,
+      targetType: TargetType.essay,
+      type: Type.browse
     })
   }, [])
 
@@ -76,19 +76,12 @@ const Essay = (props: Props) => {
         </Typography>
 
         {essay.tags.map((tag) => (
-          <Typography
-            key={(tag as Tag)._id}
-            className='ml-3'
-            fontSize={14}
-            fontStyle='italic'
-            color={(theme) => theme.palette.muted?.main}
-            component='span'
-          >
-            <Link href={`/category/${(tag as Tag)._id}`}>{(tag as Tag).name}</Link>
+          <Typography key={tag.id} className='ml-3' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main} component='span'>
+            <Link href={`/category/${tag.id}`}>{(tag as Tag).name}</Link>
           </Typography>
         ))}
 
-        <Toggles className='ml-auto' essayId={essay._id} />
+        <Toggles className='ml-auto' essayId={essay.id} />
       </Box>
 
       {/* 关于作者 */}
@@ -121,18 +114,23 @@ const Essay = (props: Props) => {
 export default Essay
 
 /** 服务端渲染 */
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { data: essay } = await getEssay(params?.id as string)
-
-  // 文章未找到，返回404
-  if (!essay)
+export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
+  if (!params?.id)
     return {
       notFound: true
     }
 
+  const { data } = await getEssay(Number(params?.id))
+
+  if (!data?.essay) {
+    return {
+      notFound: true
+    }
+  }
+
   return {
     props: {
-      essay
+      essay: data?.essay
     }
   }
 }

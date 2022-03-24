@@ -24,8 +24,6 @@ interface Props {
 const Home = (props: Props) => {
   const ref = createRef<HTMLSpanElement>()
 
-  console.log('props====', props.likeTopEssays)
-
   useEffect(() => {
     // 返回的函数传递给Effect，取消订阅
     return setTypedUI(ref)

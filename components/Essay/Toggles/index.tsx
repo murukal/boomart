@@ -1,34 +1,44 @@
+// react
+import { useState } from 'react'
 // mui
 import { Box, IconButton } from '@mui/material'
-import { ThumbUp, Favorite, Comment } from '@mui/icons-material'
+import { ThumbUp, Favorite } from '@mui/icons-material'
 // project
+import { create, TargetType, Type } from '../../../apis/toggle'
 import type { Props } from './assets'
-import type { Type as ToggleType } from '../../../typings/toggle'
-import { create } from '../../../apis/toggle'
 
 const Toggles = (props: Props) => {
-  const onToggle = (type: ToggleType) => async () => {
-    const res = await create({
-      target: props.essayId,
-      targetType: 'essay',
+  const [isLiked, setIsLiked] = useState(false)
+  const [isCollected, setIsCollected] = useState(false)
+
+  const onToggle = (type: Type) => async () => {
+    const result = await create({
+      targetId: props.essayId,
+      targetType: TargetType.essay,
       type
     })
 
-    console.log('res====', res)
+    if (!result.data?.createToggle) return
+
+    // 设置状态
+    switch (type) {
+      case Type.like:
+        setIsLiked((state) => !state)
+        break
+      case Type.collect:
+        setIsCollected((state) => !state)
+        break
+    }
   }
 
   return (
     <Box className={props.className}>
-      <IconButton onClick={onToggle('THUMBUP')}>
-        <ThumbUp />
+      <IconButton onClick={onToggle(Type.like)}>
+        <ThumbUp color={isLiked ? 'error' : undefined} />
       </IconButton>
 
-      <IconButton onClick={onToggle('FAVORITE')}>
-        <Favorite />
-      </IconButton>
-
-      <IconButton onClick={onToggle('COMMENT')}>
-        <Comment />
+      <IconButton onClick={onToggle(Type.collect)}>
+        <Favorite color={isCollected ? 'error' : undefined} />
       </IconButton>
     </Box>
   )
