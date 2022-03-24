@@ -26,8 +26,11 @@ const Wrapper = (props: Props) => {
   const styles = useMemo(() => {
     return {
       cardStyles: {
-        className: type === 'horizontal' ? 'flex bg-gray-50 mt-7' : undefined,
-        elevation: type === 'horizontal' ? 0 : undefined
+        className: type === 'horizontal' ? 'flex mt-7' : undefined,
+        elevation: type === 'horizontal' ? 0 : undefined,
+        style: {
+          backgroundColor: props.color || 'rgb(249 250 251 / var(--tw-bg-opacity))'
+        }
       },
       coverStyles: {
         className: `cursor-pointer ${type === 'horizontal' ? 'rounded-r' : ''}`,
@@ -42,7 +45,7 @@ const Wrapper = (props: Props) => {
   }, [type])
 
   return (
-    <Card className={styles.cardStyles.className} key={essay.id} elevation={styles.cardStyles.elevation}>
+    <Card className={styles.cardStyles.className} key={essay.id} elevation={styles.cardStyles.elevation} style={styles.cardStyles.style}>
       <CardMedia
         className={styles.coverStyles.className}
         style={styles.coverStyles.style}

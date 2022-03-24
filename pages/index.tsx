@@ -24,6 +24,8 @@ interface Props {
 const Home = (props: Props) => {
   const ref = createRef<HTMLSpanElement>()
 
+  console.log('props====', props.likeTopEssays)
+
   useEffect(() => {
     // 返回的函数传递给Effect，取消订阅
     return setTypedUI(ref)
@@ -122,11 +124,7 @@ const Home = (props: Props) => {
       <Hot className='py-8' browseTopEssays={props.browseTopEssays} likeTopEssays={props.likeTopEssays} />
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest
-        className='bg-gray-50 py-8'
-        essays={props.latestEssayProps?.items || []}
-        pageCount={props.latestEssayProps?.pageCount || 0}
-      />
+      <Latest className='bg-gray-50 py-8' essays={props.latestEssayProps?.items || []} pageCount={props.latestEssayProps?.pageCount || 0} />
     </>
   )
 }

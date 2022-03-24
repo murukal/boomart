@@ -12,7 +12,6 @@ import Wrapper from '../Wrapper'
 import { getHotTagStyle } from './assets'
 import type { Props } from './assets'
 import type { Tag } from '../../../typings/tag'
-import type { Essay } from '../../../typings/essay'
 
 const Hot = (props: Props) => {
   const browseTopEssays = useMemo(() => props.browseTopEssays || [], [props.browseTopEssays])
@@ -26,6 +25,10 @@ const Hot = (props: Props) => {
 
     return [...new Set(tagNames)]
   }, [browseTopEssays, likeTopEssays])
+
+  const onSlideChange = () => {
+    console.log('slide change')
+  }
 
   return (
     <Container className={props.className}>
@@ -51,25 +54,21 @@ const Hot = (props: Props) => {
           <Swiper
             className='h-full'
             modules={[Autoplay, EffectFade, Navigation]}
-            onSlideChange={() => console.log('slide change')}
+            onSlideChange={onSlideChange}
             autoplay={true}
             effect='fade'
             navigation={true}
           >
-            {([] as Essay[]).map((essay) => (
+            {likeTopEssays.map((essay) => (
               <SwiperSlide className='flex justify-center items-center' key={essay.id}>
-                <CardMedia
-                  component='img'
-                  image={essay.cover || (essay.tags as Tag[]).at(0)?.image}
-                  alt={essay.title}
-                />
+                <CardMedia component='img' image={essay.cover || (essay.tags as Tag[]).at(0)?.image} alt={essay.title} />
               </SwiperSlide>
             ))}
           </Swiper>
         </Grid>
 
-        {/* 排名后4 */}
-        {(props.browseTopEssays || []).map((essay) => (
+        {/* 浏览量榜单4 */}
+        {browseTopEssays.map((essay) => (
           <Grid key={essay.id} item xs={4}>
             <Wrapper essay={essay} type='vertical' />
           </Grid>
