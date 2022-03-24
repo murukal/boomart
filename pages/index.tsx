@@ -14,6 +14,7 @@ import { getEssays } from '../apis/essay'
 import { getTopEssayIds, Type } from '../apis/toggle'
 import { PaginateOutput } from '../typings/api'
 import { Essay } from '../typings/essay'
+import { getSession } from 'next-auth/react'
 
 interface Props {
   latestEssayProps: PaginateOutput<Essay> | null
@@ -122,14 +123,18 @@ const Home = (props: Props) => {
       <Hot className='py-8' browseTopEssays={props.browseTopEssays} likeTopEssays={props.likeTopEssays} />
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest className='bg-gray-50 py-8' essays={props.latestEssayProps?.items || []} pageCount={props.latestEssayProps?.pageCount || 0} />
+      <Latest
+        className='bg-gray-50 py-8'
+        essays={props.latestEssayProps?.items || []}
+        pageCount={props.latestEssayProps?.pageCount || 0}
+      />
     </>
   )
 }
 
 export default Home
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
   // 获取浏览量最高的文章
   const browseTopEssayIds = getTopEssayIds(Type.browse)
   // 根据文章id获取文章
@@ -146,6 +151,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 
   // 获取最近更新的文章
   const latestEssayResult = await getEssays()
+
+  // 获取next-auth中存储的用户信息
+  // const session = await getSession({ req })
+
+  // console.log('index==== session====', session)
 
   return {
     props: {

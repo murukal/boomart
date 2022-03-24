@@ -26,7 +26,7 @@ const Wrapper = (props: Props) => {
   const styles = useMemo(() => {
     return {
       cardStyles: {
-        className: type === 'horizontal' ? 'flex mt-7' : undefined,
+        className: type === 'horizontal' ? 'flex mt-7' : 'h-full',
         elevation: type === 'horizontal' ? 0 : undefined,
         style: {
           backgroundColor: props.color || 'rgb(249 250 251 / var(--tw-bg-opacity))'
@@ -45,7 +45,12 @@ const Wrapper = (props: Props) => {
   }, [type])
 
   return (
-    <Card className={styles.cardStyles.className} key={essay.id} elevation={styles.cardStyles.elevation} style={styles.cardStyles.style}>
+    <Card
+      className={styles.cardStyles.className}
+      key={essay.id}
+      elevation={styles.cardStyles.elevation}
+      style={styles.cardStyles.style}
+    >
       <CardMedia
         className={styles.coverStyles.className}
         style={styles.coverStyles.style}

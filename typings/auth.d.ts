@@ -9,4 +9,6 @@ export interface User extends Core {
   username: string
   email: string
   avatar: string
+
+  creationCount: number
 }

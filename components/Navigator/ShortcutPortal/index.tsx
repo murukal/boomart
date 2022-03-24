@@ -14,8 +14,8 @@ const ShortCutPortal = (props: Props) => {
   const portalEl = useRef(null)
   const router = useRouter()
 
-  const menuTreeNodes = useMemo(() => props.menuTreeNodes || [], [props.menuTreeNodes])
-  const isParent = useMemo(() => menuTreeNodes.length !== 0, [menuTreeNodes])
+  const menus = useMemo(() => props.menus || [], [props.menus])
+  const isParent = useMemo(() => menus.length !== 0, [menus])
 
   /** 打开侧边栏或者跳转页面 */
   const onPortalOpen = () => {
@@ -36,11 +36,11 @@ const ShortCutPortal = (props: Props) => {
     <>
       {!props.onPrevPortalClick ? (
         <Button ref={portalEl} variant='text' endIcon={isParent && <KeyboardArrowDown />} onClick={onPortalOpen}>
-          {props.portal.description}
+          {props.portal.name}
         </Button>
       ) : (
         <MenuItem ref={portalEl} onClick={onPortalOpen}>
-          <Typography color='primary'>{props.portal.description}</Typography>
+          <Typography color='primary'>{props.portal.name}</Typography>
         </MenuItem>
       )}
 
@@ -52,10 +52,14 @@ const ShortCutPortal = (props: Props) => {
             horizontal: props.anchorOrigin?.horizontal || 'right',
             vertical: props.anchorOrigin?.vertical || 'top'
           }}
+          transformOrigin={{
+            horizontal: 0,
+            vertical: -12
+          }}
           onClose={onPortalClose}
         >
-          {menuTreeNodes.map((menu) => (
-            <ShortCutPortal key={menu._id} portal={menu} menuTreeNodes={menu.children} onPrevPortalClick={onPortalClose} />
+          {menus.map((menu) => (
+            <ShortCutPortal key={menu.id} portal={menu} menus={menu.children} onPrevPortalClick={onPortalClose} />
           ))}
         </Menu>
       )}

@@ -13,8 +13,7 @@ import {
   QueryOptions,
   TypedDocumentNode
 } from '@apollo/client'
-// project
-import { GraphQLError } from 'graphql'
+import type { GraphQLError } from 'graphql'
 
 const link = createHttpLink({
   uri: `${process.env.NEXT_PUBLIC_BASE_URL}/graphql`,

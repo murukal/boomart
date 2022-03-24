@@ -18,6 +18,18 @@ const ESSAY: TypedDocumentNode<
   query Essay($id: Int!) {
     essay(id: $id) {
       id
+      tags {
+        id
+        name
+        image
+      }
+      createdBy {
+        username
+        avatar
+        creationCount
+      }
+      title
+      content
     }
   }
 `

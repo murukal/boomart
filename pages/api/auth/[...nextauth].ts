@@ -89,13 +89,13 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       },
 
       /** session 回调 内的数据来源于 jwt 回调 */
-      jwt: async ({ token }) => {
-        return token
+      jwt: async (params) => {
+        return params.token
       },
 
       /** 生成用户会话 */
-      session: async ({ session }) => {
-        return session
+      session: async (params) => {
+        return params.session
       },
 
       /** 回调url */
@@ -105,14 +105,16 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     },
 
     jwt: {
-      encode: async ({ token, secret }) => {
-        return sign(
+      encode: async (params) =>
+        sign(
           {
-            id: token?.sub
+            id: params.token?.sub,
+            name: params.token?.name,
+            email: params.token?.email,
+            image: params.token?.picture
           },
-          secret
-        )
-      },
+          params.secret
+        ),
 
       decode: async ({ token, secret }) => {
         if (!token) return null
@@ -121,7 +123,10 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 
         // 返回token payload
         return {
-          sub: payload.id
+          sub: payload.id,
+          name: payload.name,
+          email: payload.email,
+          picture: payload.image
         }
       }
     },

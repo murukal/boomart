@@ -8,12 +8,14 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
 // third
 import { CacheProvider } from '@emotion/react'
+import { ApolloProvider } from '@apollo/client'
 // project
 import { createEmotionCache } from '../utils/ui'
 import theme from '../theme'
 import Layout from '../layouts/Layout'
 import store from '../redux'
 import boomartUrl from '../public/boomart.ico'
+import client from '../apis'
 // styles
 import '../styles/index.css'
 
@@ -27,21 +29,23 @@ const App = (props: AppProps) => {
 
   /** createElement */
   return (
-    <SessionProvider session={session}>
-      <CacheProvider value={emotionCache}>
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <Head>
-              <title>番土番土</title>
-              <link rel='icon' href={boomartUrl.src} />
-            </Head>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ThemeProvider>
-        </Provider>
-      </CacheProvider>
-    </SessionProvider>
+    <ApolloProvider client={client}>
+      <SessionProvider session={session}>
+        <CacheProvider value={emotionCache}>
+          <Provider store={store}>
+            <ThemeProvider theme={theme}>
+              <Head>
+                <title>番土番土</title>
+                <link rel='icon' href={boomartUrl.src} />
+              </Head>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </ThemeProvider>
+          </Provider>
+        </CacheProvider>
+      </SessionProvider>
+    </ApolloProvider>
   )
 }
 

@@ -14,8 +14,6 @@ import Comments from '../../components/Essay/Comments'
 import { getEssay } from '../../apis/essay'
 import { create, TargetType, Type } from '../../apis/toggle'
 import type { Essay } from '../../typings/essay'
-import type { User } from '../../typings/auth'
-import type { Tag } from '../../typings/tag'
 
 interface Props {
   essay: Essay
@@ -50,7 +48,7 @@ const Essay = (props: Props) => {
 
       {/* 著作信息 */}
       <Box className='mt-12 flex items-center'>
-        <Avatar src={createdBy.avatar}></Avatar>
+        <Avatar src={createdBy.avatar} />
 
         <Box className='ml-4' color='#666'>
           <Box>
@@ -76,8 +74,15 @@ const Essay = (props: Props) => {
         </Typography>
 
         {essay.tags.map((tag) => (
-          <Typography key={tag.id} className='ml-3' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main} component='span'>
-            <Link href={`/category/${tag.id}`}>{(tag as Tag).name}</Link>
+          <Typography
+            key={tag.id}
+            className='ml-3'
+            fontSize={14}
+            fontStyle='italic'
+            color={(theme) => theme.palette.muted?.main}
+            component='span'
+          >
+            <Link href={`/category/${tag.id}`}>{tag.name}</Link>
           </Typography>
         ))}
 
@@ -86,7 +91,7 @@ const Essay = (props: Props) => {
 
       {/* 关于作者 */}
       <Card className='mt-12 p-7 flex'>
-        <CardMedia className='rounded-full w-24 h-24' component='img' image={createdBy.avatar} />
+        <Avatar className='w-24 h-24' src={createdBy.avatar} />
 
         <CardContent
           className='ml-10'
@@ -101,7 +106,7 @@ const Essay = (props: Props) => {
           <Typography className='mt-4'>{createdBy.username}</Typography>
 
           <Typography className='mt-4' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main}>
-            <Link href='/'>去看下 ta (125)</Link>
+            <Link href='/'>{`去看下 ta ( ${createdBy.creationCount} )`}</Link>
           </Typography>
         </CardContent>
       </Card>
