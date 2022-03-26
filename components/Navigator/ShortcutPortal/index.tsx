@@ -3,7 +3,8 @@ import { useRouter } from 'next/router'
 // react
 import { useRef, useState, useMemo } from 'react'
 // mui
-import { Button, Menu, MenuItem, Typography } from '@mui/material'
+import { Menu, MenuItem, Typography } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import { KeyboardArrowDown } from '@mui/icons-material'
 // project
 import type { Props } from './assets'
@@ -15,7 +16,7 @@ const ShortCutPortal = (props: Props) => {
   const router = useRouter()
 
   const menus = useMemo(() => props.menus || [], [props.menus])
-  const isParent = useMemo(() => menus.length, [menus])
+  const isParent = useMemo(() => !!menus.length, [menus])
 
   /** 打开侧边栏或者跳转页面 */
   const onPortalOpen = () => {
@@ -35,9 +36,15 @@ const ShortCutPortal = (props: Props) => {
   return (
     <>
       {!props.onPrevPortalClick ? (
-        <Button ref={portalEl} variant='text' endIcon={isParent && <KeyboardArrowDown />} onClick={onPortalOpen}>
+        <LoadingButton
+          ref={portalEl}
+          loading={props.isLoading}
+          variant='text'
+          endIcon={isParent && <KeyboardArrowDown />}
+          onClick={onPortalOpen}
+        >
           {props.portal.name}
-        </Button>
+        </LoadingButton>
       ) : (
         <MenuItem ref={portalEl} onClick={onPortalOpen}>
           <Typography color='primary'>{props.portal.name}</Typography>

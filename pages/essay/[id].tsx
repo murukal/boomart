@@ -2,6 +2,7 @@
 import { useMemo, useEffect } from 'react'
 // next
 import Link from 'next/link'
+import { getSession } from 'next-auth/react'
 import type { GetServerSideProps } from 'next'
 // mui
 import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from '@mui/material'
@@ -65,7 +66,15 @@ const Essay = (props: Props) => {
       <CardMedia className='rounded-lg mt-12' component='img' height={600} image={cover} alt={essay.title} />
 
       {/* 文章正文 */}
-      <ReactMarkdown className='mt-12'>{essay.content}</ReactMarkdown>
+      <Box
+        sx={{
+          marginTop: '3rem',
+          fontSize: '2rem',
+          fontWeight: 400
+        }}
+      >
+        <ReactMarkdown>{essay.content}</ReactMarkdown>
+      </Box>
 
       {/* tags */}
       <Box className='mt-12 flex items-center'>
@@ -119,7 +128,7 @@ const Essay = (props: Props) => {
 export default Essay
 
 /** 服务端渲染 */
-export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({ params, req }) => {
   if (!params?.id)
     return {
       notFound: true

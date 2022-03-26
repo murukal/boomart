@@ -4,7 +4,8 @@ import { gql } from '@apollo/client'
 import type { TypedDocumentNode } from '@apollo/client'
 // project
 import { fetcher } from '.'
-import type { CreateToggleInput, Toggle, TopInput } from '../typings/toggle'
+import type { CreateToggleInput, RemoveToggleInput, TopInput } from '../typings/toggle'
+import type { Essay } from '../typings/essay'
 
 export enum Type {
   browse = 'browse',
@@ -19,31 +20,42 @@ export enum TargetType {
 /**
  * 查询榜单文章ids
  */
-const TOP_ESSAY_IDS: TypedDocumentNode<
+const TOP_ESSAYS: TypedDocumentNode<
   {
-    essayTopIds: number[]
+    topEssays: Essay[]
   },
   {
     topInput: TopInput
   }
 > = gql`
-  query TopEssayIds($topInput: TopInput!) {
-    topEssayIds(topInput: $topInput)
+  query ($topInput: TopInput!) {
+    topEssays(topInput: $topInput) {
+      id
+      title
+      cover
+      tags {
+        id
+        name
+        image
+      }
+      createdBy {
+        username
+      }
+    }
   }
 `
 
-export const getTopEssayIds = (type: Type) => {
+export const getTopEssays = (type: Type) => {
   const to = dayjs()
   const from = to.subtract(1, 'M')
 
   return fetcher.query({
-    query: TOP_ESSAY_IDS,
+    query: TOP_ESSAYS,
     variables: {
       topInput: {
         from: from.toDate(),
         to: to.toDate(),
         limit: 4,
-        targetType: TargetType.essay,
         type
       }
     }
@@ -54,15 +66,13 @@ export const getTopEssayIds = (type: Type) => {
  * 创建toggle
  */
 const CREATE: TypedDocumentNode<
-  { createToggle: Toggle },
+  { createToggle: boolean },
   {
     createToggleInput: CreateToggleInput
   }
 > = gql`
   mutation CreateToggle($createToggleInput: CreateToggleInput!) {
-    createToggle(createToggleInput: $createToggleInput) {
-      id
-    }
+    createToggle(createToggleInput: $createToggleInput)
   }
 `
 
@@ -71,5 +81,27 @@ export const create = (createToggleInput: CreateToggleInput) =>
     mutation: CREATE,
     variables: {
       createToggleInput
+    }
+  })
+
+/**
+ * 删除toggle
+ */
+const REMOVE: TypedDocumentNode<
+  { removeToggle: boolean },
+  {
+    removeToggleInput: RemoveToggleInput
+  }
+> = gql`
+  mutation RemoveToggle($removeToggleInput: RemoveToggleInput!) {
+    removeToggle(removeToggleInput: $removeToggleInput)
+  }
+`
+
+export const remove = (removeToggleInput: RemoveToggleInput) =>
+  fetcher.mutate({
+    mutation: REMOVE,
+    variables: {
+      removeToggleInput
     }
   })

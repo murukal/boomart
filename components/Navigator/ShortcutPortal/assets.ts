@@ -8,4 +8,6 @@ export interface Props {
   menus?: Menu[]
   anchorOrigin?: PopoverOrigin
   onPrevPortalClick?: Function
+
+  isLoading?: boolean
 }

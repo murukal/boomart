@@ -11,10 +11,9 @@ import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { GetServerSideProps } from 'next'
 import { getEssays } from '../apis/essay'
-import { getTopEssayIds, Type } from '../apis/toggle'
+import { getTopEssays, Type } from '../apis/toggle'
 import { PaginateOutput } from '../typings/api'
 import { Essay } from '../typings/essay'
-import { getSession } from 'next-auth/react'
 
 interface Props {
   latestEssayProps: PaginateOutput<Essay> | null
@@ -136,32 +135,19 @@ export default Home
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
   // 获取浏览量最高的文章
-  const browseTopEssayIds = getTopEssayIds(Type.browse)
-  // 根据文章id获取文章
-  const browseTopEssayResult = getEssays({
-    ids: (await browseTopEssayIds).data?.essayTopIds
-  })
+  const browseTopEssayResult = await getTopEssays(Type.browse)
 
   // 获取点赞量最高的文章
-  const likeTopEssayIds = getTopEssayIds(Type.like)
-  // 根据文章id获取文章
-  const likeTopEssayResult = getEssays({
-    ids: (await likeTopEssayIds).data?.essayTopIds
-  })
+  const likeTopEssayResult = await getTopEssays(Type.like)
 
   // 获取最近更新的文章
   const latestEssayResult = await getEssays()
 
-  // 获取next-auth中存储的用户信息
-  // const session = await getSession({ req })
-
-  // console.log('index==== session====', session)
-
   return {
     props: {
       latestEssayProps: latestEssayResult.data?.essays || null,
-      browseTopEssays: (await browseTopEssayResult).data?.essays.items || null,
-      likeTopEssays: (await likeTopEssayResult).data?.essays.items || null
+      browseTopEssays: browseTopEssayResult.data?.topEssays || null,
+      likeTopEssays: likeTopEssayResult.data?.topEssays || null
     }
   }
 }

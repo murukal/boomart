@@ -30,6 +30,7 @@ const ESSAY: TypedDocumentNode<
       }
       title
       content
+      isLiked
     }
   }
 `
@@ -43,6 +44,25 @@ export const getEssay = (id: number) =>
   })
 
 /**
+ * 查询文章状态
+ */
+export const ESSAY_TOGGLE: TypedDocumentNode<
+  {
+    essay: Essay
+  },
+  {
+    id: number
+  }
+> = gql`
+  query Essay($id: Int!) {
+    essay(id: $id) {
+      isLiked
+      isCollected
+    }
+  }
+`
+
+/**
  * 查询多个文章
  */
 export const ESSAYS: TypedDocumentNode<
@@ -51,8 +71,8 @@ export const ESSAYS: TypedDocumentNode<
   },
   QueryParams<FilterInput>
 > = gql`
-  query Essays($paginateInput: PaginateInput) {
-    essays(paginateInput: $paginateInput) {
+  query Essays($paginateInput: PaginateInput, $filterInput: FilterEssayInput) {
+    essays(paginateInput: $paginateInput, filterInput: $filterInput) {
       items {
         id
         title

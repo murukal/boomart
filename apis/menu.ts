@@ -6,7 +6,7 @@ import { FilterInput, Menu } from '../typings/menu'
 /**
  * 查询多个菜单
  */
-const MENUS: TypedDocumentNode<
+export const MENUS: TypedDocumentNode<
   {
     menus: PaginateOutput<Menu>
   },
@@ -28,13 +28,3 @@ const MENUS: TypedDocumentNode<
     }
   }
 `
-
-export const getMenus = () =>
-  fetcher.query({
-    query: MENUS,
-    variables: {
-      filterInput: {
-        tenantCode: 'BOOMART'
-      }
-    }
-  })

@@ -11,6 +11,9 @@ export interface Essay extends Core {
   tags: Tag[]
 
   createdBy: User
+
+  isLiked: boolean
+  isCollected: boolean
 }
 
 export interface FilterInput {

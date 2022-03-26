@@ -4,7 +4,6 @@ import { TargetType, Type } from '../apis/toggle'
 export interface TopInput {
   type: Type
   limit: number
-  targetType: TargetType
   from: Date
   to: Date
 }
@@ -16,3 +15,5 @@ export interface Toggle extends Core {
 }
 
 export interface CreateToggleInput extends Pick<Toggle, 'type' | 'targetType' | 'targetId'> {}
+
+export interface RemoveToggleInput extends CreateToggleInput {}
