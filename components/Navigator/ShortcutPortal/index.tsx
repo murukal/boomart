@@ -15,7 +15,7 @@ const ShortCutPortal = (props: Props) => {
   const router = useRouter()
 
   const menus = useMemo(() => props.menus || [], [props.menus])
-  const isParent = useMemo(() => menus.length !== 0, [menus])
+  const isParent = useMemo(() => menus.length, [menus])
 
   /** 打开侧边栏或者跳转页面 */
   const onPortalOpen = () => {

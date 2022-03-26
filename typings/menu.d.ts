@@ -2,7 +2,7 @@ import { Core } from '.'
 
 export interface FilterInput {
   parentId?: number
-  tenantId?: number
+  tenantCode?: string
 }
 
 export interface Menu extends Core {

@@ -1,4 +1,5 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
+import { fetcher } from '.'
 import { PaginateOutput } from '../typings/api'
 import { FilterInput, Menu } from '../typings/menu'
 
@@ -27,3 +28,13 @@ const MENUS: TypedDocumentNode<
     }
   }
 `
+
+export const getMenus = () =>
+  fetcher.query({
+    query: MENUS,
+    variables: {
+      filterInput: {
+        tenantCode: 'BOOMART'
+      }
+    }
+  })
