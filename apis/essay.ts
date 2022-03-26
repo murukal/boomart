@@ -1,6 +1,6 @@
 // project
 import { gql, TypedDocumentNode } from '@apollo/client'
-import requests, { fetcher } from '.'
+import { fetcher } from '.'
 import { PaginateInput, PaginateOutput, QueryParams } from '../typings/api'
 import type { Essay, FilterInput } from '../typings/essay'
 

@@ -2,7 +2,6 @@
 import { useMemo, useEffect } from 'react'
 // next
 import Link from 'next/link'
-import { getSession } from 'next-auth/react'
 import type { GetServerSideProps } from 'next'
 // mui
 import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from '@mui/material'
@@ -69,7 +68,7 @@ const Essay = (props: Props) => {
       <Box
         sx={{
           marginTop: '3rem',
-          fontSize: '2rem',
+          fontSize: '1.5rem',
           fontWeight: 400
         }}
       >
