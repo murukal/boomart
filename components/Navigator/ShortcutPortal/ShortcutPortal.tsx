@@ -7,7 +7,7 @@ import { Menu, MenuItem, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { KeyboardArrowDown } from '@mui/icons-material'
 // project
-import type { Props } from './assets'
+import type { Props } from '.'
 
 const ShortCutPortal = (props: Props) => {
   const [isPortalOpened, setIsPortalOpened] = useState(false)
@@ -36,13 +36,7 @@ const ShortCutPortal = (props: Props) => {
   return (
     <>
       {!props.onPrevPortalClick ? (
-        <LoadingButton
-          ref={portalEl}
-          loading={props.isLoading}
-          variant='text'
-          endIcon={isParent && <KeyboardArrowDown />}
-          onClick={onPortalOpen}
-        >
+        <LoadingButton ref={portalEl} loading={props.isLoading} variant='text' endIcon={isParent && <KeyboardArrowDown />} onClick={onPortalOpen}>
           {props.portal.name}
         </LoadingButton>
       ) : (

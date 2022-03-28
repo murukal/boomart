@@ -5,7 +5,7 @@ import type { ChangeEvent } from 'react'
 import { Box, Container, Grid, Typography, Divider, Pagination } from '@mui/material'
 // project
 import Wrapper from '../Wrapper'
-import type { Props } from './assets'
+import type { Props } from '.'
 
 const Latest = (props: Props) => {
   /** state */

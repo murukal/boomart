@@ -9,7 +9,7 @@ import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from
 import dayjs from 'dayjs'
 import ReactMarkdown from 'react-markdown'
 // project
-import Toggles from '../../components/Essay/Toggles'
+import Toggles from '../../components/Essay/Toggles/Toggles'
 import Comments from '../../components/Essay/Comments'
 import { getEssay } from '../../apis/essay'
 import { create, TargetType, Type } from '../../apis/toggle'
@@ -82,14 +82,7 @@ const Essay = (props: Props) => {
         </Typography>
 
         {essay.tags.map((tag) => (
-          <Typography
-            key={tag.id}
-            className='ml-3'
-            fontSize={14}
-            fontStyle='italic'
-            color={(theme) => theme.palette.muted?.main}
-            component='span'
-          >
+          <Typography key={tag.id} className='ml-3' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main} component='span'>
             <Link href={`/category/${tag.id}`}>{tag.name}</Link>
           </Typography>
         ))}

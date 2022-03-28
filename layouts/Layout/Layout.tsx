@@ -9,9 +9,9 @@ import { ArrowUpward } from '@mui/icons-material'
 import PerfectScrollbar from 'perfect-scrollbar'
 // project
 import Header from '../Header'
-import Footer from '../Footer'
-import type { Props } from './assets'
+import Footer from '../Footer/Footer'
 import { setTags } from '../../redux/tags/action'
+import type { Props } from '.'
 
 const Layout = (props: Props) => {
   const [ps, setPs] = useState<PerfectScrollbar>()

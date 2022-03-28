@@ -7,7 +7,7 @@ import { Card, CardMedia, CardContent, Typography } from '@mui/material'
 // project
 import Tags from '../Tags'
 import Signature from '../Signature'
-import type { Props } from './assets'
+import type { Props } from '.'
 
 const Wrapper = (props: Props) => {
   const router = useRouter()
@@ -45,12 +45,7 @@ const Wrapper = (props: Props) => {
   }, [type])
 
   return (
-    <Card
-      className={styles.cardStyles.className}
-      key={essay.id}
-      elevation={styles.cardStyles.elevation}
-      style={styles.cardStyles.style}
-    >
+    <Card className={styles.cardStyles.className} key={essay.id} elevation={styles.cardStyles.elevation} style={styles.cardStyles.style}>
       <CardMedia
         className={styles.coverStyles.className}
         style={styles.coverStyles.style}

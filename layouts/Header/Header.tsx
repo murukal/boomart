@@ -8,27 +8,14 @@ import { signIn, useSession } from 'next-auth/react'
 // redux
 import { useSelector } from 'react-redux'
 // mui
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Tabs,
-  Tab,
-  Avatar,
-  Menu,
-  MenuItem,
-  Typography,
-  IconButton
-} from '@mui/material'
+import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography, IconButton } from '@mui/material'
 import { Search, Notes, Home, RotateRightRounded } from '@mui/icons-material'
 // third
 import { useQuery } from '@apollo/client'
 // project
 import logo from '../../public/logo.png'
-import ShortcutPortal from '../../components/Navigator/ShortcutPortal'
+import ShortcutPortal from '../../components/Navigator/ShortcutPortal/ShortcutPortal'
 import { MENUS } from '../../apis/menu'
-import type { Menu as MenuType } from '../../typings/menu'
 import type { State } from '../../redux'
 import type { Tag } from '../../typings/tag'
 import { getMenuTreeFromMenus } from '../../utils/menu'
@@ -72,10 +59,7 @@ const Header = () => {
   }
 
   /** tabs */
-  const tabs = useMemo(
-    () => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />),
-    [tags]
-  )
+  const tabs = useMemo(() => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />), [tags])
 
   /** 选中 tab */
   const tabValue = useMemo(
@@ -105,12 +89,7 @@ const Header = () => {
 
     return (
       <>
-        <Avatar
-          ref={userProfileEl}
-          className='ml-2 w-8 h-8 cursor-pointer'
-          src={session.user?.image || undefined}
-          onClick={onUserProfileOpen}
-        />
+        <Avatar ref={userProfileEl} className='ml-2 w-8 h-8 cursor-pointer' src={session.user?.image || undefined} onClick={onUserProfileOpen} />
         <Menu
           anchorEl={userProfileEl.current}
           open={isUserProfileOpened}

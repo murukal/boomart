@@ -12,7 +12,7 @@ import { ApolloProvider } from '@apollo/client'
 // project
 import { createEmotionCache } from '../utils/ui'
 import theme from '../theme'
-import Layout from '../layouts/Layout'
+import Layout from '../layouts/Layout/Layout'
 import store from '../redux'
 import boomartUrl from '../public/boomart.ico'
 import client from '../apis'

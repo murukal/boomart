@@ -5,8 +5,8 @@ import { Box, Typography } from '@mui/material'
 // third
 import dayjs from 'dayjs'
 // project
-import { textStyle, subScriptStyle } from './assets'
-import type { Props } from './assets'
+import { textStyle, subScriptStyle } from '.'
+import type { Props } from '.'
 import type { User } from '../../../typings/auth'
 
 const Signature = (props: Props) => {

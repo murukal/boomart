@@ -2,7 +2,7 @@
 import { CardActions, IconButton } from '@mui/material'
 import { Favorite, ThumbUp } from '@mui/icons-material'
 // project
-import type { Props } from './assets'
+import type { Props } from '.'
 
 const Markers = (props: Props) => {
   return (

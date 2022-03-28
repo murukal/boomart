@@ -9,8 +9,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 // project
 import Wrapper from '../Wrapper'
-import { getHotTagStyle } from './assets'
-import type { Props } from './assets'
+import { getHotTagStyle } from '.'
+import type { Props } from '.'
 import type { Tag } from '../../../typings/tag'
 
 const Hot = (props: Props) => {

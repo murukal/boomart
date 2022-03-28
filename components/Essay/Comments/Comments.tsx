@@ -2,8 +2,8 @@
 import { Box, Card, Typography, CardMedia, CardContent, TextField, Button } from '@mui/material'
 import { useCallback } from 'react'
 // project
-import { getTitleStyle } from '../../../layouts/Footer/assets'
-import type { Props } from './assets'
+import { getTitleStyle } from '../../../layouts/Footer'
+import type { Props } from '.'
 
 const Comments = (props: Props) => {
   const getComments = useCallback(
@@ -13,8 +13,8 @@ const Comments = (props: Props) => {
           <CardMedia className='rounded-full w-14 h-14' component='img' image='' alt='测试' />
           <CardContent className='ml-5 p-0'>
             <Typography fontSize={15} color='#777777'>
-              Vestibulum euismod, leo eget varius gravida, eros enim interdum urna, non rutrum enim ante quis metus.
-              Duis porta ornare nulla ut bibendum
+              Vestibulum euismod, leo eget varius gravida, eros enim interdum urna, non rutrum enim ante quis metus. Duis porta ornare nulla ut
+              bibendum
             </Typography>
 
             <Box className='mt-3 flex items-center'>

@@ -3,10 +3,10 @@ import Image from 'next/image'
 // mui
 import { Box, Container, Grid, Typography, Link, Divider } from '@mui/material'
 // project
-import { getTitleStyle, getContentStyle } from './assets'
+import { getTitleStyle, getContentStyle } from '.'
 import beian from '../../public/beian.png'
 import TagChips from './TagChips'
-import type { Props } from './assets'
+import type { Props } from '.'
 
 const Footer = (props: Props) => {
   return (

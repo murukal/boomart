@@ -1,8 +1,8 @@
 // mui
 import { Box, Typography } from '@mui/material'
 // project
-import { subScriptStyle } from './assets'
-import type { Props } from './assets'
+import { subScriptStyle } from '.'
+import type { Props } from '.'
 
 const Tags = (props: Props) => {
   return (

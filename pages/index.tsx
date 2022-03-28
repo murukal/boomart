@@ -5,9 +5,9 @@ import Image from 'next/image'
 // mui
 import { Box, Container, Typography, Input, Button } from '@mui/material'
 // project
+import featured from '../public/featured.png'
 import Hot from '../components/Essay/Hot'
 import Latest from '../components/Essay/Latest'
-import featured from '../public/featured.png'
 import { setTypedUI } from '../utils/ui'
 import { GetServerSideProps } from 'next'
 import { getEssays } from '../apis/essay'
@@ -122,11 +122,7 @@ const Home = (props: Props) => {
       <Hot className='py-8' browseTopEssays={props.browseTopEssays} likeTopEssays={props.likeTopEssays} />
 
       {/* 最近发布 文章 + 评论列表 */}
-      <Latest
-        className='bg-gray-50 py-8'
-        essays={props.latestEssayProps?.items || []}
-        pageCount={props.latestEssayProps?.pageCount || 0}
-      />
+      <Latest className='bg-gray-50 py-8' essays={props.latestEssayProps?.items || []} pageCount={props.latestEssayProps?.pageCount || 0} />
     </>
   )
 }

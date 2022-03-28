@@ -8,7 +8,7 @@ import { useQuery } from '@apollo/client'
 // project
 import { ESSAY_TOGGLE } from '../../../apis/essay'
 import { create, remove, TargetType, Type } from '../../../apis/toggle'
-import type { Props } from './assets'
+import type { Props } from '.'
 
 const Toggles = (props: Props) => {
   const [isToggled, setIsToggled] = useState<Record<Type.like | Type.collect, boolean>>({
@@ -44,9 +44,7 @@ const Toggles = (props: Props) => {
         })
     }
 
-    const result = isToggled[type]
-      ? (await handlers.remove()).data?.removeToggle
-      : (await handlers.create()).data?.createToggle
+    const result = isToggled[type] ? (await handlers.remove()).data?.removeToggle : (await handlers.create()).data?.createToggle
 
     if (!result) return
 

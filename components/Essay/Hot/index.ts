@@ -3,6 +3,8 @@ import type { SxProps, Theme } from '@mui/material'
 // project
 import type { Essay } from '../../../typings/essay'
 
+export { default } from './Hot'
+
 export interface Props {
   className?: string
 

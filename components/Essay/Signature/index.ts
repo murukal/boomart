@@ -1,11 +1,19 @@
 // react
 import type { CSSProperties } from 'react'
 // project
-import type { Tag } from '../../../typings/tag'
+import type { Essay } from '../../../typings/essay'
+
+export { default } from './Signature'
 
 export interface Props {
-  tags: Tag[]
+  essay: Essay
   className?: string
+}
+
+export const textStyle: CSSProperties = {
+  position: 'relative',
+  color: '#666',
+  fontSize: 10
 }
 
 export const subScriptStyle: CSSProperties = {
@@ -14,7 +22,7 @@ export const subScriptStyle: CSSProperties = {
   height: 3,
   background: '#999',
   position: 'absolute',
+  top: '50%',
   right: 0,
-  bottom: 3,
   borderRadius: '50%'
 }
