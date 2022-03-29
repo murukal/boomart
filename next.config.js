@@ -10,11 +10,12 @@ module.exports = withBundleAnalyzer({
     domains: ['boomemory-1304340057.cos.ap-shanghai.myqcloud.com']
   },
 
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: '/graphql',
-        destination: 'http://fantufantu.com/graphql'
+        destination: 'http://localhost:3200/graphql',
+        permanent: true
       }
     ]
   }

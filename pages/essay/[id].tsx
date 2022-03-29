@@ -52,8 +52,8 @@ const Essay = (props: Props) => {
 
         <Box className='ml-4' color='#666'>
           <Box>
-            <Typography component='span'>By </Typography>
-            <Typography className='font-bold' component='span' color={(theme) => theme.palette.muted?.main}>
+            <Typography component='span'>By</Typography>
+            <Typography className='font-bold ml-1' component='span' color={(theme) => theme.palette.muted?.main}>
               {createdBy.username}
             </Typography>
           </Box>
@@ -62,7 +62,7 @@ const Essay = (props: Props) => {
       </Box>
 
       {/* 封面 */}
-      <CardMedia className='rounded-lg mt-12' component='img' height={600} image={cover} alt={essay.title} />
+      <CardMedia className='rounded-lg mt-12' component='img' height={500} image={cover} alt={essay.title} />
 
       {/* 文章正文 */}
       <Box
@@ -102,9 +102,7 @@ const Essay = (props: Props) => {
         >
           <Typography variant='h4'>{createdBy.username}</Typography>
 
-          <Typography className='mt-5'>关于作者</Typography>
-
-          <Typography className='mt-4'>{createdBy.username}</Typography>
+          <Typography className='mt-5'>这个人有点懒，没有介绍自己</Typography>
 
           <Typography className='mt-4' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main}>
             <Link href='/'>{`去看下 ta ( ${createdBy.creationCount} )`}</Link>
@@ -112,7 +110,7 @@ const Essay = (props: Props) => {
         </CardContent>
       </Card>
 
-      <Comments className='mt-12' comments={[]} />
+      <Comments className='mt-12' targetType={TargetType.essay} targetId={essay.id} />
     </Container>
   )
 }

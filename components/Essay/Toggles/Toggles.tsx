@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client'
 import { ESSAY_TOGGLE } from '../../../apis/essay'
 import { create, remove, TargetType, Type } from '../../../apis/toggle'
 import type { Props } from '.'
+import { signIn, useSession } from 'next-auth/react'
 
 const Toggles = (props: Props) => {
   const [isToggled, setIsToggled] = useState<Record<Type.like | Type.collect, boolean>>({
@@ -28,7 +29,16 @@ const Toggles = (props: Props) => {
     }
   })
 
+  // 登录状态
+  const { status: sessionStatus } = useSession()
+
   const onToggle = (type: Type.like | Type.collect) => async () => {
+    // 未登录，跳转登录
+    if (sessionStatus !== 'authenticated') {
+      signIn()
+      return
+    }
+
     const handlers = {
       create: () =>
         create({

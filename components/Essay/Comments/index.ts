@@ -1,6 +1,10 @@
+import { TargetType } from '../../../apis/toggle'
+
 export interface Props {
   className?: string
-  comments: []
+
+  targetId: number
+  targetType: TargetType
 }
 
 export { default } from './Comments'
