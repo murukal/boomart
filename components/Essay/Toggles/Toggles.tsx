@@ -26,7 +26,8 @@ const Toggles = (props: Props) => {
         like: data.essay.isLiked,
         collect: data.essay.isCollected
       })
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 
   // 登录状态
@@ -54,7 +55,9 @@ const Toggles = (props: Props) => {
         })
     }
 
-    const result = isToggled[type] ? (await handlers.remove()).data?.removeToggle : (await handlers.create()).data?.createToggle
+    const result = isToggled[type]
+      ? (await handlers.remove()).data?.removeToggle
+      : (await handlers.create()).data?.createToggle
 
     if (!result) return
 
@@ -67,7 +70,7 @@ const Toggles = (props: Props) => {
   return (
     <Box className={props.className}>
       <IconButton onClick={onToggle(Type.like)}>
-        <ThumbUp color={isToggled.like ? 'error' : undefined} />
+        <ThumbUp color={isToggled.like ? 'primary' : undefined} />
       </IconButton>
 
       <IconButton onClick={onToggle(Type.collect)}>

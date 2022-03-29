@@ -1,6 +1,6 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
 import { fetcher } from '.'
-import { CreateCommentInput } from '../typings/comment'
+import { Comment, CreateCommentInput, FilterInput } from '../typings/comment'
 
 /**
  * 创建toggle
@@ -23,3 +23,26 @@ export const create = (createCommentInput: CreateCommentInput) =>
       createCommentInput
     }
   })
+
+/**
+ * 查询多个评论
+ */
+export const COMMENTS: TypedDocumentNode<
+  {
+    comments: Comment[]
+  },
+  {
+    filterInput: FilterInput
+  }
+> = gql`
+  query Comments($filterInput: FilterCommentInput!) {
+    comments(filterInput: $filterInput) {
+      id
+      content
+      createdBy {
+        username
+        avatar
+      }
+    }
+  }
+`

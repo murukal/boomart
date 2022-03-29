@@ -4,11 +4,23 @@ import type { SyntheticEvent } from 'react'
 // next
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 // redux
 import { useSelector } from 'react-redux'
 // mui
-import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography, IconButton } from '@mui/material'
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Tabs,
+  Tab,
+  Avatar,
+  Menu,
+  MenuItem,
+  Typography,
+  IconButton
+} from '@mui/material'
 import { Search, Notes, Home, RotateRightRounded } from '@mui/icons-material'
 // third
 import { useQuery } from '@apollo/client'
@@ -51,7 +63,9 @@ const Header = () => {
   }
 
   /** 退出登陆 */
-  const onLogout = () => {}
+  const onLogout = () => {
+    signOut()
+  }
 
   /** tab 切换 */
   const onTabChange = (event: SyntheticEvent, value: string) => {
@@ -59,7 +73,10 @@ const Header = () => {
   }
 
   /** tabs */
-  const tabs = useMemo(() => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />), [tags])
+  const tabs = useMemo(
+    () => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />),
+    [tags]
+  )
 
   /** 选中 tab */
   const tabValue = useMemo(
@@ -89,7 +106,12 @@ const Header = () => {
 
     return (
       <>
-        <Avatar ref={userProfileEl} className='ml-2 w-8 h-8 cursor-pointer' src={session.user?.image || undefined} onClick={onUserProfileOpen} />
+        <Avatar
+          ref={userProfileEl}
+          className='ml-2 w-8 h-8 cursor-pointer'
+          src={session.user?.image || undefined}
+          onClick={onUserProfileOpen}
+        />
         <Menu
           anchorEl={userProfileEl.current}
           open={isUserProfileOpened}
@@ -115,6 +137,7 @@ const Header = () => {
 
         <Box className='flex items-center'>
           <ShortcutPortal
+            isLoading={loading}
             menus={getMenuTreeFromMenus(data?.menus.items || [])}
             portal={{
               name: '传送门'
