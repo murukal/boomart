@@ -11,4 +11,6 @@ export interface User extends Core {
   avatar: string
 
   creationCount: number
+
+  isSelf: boolean
 }

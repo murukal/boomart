@@ -3,7 +3,7 @@ import { fetcher } from '.'
 import { Comment, CreateCommentInput, FilterInput } from '../typings/comment'
 
 /**
- * 创建toggle
+ * 创建评论
  */
 const CREATE: TypedDocumentNode<
   { createComment: boolean },
@@ -40,9 +40,36 @@ export const COMMENTS: TypedDocumentNode<
       id
       content
       createdBy {
+        isSelf
         username
         avatar
       }
+      isDeleted
+      createdAt
     }
   }
 `
+
+/**
+ * 删除评论
+ */
+const Remove: TypedDocumentNode<
+  {
+    removeComment: boolean
+  },
+  {
+    id: number
+  }
+> = gql`
+  mutation RemoveComment($id: Int!) {
+    removeComment(id: $id)
+  }
+`
+
+export const remove = (id: number) =>
+  fetcher.mutate({
+    mutation: Remove,
+    variables: {
+      id
+    }
+  })

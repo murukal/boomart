@@ -1,15 +1,18 @@
 // react
 import { useState } from 'react'
 import type { ChangeEvent } from 'react'
-// mui
-import { Box, Card, Typography, CardMedia, CardContent, TextField, Button, Avatar } from '@mui/material'
-// third
+// next
 import { useSession } from 'next-auth/react'
+// mui
+import { Box, Card, Typography, CardContent, TextField, Button, Avatar, IconButton } from '@mui/material'
+import { KeyboardArrowDown } from '@mui/icons-material'
+// third
+import { useQuery } from '@apollo/client'
 // project
 import { getTitleStyle } from '../../../layouts/Footer'
-import { COMMENTS, create } from '../../../apis/comment'
+import { COMMENTS, create, remove } from '../../../apis/comment'
 import type { Props } from '.'
-import { useQuery } from '@apollo/client'
+import dayjs from 'dayjs'
 
 const Comments = (props: Props) => {
   const [content, setContent] = useState('')
@@ -42,12 +45,22 @@ const Comments = (props: Props) => {
     }
   }
 
+  /** 删除评论 */
+  const onRemove = (id: number) => async () => {
+    const result = await remove(id)
+
+    // 删除成功，重新拉取数据
+    if (result.data?.removeComment) {
+      refetch()
+    }
+  }
+
   /** 评论内容发生变更 */
   const onContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)
 
   return (
     <Box className={props.className}>
-      {data?.comments.length && (
+      {!!data?.comments.length && (
         <Box>
           <Typography sx={getTitleStyle}>comments</Typography>
 
@@ -73,12 +86,24 @@ const Comments = (props: Props) => {
                       {comment.createdBy.username}
                     </Typography>
                     <Typography className='ml-5' color='#999999'>
-                      6 minutes ago
+                      {dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                     </Typography>
 
-                    {/* <Button variant='text' className='ml-auto'>
-                      Reply
-                    </Button> */}
+                    <Box className='ml-auto'>
+                      {!comment.isDeleted && comment.createdBy.isSelf && (
+                        <Button variant='text' color='error' className='ml-auto' onClick={onRemove(comment.id)}>
+                          删除
+                        </Button>
+                      )}
+
+                      {/* <Button variant='text' className='ml-auto'>
+                        回复
+                      </Button>
+
+                      <IconButton color='primary' className='ml-auto'>
+                        <KeyboardArrowDown />
+                      </IconButton> */}
+                    </Box>
                   </Box>
                 </CardContent>
               </Card>
@@ -94,14 +119,7 @@ const Comments = (props: Props) => {
             发表评论
           </Typography>
 
-          <TextField
-            className='mt-7 w-full'
-            label='友善的评论'
-            value={content}
-            multiline
-            rows={3}
-            onChange={onContentChange}
-          />
+          <TextField className='mt-7 w-full' label='友善的评论' value={content} multiline rows={3} onChange={onContentChange} />
 
           <Button className='mt-7 rounded-3xl' variant='contained' onClick={onSubmit}>
             发表评论

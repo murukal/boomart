@@ -6,6 +6,8 @@ import { Toggle } from './toggle'
 export interface Comment extends Core {
   content: string
   createdBy: User
+
+  isDeleted: boolean
 }
 
 export interface CreateCommentInput extends Pick<Comment, 'targetType' | 'targetId' | 'content'> {}
