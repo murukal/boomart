@@ -9,14 +9,3 @@ export interface Props {
   tags: Tag[]
   className?: string
 }
-
-export const subScriptStyle: CSSProperties = {
-  content: '""',
-  width: 3,
-  height: 3,
-  background: '#999',
-  position: 'absolute',
-  right: 0,
-  bottom: 3,
-  borderRadius: '50%'
-}

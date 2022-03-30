@@ -1,0 +1,21 @@
+.plate-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #eaecee;
+    position: relative;
+    padding-bottom: 12px;
+    margin-bottom: 1rem;
+}
+
+.plate-title::after {
+    content: "";
+    background-color: black;
+    height: 3px;
+    width: 3rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+

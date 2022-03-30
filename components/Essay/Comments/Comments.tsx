@@ -5,14 +5,13 @@ import type { ChangeEvent } from 'react'
 import { useSession } from 'next-auth/react'
 // mui
 import { Box, Card, Typography, CardContent, TextField, Button, Avatar, IconButton } from '@mui/material'
-import { KeyboardArrowDown } from '@mui/icons-material'
 // third
 import { useQuery } from '@apollo/client'
-// project
-import { getTitleStyle } from '../../../layouts/Footer'
-import { COMMENTS, create, remove } from '../../../apis/comment'
-import type { Props } from '.'
 import dayjs from 'dayjs'
+// project
+import styles from '~/layouts/Layout/Layout.module.css'
+import { COMMENTS, create, remove } from '~/apis/comment'
+import type { Props } from '.'
 
 const Comments = (props: Props) => {
   const [content, setContent] = useState('')
@@ -62,7 +61,7 @@ const Comments = (props: Props) => {
     <Box className={props.className}>
       {!!data?.comments.length && (
         <Box>
-          <Typography sx={getTitleStyle}>comments</Typography>
+          <Typography className={styles['plate-title']}>comments</Typography>
 
           {/* 评论列表 */}
           {data.comments.map((comment) => {
@@ -115,9 +114,7 @@ const Comments = (props: Props) => {
       {sessionStatus === 'authenticated' && (
         <Box>
           {/* 发表评论 */}
-          <Typography className='mt-20' sx={getTitleStyle}>
-            发表评论
-          </Typography>
+          <Typography className={`${styles['plate-title']} mt-20`}>发表评论</Typography>
 
           <TextField className='mt-7 w-full' label='友善的评论' value={content} multiline rows={3} onChange={onContentChange} />
 

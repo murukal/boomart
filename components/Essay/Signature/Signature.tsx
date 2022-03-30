@@ -5,9 +5,9 @@ import { Box, Typography } from '@mui/material'
 // third
 import dayjs from 'dayjs'
 // project
-import { textStyle, subScriptStyle } from '.'
+import styles from './Signature.module.css'
 import type { Props } from '.'
-import type { User } from '../../../typings/auth'
+import type { User } from '~/typings/auth'
 
 const Signature = (props: Props) => {
   const createdBy = useMemo<User>(() => {
@@ -16,19 +16,10 @@ const Signature = (props: Props) => {
 
   return (
     <Box className={props.className}>
-      <Typography
-        className='uppercase pr-2.5 mr-2.5'
-        component='span'
-        sx={{
-          ...textStyle,
-          '&::after': {
-            ...subScriptStyle
-          }
-        }}
-      >
+      <Typography className={`${styles.content} ${styles['sub-script']} uppercase pr-2.5 mr-2.5`} component='span'>
         {dayjs(props.essay.createdAt).format('D MMM')}
       </Typography>
-      <Typography component='span' sx={textStyle}>{`By ${createdBy?.username}`}</Typography>
+      <Typography className={styles.content} component='span'>{`By ${createdBy?.username}`}</Typography>
     </Box>
   )
 }

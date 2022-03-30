@@ -1,15 +1,16 @@
 // react
 import { useState } from 'react'
+// next
+import { signIn, useSession } from 'next-auth/react'
 // mui
 import { Box, IconButton } from '@mui/material'
 import { ThumbUp, Favorite } from '@mui/icons-material'
 // third
 import { useQuery } from '@apollo/client'
 // project
-import { ESSAY_TOGGLE } from '../../../apis/essay'
-import { create, remove, TargetType, Type } from '../../../apis/toggle'
+import { ESSAY_TOGGLE } from '~/apis/essay'
+import { create, remove, TargetType, Type } from '~/apis/toggle'
 import type { Props } from '.'
-import { signIn, useSession } from 'next-auth/react'
 
 const Toggles = (props: Props) => {
   const [isToggled, setIsToggled] = useState<Record<Type.like | Type.collect, boolean>>({
@@ -55,9 +56,7 @@ const Toggles = (props: Props) => {
         })
     }
 
-    const result = isToggled[type]
-      ? (await handlers.remove()).data?.removeToggle
-      : (await handlers.create()).data?.createToggle
+    const result = isToggled[type] ? (await handlers.remove()).data?.removeToggle : (await handlers.create()).data?.createToggle
 
     if (!result) return
 

@@ -4,11 +4,12 @@ import type { ChangeEvent } from 'react'
 // next
 import type { GetServerSideProps } from 'next'
 // mui
-import { Pagination, Container } from '@mui/material'
+import { Pagination, Container, Box, Typography } from '@mui/material'
 // project
-import Wrapper from '../../components/Essay/Wrapper'
-import { getEssays } from '../../apis/essay'
-import type { Essay } from '../../typings/essay'
+import Wrapper from '~/components/Essay/Wrapper'
+import { getEssays } from '~/apis/essay'
+import styles from '~/layouts/Layout/Layout.module.css'
+import type { Essay } from '~/typings/essay'
 
 interface Props {
   essays: Essay[]
@@ -25,11 +26,21 @@ const Category = (props: Props) => {
 
   return (
     <Container>
-      {props.essays.map((essay) => (
-        <Wrapper key={essay.id} essay={essay} />
-      ))}
+      {/* 视频板块 */}
+      <Box>
+        <Typography className={styles['plate-title']}>视频</Typography>
+      </Box>
 
-      <Pagination className='mt-7' count={props.pageCount} color='primary' onChange={onPageChange} />
+      {/* 文章板块 */}
+      <Box>
+        <Typography className={styles['plate-title']}>文章</Typography>
+
+        {props.essays.map((essay) => (
+          <Wrapper key={essay.id} essay={essay} />
+        ))}
+
+        <Pagination className='mt-7' count={props.pageCount} color='primary' onChange={onPageChange} />
+      </Box>
     </Container>
   )
 }

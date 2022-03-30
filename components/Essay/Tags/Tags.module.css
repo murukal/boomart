@@ -1,0 +1,15 @@
+.tag {
+    padding-right: 7px;
+    position: relative;
+}
+
+.tag::after{
+    content: "";
+    width: 3px;
+    height: 3px;
+    background-color:#999;
+    position: absolute;
+    right: 0;
+    bottom: 3px;
+    border-radius: 50%;
+}

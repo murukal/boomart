@@ -3,7 +3,8 @@ import Image from 'next/image'
 // mui
 import { Box, Container, Grid, Typography, Link, Divider } from '@mui/material'
 // project
-import { getTitleStyle, getContentStyle } from '.'
+import footerStyles from './Footer.module.css'
+import layoutStyles from '../Layout/Layout.module.css'
 import beian from '../../public/beian.png'
 import TagChips from './TagChips'
 import type { Props } from '.'
@@ -14,28 +15,26 @@ const Footer = (props: Props) => {
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={3}>
-            <Typography sx={getTitleStyle}>abount us</Typography>
+            <Typography className={layoutStyles['plate-title']}>abount us</Typography>
 
-            <Typography className='mb-3' sx={getContentStyle}>
-              谁也阻挡不了一颗想要创作的心
-            </Typography>
+            <Typography className={`mb-3 ${footerStyles.content}`}>谁也阻挡不了一颗想要创作的心</Typography>
 
             <Typography className='mb-3 font-bold' color='#212529'>
               邮箱地址
             </Typography>
-            <Typography sx={getContentStyle}>fanfan: rrongpan@outlook.com</Typography>
-            <Typography sx={getContentStyle}>tutu: jokerxxx222@126.com</Typography>
+            <Typography className={footerStyles.content}>fanfan: rrongpan@outlook.com</Typography>
+            <Typography className={footerStyles.content}>tutu: jokerxxx222@126.com</Typography>
           </Grid>
           <Grid item xs={2}>
-            <Typography sx={getTitleStyle}>quick link</Typography>
+            <Typography className={layoutStyles['plate-title']}>quick link</Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography sx={getTitleStyle}>tags</Typography>
+            <Typography className={layoutStyles['plate-title']}>tags</Typography>
             {/* chips */}
             <TagChips />
           </Grid>
           <Grid item xs={4}>
-            <Typography sx={getTitleStyle}>newsletter</Typography>
+            <Typography className={layoutStyles['plate-title']}>newsletter</Typography>
           </Grid>
         </Grid>
 
@@ -43,13 +42,12 @@ const Footer = (props: Props) => {
 
         {/* copyright */}
         <Box className='flex justify-between'>
-          <Link sx={getContentStyle} target='_blank' rel='noreferrer' href='https://beian.miit.gov.cn' underline='none'>
+          <Link className={footerStyles.content} target='_blank' rel='noreferrer' href='https://beian.miit.gov.cn' underline='none'>
             浙ICP备2021003835号
           </Link>
 
           <Link
-            className='flex items-center'
-            sx={getContentStyle}
+            className={`${footerStyles.content} flex items-center`}
             target='_blank'
             rel='noreferrer'
             href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010902003160'
@@ -59,7 +57,7 @@ const Footer = (props: Props) => {
             浙公网安备 33010902003160号
           </Link>
 
-          <Typography sx={getContentStyle}>Copyright © 2022 by fanfan & tutu</Typography>
+          <Typography className={footerStyles.content}>Copyright © 2022 by fanfan & tutu</Typography>
         </Box>
       </Container>
     </Box>

@@ -9,11 +9,11 @@ import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from
 import dayjs from 'dayjs'
 import ReactMarkdown from 'react-markdown'
 // project
-import Toggles from '../../components/Essay/Toggles/Toggles'
-import Comments from '../../components/Essay/Comments'
-import { getEssay } from '../../apis/essay'
-import { create, TargetType, Type } from '../../apis/toggle'
-import type { Essay } from '../../typings/essay'
+import Toggles from '~/components/Essay/Toggles'
+import Comments from '~/components/Essay/Comments'
+import { getEssay } from '~/apis/essay'
+import { create, TargetType, Type } from '~/apis/toggle'
+import type { Essay } from '~/typings/essay'
 
 interface Props {
   essay: Essay
