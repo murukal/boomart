@@ -1,5 +1,6 @@
 // react
 import { useMemo } from 'react'
+import type { CSSProperties } from 'react'
 // nextjs
 import { useRouter } from 'next/router'
 // mui
@@ -25,29 +26,55 @@ const Wrapper = (props: Props) => {
   /** 根据 type 生成卡片的style */
   const styles = useMemo(() => {
     return {
+      // 卡片外层样式
       cardStyles: {
-        className: type === 'horizontal' ? 'flex mt-7' : 'h-full',
         elevation: type === 'horizontal' ? 0 : undefined,
         style: {
-          backgroundColor: props.color || 'rgb(249 250 251 / var(--tw-bg-opacity))'
-        }
+          backgroundColor: props.color || 'rgb(249 250 251 / var(--tw-bg-opacity))',
+          display: 'flex',
+          flexDirection: 'column',
+          ...(type === 'horizontal' && {
+            marginTop: '1.75rem',
+            flexDirection: 'row'
+          }),
+          ...(type === 'vertical' && {
+            height: '100%',
+            flexDirection: 'column'
+          })
+        } as CSSProperties
       },
+
+      // 卡片封面图片样式
       coverStyles: {
-        className: `cursor-pointer ${type === 'horizontal' ? 'rounded-r' : ''}`,
         height: type === 'horizontal' ? 150 : 200,
-        style: type === 'horizontal' ? { flex: 1 } : undefined
+        style: {
+          cursor: 'pointer',
+          ...(type === 'horizontal' && { flex: 0.5, borderRadius: '0.25rem' })
+        } as CSSProperties
       },
+
+      // 卡片内容样式
       contentStyles: {
-        className: type === 'horizontal' ? 'px-4 self-center' : 'p-7',
-        style: type === 'horizontal' ? { flex: 2 } : undefined
+        style: {
+          flex: 1,
+          ...(type === 'horizontal' && { padding: '1rem', alignSelf: 'center' }),
+          ...(type === 'vertical' && { flex: 1, padding: '1.75rem', display: 'flex', flexDirection: 'column' })
+        } as CSSProperties
+      },
+
+      // 卡片署名样式
+      signatureStyle: {
+        style: {
+          ...(type === 'horizontal' && { marginTop: '1.25rem' }),
+          ...(type === 'vertical' && { marginTop: 'auto' })
+        } as CSSProperties
       }
     }
   }, [type])
 
   return (
-    <Card className={styles.cardStyles.className} key={essay.id} elevation={styles.cardStyles.elevation} style={styles.cardStyles.style}>
+    <Card key={essay.id} elevation={styles.cardStyles.elevation} style={styles.cardStyles.style}>
       <CardMedia
-        className={styles.coverStyles.className}
         style={styles.coverStyles.style}
         height={styles.coverStyles.height}
         component='img'
@@ -55,7 +82,7 @@ const Wrapper = (props: Props) => {
         alt={essay.title}
         onClick={onGo2Essay(essay.id)}
       />
-      <CardContent className={styles.contentStyles.className} style={styles.contentStyles.style}>
+      <CardContent style={styles.contentStyles.style}>
         <Tags className='mb-3' tags={tags} />
 
         {/* 文章标题 */}
@@ -64,7 +91,7 @@ const Wrapper = (props: Props) => {
         </Typography>
 
         {/* 文章署名 */}
-        <Signature className='mt-5' essay={essay} />
+        <Signature essay={essay} style={styles.signatureStyle.style} />
       </CardContent>
     </Card>
   )

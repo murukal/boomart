@@ -10,12 +10,12 @@ import { ThemeProvider } from '@mui/material'
 import { CacheProvider } from '@emotion/react'
 import { ApolloProvider } from '@apollo/client'
 // project
-import { createEmotionCache } from '../utils/ui'
-import theme from '../theme'
-import Layout from '../layouts/Layout/Layout'
-import store from '../redux'
-import boomartUrl from '../public/boomart.ico'
-import client from '../apis'
+import { createEmotionCache } from '~/utils/ui'
+import theme from '~/theme'
+import Layout from '~/layouts/Layout/Layout'
+import store from '~/store'
+import boomartUrl from '~/public/boomart.ico'
+import client from '~/apis'
 // styles
 import '../styles/index.css'
 

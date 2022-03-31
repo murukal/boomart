@@ -15,7 +15,7 @@ const Signature = (props: Props) => {
   }, [props.essay])
 
   return (
-    <Box className={props.className}>
+    <Box className={props.className} style={props.style}>
       <Typography className={`${styles.content} ${styles['sub-script']} uppercase pr-2.5 mr-2.5`} component='span'>
         {dayjs(props.essay.createdAt).format('D MMM')}
       </Typography>

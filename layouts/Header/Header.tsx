@@ -25,12 +25,12 @@ import { Search, Notes, Home, RotateRightRounded } from '@mui/icons-material'
 // third
 import { useQuery } from '@apollo/client'
 // project
-import logo from '../../public/logo.png'
-import ShortcutPortal from '../../components/Navigator/ShortcutPortal/ShortcutPortal'
-import { MENUS } from '../../apis/menu'
-import type { State } from '../../redux'
-import type { Tag } from '../../typings/tag'
-import { getMenuTreeFromMenus } from '../../utils/menu'
+import logo from '~/public/logo.png'
+import ShortcutPortal from '~/components/Navigator/ShortcutPortal/ShortcutPortal'
+import { MENUS } from '~/apis/menu'
+import { getMenuTreeFromMenus } from '~/utils/menu'
+import type { State } from '~/store'
+import type { Tag } from '~/typings/tag'
 
 const Header = () => {
   const [isUserProfileOpened, setIsUserProfileOpened] = useState(false)

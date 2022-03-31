@@ -7,5 +7,6 @@ export { default } from './Signature'
 
 export interface Props {
   essay: Essay
+  style?: CSSProperties
   className?: string
 }

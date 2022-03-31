@@ -1,5 +1,3 @@
-// react
-import type { CSSProperties } from 'react'
 // project
 import type { Tag } from '../../../typings/tag'
 

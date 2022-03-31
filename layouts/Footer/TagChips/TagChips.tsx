@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux'
 // mui
 import { Chip } from '@mui/material'
 // project
-import type { State } from '../../../redux'
-import type { Tag } from '../../../typings/tag'
+import type { State } from '~/store'
+import type { Tag } from '~/typings/tag'
 
 const TagChips = () => {
   const tags = useSelector<State, Tag[]>((state) => state.tags)
