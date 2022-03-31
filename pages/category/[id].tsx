@@ -4,11 +4,10 @@ import type { ChangeEvent } from 'react'
 // next
 import type { GetServerSideProps } from 'next'
 // mui
-import { Pagination, Container, Box, Typography } from '@mui/material'
+import { Pagination, Container, Box } from '@mui/material'
 // project
 import Wrapper from '~/components/Essay/Wrapper'
 import { getEssays } from '~/apis/essay'
-import styles from '~/layouts/Layout/Layout.module.css'
 import type { Essay } from '~/typings/essay'
 
 interface Props {
@@ -26,15 +25,8 @@ const Category = (props: Props) => {
 
   return (
     <Container>
-      {/* 视频板块 */}
-      <Box>
-        <Typography className={styles['plate-title']}>视频</Typography>
-      </Box>
-
       {/* 文章板块 */}
       <Box>
-        <Typography className={styles['plate-title']}>文章</Typography>
-
         {props.essays.map((essay) => (
           <Wrapper key={essay.id} essay={essay} />
         ))}

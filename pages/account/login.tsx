@@ -1,19 +1,11 @@
-// mui
-import {
-  Container,
-  Box,
-  Paper,
-  TextField,
-  Typography,
-  Grid,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  Divider
-} from '@mui/material'
+// react
+import { useState } from 'react'
+import type { ChangeEvent } from 'react'
+// next
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { ChangeEvent, useState } from 'react'
+// mui
+import { Container, Box, Paper, TextField, Typography, Grid, FormControlLabel, Checkbox, Button } from '@mui/material'
 
 const Login = () => {
   const [keyword, setKeyword] = useState('')
@@ -103,10 +95,6 @@ const Login = () => {
               >
                 log in
               </Button>
-
-              <Divider className='my-4 w-full'>
-                <Typography variant='body1'>OR</Typography>
-              </Divider>
             </Paper>
           </Grid>
         </Grid>

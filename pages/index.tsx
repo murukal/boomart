@@ -121,8 +121,12 @@ const Home = (props: Props) => {
       {/* 热门榜单 */}
       <Hot className='py-8' browseTopEssays={props.browseTopEssays} likeTopEssays={props.likeTopEssays} />
 
-      {/* 最近发布 文章 + 评论列表 */}
-      <Latest className='bg-gray-50 py-8' essays={props.latestEssayProps?.items || []} pageCount={props.latestEssayProps?.pageCount || 0} />
+      {/* 最近发布 文章 */}
+      <Latest
+        className='bg-gray-50 py-8'
+        essays={props.latestEssayProps?.items || []}
+        pageCount={props.latestEssayProps?.pageCount || 0}
+      />
     </>
   )
 }

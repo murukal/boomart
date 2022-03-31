@@ -31,9 +31,11 @@ import { MENUS } from '~/apis/menu'
 import { getMenuTreeFromMenus } from '~/utils/menu'
 import type { State } from '~/store'
 import type { Tag } from '~/typings/tag'
+import RightDrawer from '~/components/RightDrawer'
 
 const Header = () => {
   const [isUserProfileOpened, setIsUserProfileOpened] = useState(false)
+  const [isDrawerOpened, setIsDrawerOpened] = useState(false)
 
   const { data, loading } = useQuery(MENUS, {
     variables: {
@@ -87,6 +89,11 @@ const Header = () => {
   /** 进入登录页面 */
   const onGo2Login = () => {
     signIn(undefined, { callbackUrl: router.asPath })
+  }
+
+  /** 打开右侧抽屉 */
+  const onOpenDrawer = () => {
+    setIsDrawerOpened(true)
   }
 
   /**
@@ -181,11 +188,14 @@ const Header = () => {
         </Tabs>
 
         <Box>
-          <IconButton>
+          <IconButton onClick={onOpenDrawer}>
             <Notes />
           </IconButton>
         </Box>
       </Container>
+
+      {/* 右侧抽屉 */}
+      <RightDrawer isOpened={isDrawerOpened} onClose={() => setIsDrawerOpened(false)} />
     </>
   )
 }
