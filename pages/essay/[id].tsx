@@ -77,7 +77,7 @@ const Essay = (props: Props) => {
 
             return (
               <SyntaxHighlighter language={languages?.at(1)} style={dark} PreTag='div' {...props}>
-                {String(children).replace(/\n$/, '')}
+                {children}
               </SyntaxHighlighter>
             )
           }
