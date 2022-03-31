@@ -65,15 +65,7 @@ const Essay = (props: Props) => {
       <CardMedia className='rounded-lg mt-12' component='img' height={500} image={cover} alt={essay.title} />
 
       {/* 文章正文 */}
-      <Box
-        sx={{
-          marginTop: '3rem',
-          fontSize: '1.5rem',
-          fontWeight: 400
-        }}
-      >
-        <ReactMarkdown>{essay.content}</ReactMarkdown>
-      </Box>
+      <ReactMarkdown className='mt-10'>{essay.content}</ReactMarkdown>
 
       {/* tags */}
       <Box className='mt-12 flex items-center'>

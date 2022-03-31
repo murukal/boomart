@@ -29,13 +29,6 @@ const Player = () => {
       <Button onClick={onReady}>play</Button>
 
       <Button onClick={onStop}>stop</Button>
-
-      {/* <iframe
-        src='//player.bilibili.com/player.html?aid=841542876&bvid=BV1654y1v79X&cid=218343251&page=1'
-        scrolling='no'
-        frameBorder='no'
-        allowFullScreen={true}
-      ></iframe> */}
     </Container>
   )
 }
