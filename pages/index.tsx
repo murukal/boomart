@@ -12,8 +12,8 @@ import { setTypedUI } from '../utils/ui'
 import { GetServerSideProps } from 'next'
 import { getEssays } from '../apis/essay'
 import { getTopEssays, Type } from '../apis/toggle'
-import { PaginateOutput } from '../typings/api'
-import { Essay } from '../typings/essay'
+import type { PaginateOutput } from '../typings/api'
+import type { Essay } from '../typings/essay'
 
 interface Props {
   latestEssayProps: PaginateOutput<Essay> | null

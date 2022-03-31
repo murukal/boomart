@@ -8,6 +8,9 @@ import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from
 // third
 import dayjs from 'dayjs'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { dark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 // project
 import Toggles from '~/components/Essay/Toggles'
 import Comments from '~/components/Essay/Comments'
@@ -65,7 +68,23 @@ const Essay = (props: Props) => {
       <CardMedia className='rounded-lg mt-12' component='img' height={500} image={cover} alt={essay.title} />
 
       {/* 文章正文 */}
-      <ReactMarkdown className='mt-10'>{essay.content}</ReactMarkdown>
+      <ReactMarkdown
+        className='mt-10'
+        remarkPlugins={[remarkGfm]}
+        components={{
+          code({ node, inline, className, children, ...props }) {
+            const languages = /language-(\w+)/.exec(className || '')
+
+            return (
+              <SyntaxHighlighter language={languages?.at(1)} style={dark} PreTag='div' {...props}>
+                {String(children).replace(/\n$/, '')}
+              </SyntaxHighlighter>
+            )
+          }
+        }}
+      >
+        {essay.content}
+      </ReactMarkdown>
 
       {/* tags */}
       <Box className='mt-12 flex items-center'>
@@ -110,7 +129,7 @@ const Essay = (props: Props) => {
 export default Essay
 
 /** 服务端渲染 */
-export const getServerSideProps: GetServerSideProps<Props> = async ({ params, req }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
   if (!params?.id)
     return {
       notFound: true
