@@ -1,15 +1,15 @@
 // react
 import { useMemo } from 'react'
 // mui
-import { Container, Grid, Typography, CardMedia } from '@mui/material'
+import { Container, Grid, Typography, CardMedia, Box } from '@mui/material'
 import { LabelOutlined } from '@mui/icons-material'
 // third
-import { Autoplay, EffectFade, Navigation } from 'swiper'
+import { Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 // project
 import Wrapper from '../Wrapper'
-import { getHotTagStyle } from '.'
+import styles from './Hot.module.css'
 import type { Props } from '.'
 import type { Tag } from '../../../typings/tag'
 
@@ -26,10 +26,6 @@ const Hot = (props: Props) => {
     return [...new Set(tagNames)]
   }, [browseTopEssays, likeTopEssays])
 
-  const onSlideChange = () => {
-    console.log('slide change')
-  }
-
   return (
     <Container className={props.className}>
       {/* 热门文章cards */}
@@ -44,24 +40,34 @@ const Hot = (props: Props) => {
           <Typography className='ml-1'>热门标签：</Typography>
 
           {hotTagNames.map((tagName) => (
-            <Typography sx={getHotTagStyle} key={tagName} component='span' color={(theme) => theme.palette.muted?.main}>
+            <Typography className={styles.tag} key={tagName} component='span' color={(theme) => theme.palette.muted?.main}>
               {tagName}
             </Typography>
           ))}
         </Grid>
 
         <Grid item xs={8}>
-          <Swiper
-            className='h-full'
-            modules={[Autoplay, EffectFade, Navigation]}
-            onSlideChange={onSlideChange}
-            autoplay={true}
-            effect='fade'
-            navigation={true}
-          >
+          <Swiper className='h-full' modules={[Autoplay]} autoplay={true} loop={true} navigation={true}>
             {likeTopEssays.map((essay) => (
               <SwiperSlide className='flex justify-center items-center' key={essay.id}>
-                <CardMedia component='img' image={essay.cover || (essay.tags as Tag[]).at(0)?.image} alt={essay.title} />
+                <CardMedia className='h-full w-full' image={essay.cover || (essay.tags as Tag[]).at(0)?.image} />
+
+                {/* 蒙层 */}
+                <Box
+                  sx={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100px',
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Typography variant='h3' className='m-4' color='white'>
+                    {essay.title}
+                  </Typography>
+                </Box>
               </SwiperSlide>
             ))}
           </Swiper>

@@ -78,7 +78,7 @@ const Wrapper = (props: Props) => {
           marginTop: 'auto',
 
           // 横向样式
-          ...(type === 'horizontal' && { marginTop: '1.25rem' })
+          ...(type === 'horizontal' && { marginTop: '0.5rem' })
         } as CSSProperties
       }
     }
@@ -92,7 +92,7 @@ const Wrapper = (props: Props) => {
         <Tags className='mb-3' tags={tags} />
 
         {/* 文章标题 */}
-        <Typography className='cursor-pointer' variant='h5' onClick={onGo2Essay(essay.id)}>
+        <Typography className='cursor-pointer mb-3' variant='h5' onClick={onGo2Essay(essay.id)}>
           {essay.title}
         </Typography>
 
