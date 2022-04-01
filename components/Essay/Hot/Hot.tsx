@@ -53,16 +53,19 @@ const Hot = (props: Props) => {
 
         <Grid item xs={8}>
           <Swiper
-            className='h-full'
+            className='h-full rounded'
             modules={[Autoplay]}
             autoplay={true}
             loop={true}
             navigation={true}
-            spaceBetween={100}
+            spaceBetween={50}
           >
             {likeTopEssays.map((essay) => (
               <SwiperSlide className='flex justify-center items-center' key={essay.id}>
-                <CardMedia className='h-full w-full' image={essay.cover || (essay.tags as Tag[]).at(0)?.image} />
+                <CardMedia
+                  className='h-full w-full rounded'
+                  image={essay.cover || (essay.tags as Tag[]).at(0)?.image}
+                />
 
                 {/* 蒙层 */}
                 <Box
@@ -73,7 +76,8 @@ const Hot = (props: Props) => {
                     height: '100px',
                     bottom: 0,
                     display: 'flex',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    borderRadius: '0.25rem'
                   }}
                 >
                   <Typography variant='h3' className='m-4' color='white'>
