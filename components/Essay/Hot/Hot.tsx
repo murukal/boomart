@@ -40,14 +40,26 @@ const Hot = (props: Props) => {
           <Typography className='ml-1'>热门标签：</Typography>
 
           {hotTagNames.map((tagName) => (
-            <Typography className={styles.tag} key={tagName} component='span' color={(theme) => theme.palette.muted?.main}>
+            <Typography
+              className={styles.tag}
+              key={tagName}
+              component='span'
+              color={(theme) => theme.palette.muted?.main}
+            >
               {tagName}
             </Typography>
           ))}
         </Grid>
 
         <Grid item xs={8}>
-          <Swiper className='h-full' modules={[Autoplay]} autoplay={true} loop={true} navigation={true}>
+          <Swiper
+            className='h-full'
+            modules={[Autoplay]}
+            autoplay={true}
+            loop={true}
+            navigation={true}
+            spaceBetween={100}
+          >
             {likeTopEssays.map((essay) => (
               <SwiperSlide className='flex justify-center items-center' key={essay.id}>
                 <CardMedia className='h-full w-full' image={essay.cover || (essay.tags as Tag[]).at(0)?.image} />
