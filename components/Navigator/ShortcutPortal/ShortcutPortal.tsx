@@ -24,6 +24,9 @@ const ShortCutPortal = (props: Props) => {
       setIsPortalOpened(true)
     } else {
       props.onPrevPortalClick && props.onPrevPortalClick()
+
+      console.log('props.portal.to=========', props.portal.to)
+
       router.push(props.portal.to || '/')
     }
   }

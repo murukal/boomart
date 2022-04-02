@@ -1,7 +1,7 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
 import { fetcher } from '.'
 import { PaginateOutput, QueryParams } from '../typings/api'
-import { Tag } from '../typings/tag'
+import { Tag, TopTag } from '../typings/tag'
 
 /**
  * 查询多个标签
@@ -26,3 +26,18 @@ export const getTags = () =>
   fetcher.query({
     query: TAGS
   })
+
+/**
+ * 查询标签排行榜
+ */
+export const TopTags: TypedDocumentNode<{
+  topTags: TopTag[]
+}> = gql`
+  query {
+    topTags {
+      id
+      name
+      creationCount
+    }
+  }
+`

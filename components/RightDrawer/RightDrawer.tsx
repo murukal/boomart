@@ -1,8 +1,13 @@
 import { Box, Drawer, Typography } from '@mui/material'
 import { Props } from '.'
 import styles from '~/layouts/Layout/Layout.module.css'
+import { useQuery } from '@apollo/client'
+import { TopTags } from '~/apis/tag'
 
 const RightDrawer = (props: Props) => {
+  /** 查询榜单标签 */
+  const { data } = useQuery(TopTags)
+
   return (
     <Drawer
       anchor='right'
@@ -17,6 +22,10 @@ const RightDrawer = (props: Props) => {
     >
       <Box className='my-8'>
         <Typography className={styles['plate-title']}>HOT TAGS</Typography>
+
+        {data?.topTags.map((tag) => (
+          <Box key={tag.id}>{tag.name}</Box>
+        ))}
       </Box>
 
       <Box className='my-8'>

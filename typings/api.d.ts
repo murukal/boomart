@@ -3,10 +3,10 @@
  */
 export interface PaginateOutput<T> {
   items?: T[]
-  total?: number
   page?: number
   limit?: number
   pageCount?: number
+  totalCount?: number
 }
 
 /**

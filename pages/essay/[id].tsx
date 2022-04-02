@@ -10,7 +10,7 @@ import dayjs from 'dayjs'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { dark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 // project
 import Toggles from '~/components/Essay/Toggles'
 import Comments from '~/components/Essay/Comments'
@@ -76,7 +76,7 @@ const Essay = (props: Props) => {
             const languages = /language-(\w+)/.exec(className || '')
 
             return (
-              <SyntaxHighlighter language={languages?.at(1)} style={dark} PreTag='div' {...props}>
+              <SyntaxHighlighter language={languages?.at(1)} style={a11yDark} PreTag='div' {...props}>
                 {children}
               </SyntaxHighlighter>
             )
