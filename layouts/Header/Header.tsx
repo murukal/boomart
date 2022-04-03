@@ -8,7 +8,19 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 // redux
 import { useSelector } from 'react-redux'
 // mui
-import { Box, Button, Container, Divider, Tabs, Tab, Avatar, Menu, MenuItem, Typography, IconButton } from '@mui/material'
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Tabs,
+  Tab,
+  Avatar,
+  Menu,
+  MenuItem,
+  Typography,
+  IconButton
+} from '@mui/material'
 import { Search, Notes, Home, RotateRightRounded } from '@mui/icons-material'
 // third
 import { useQuery } from '@apollo/client'
@@ -63,7 +75,10 @@ const Header = () => {
   }
 
   /** tabs */
-  const tabs = useMemo(() => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />), [tags])
+  const tabs = useMemo(
+    () => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />),
+    [tags]
+  )
 
   /** 选中 tab */
   const tabValue = useMemo(
@@ -98,7 +113,12 @@ const Header = () => {
 
     return (
       <>
-        <Avatar ref={userProfileEl} className='ml-2 w-8 h-8 cursor-pointer' src={session.user?.image || undefined} onClick={onUserProfileOpen} />
+        <Avatar
+          ref={userProfileEl}
+          className='ml-2 w-8 h-8 cursor-pointer'
+          src={session.user?.image || undefined}
+          onClick={onUserProfileOpen}
+        />
         <Menu
           anchorEl={userProfileEl.current}
           open={isUserProfileOpened}
@@ -116,8 +136,6 @@ const Header = () => {
     )
   }, [session, status, isUserProfileOpened])
 
-  console.log('data=========', data)
-
   return (
     <>
       {/* title */}
@@ -134,6 +152,10 @@ const Header = () => {
             anchorOrigin={{
               horizontal: 'left',
               vertical: 'bottom'
+            }}
+            transformOrigin={{
+              horizontal: 0,
+              vertical: -12
             }}
           />
 

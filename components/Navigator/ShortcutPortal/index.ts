@@ -6,7 +6,10 @@ import type { Menu } from '../../../typings/menu'
 export interface Props {
   portal: Partial<Menu>
   menus?: Menu[]
+
   anchorOrigin?: PopoverOrigin
+  transformOrigin?: PopoverOrigin
+
   onPrevPortalClick?: Function
 
   isLoading?: boolean

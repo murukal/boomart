@@ -42,7 +42,13 @@ const Footer = (props: Props) => {
 
         {/* copyright */}
         <Box className='flex justify-between'>
-          <Link className={footerStyles.content} target='_blank' rel='noreferrer' href='https://beian.miit.gov.cn' underline='none'>
+          <Link
+            className={footerStyles.content}
+            target='_blank'
+            rel='noreferrer'
+            href='https://beian.miit.gov.cn'
+            underline='none'
+          >
             浙ICP备2021003835号
           </Link>
 
@@ -54,7 +60,7 @@ const Footer = (props: Props) => {
             underline='none'
           >
             <Image src={beian} alt='' />
-            浙公网安备 33010902003160号
+            浙公网安备33010902003160号
           </Link>
 
           <Typography className={footerStyles.content}>Copyright © 2022 by fanfan & tutu</Typography>
