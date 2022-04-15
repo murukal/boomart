@@ -8,13 +8,13 @@ import type { CreateToggleInput, RemoveToggleInput, TopInput } from '../typings/
 import type { Essay } from '../typings/essay'
 
 export enum Type {
-  browse = 'browse',
-  like = 'like',
-  collect = 'collect'
+  Browse = 'Browse',
+  Like = 'Like',
+  Collect = 'Collect'
 }
 
 export enum TargetType {
-  essay = 'essay'
+  Essay = 'Essay'
 }
 
 /**

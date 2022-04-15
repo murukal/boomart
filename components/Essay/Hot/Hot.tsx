@@ -22,7 +22,7 @@ const Hot = (props: Props) => {
       return previous.concat(essay.tags.map((tag) => tag.name))
     }, [])
 
-    return [...new Set(tagNames)]
+    return [...new Set(tagNames)].slice(0, 3)
   }, [browseTopEssays, likeTopEssays])
 
   return (
@@ -39,14 +39,26 @@ const Hot = (props: Props) => {
           <Typography className='ml-1'>热门标签：</Typography>
 
           {hotTagNames.map((tagName) => (
-            <Typography className={styles.tag} key={tagName} component='span' color={(theme) => theme.palette.muted?.main}>
+            <Typography
+              className={styles.tag}
+              key={tagName}
+              component='span'
+              color={(theme) => theme.palette.muted?.main}
+            >
               {tagName}
             </Typography>
           ))}
         </Grid>
 
         <Grid item xs={8}>
-          <Swiper className='h-full rounded' modules={[Autoplay]} autoplay={true} loop={true} navigation={true} spaceBetween={50}>
+          <Swiper
+            className='h-full rounded'
+            modules={[Autoplay]}
+            autoplay={true}
+            loop={true}
+            navigation={true}
+            spaceBetween={50}
+          >
             {likeTopEssays.map((essay) => (
               <SwiperSlide className='flex justify-center items-center' key={essay.id}>
                 <CardMedia className='h-full w-full rounded' image={essay.cover || essay.tags.at(0)?.image} />

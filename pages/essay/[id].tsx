@@ -37,8 +37,8 @@ const Essay = (props: Props) => {
   useEffect(() => {
     create({
       targetId: essay.id,
-      targetType: TargetType.essay,
-      type: Type.browse
+      targetType: TargetType.Essay,
+      type: Type.Browse
     })
   }, [])
 
@@ -93,7 +93,14 @@ const Essay = (props: Props) => {
         </Typography>
 
         {essay.tags.map((tag) => (
-          <Typography key={tag.id} className='ml-3' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main} component='span'>
+          <Typography
+            key={tag.id}
+            className='ml-3'
+            fontSize={14}
+            fontStyle='italic'
+            color={(theme) => theme.palette.muted?.main}
+            component='span'
+          >
             <Link href={`/category/${tag.id}`}>{tag.name}</Link>
           </Typography>
         ))}
@@ -121,7 +128,7 @@ const Essay = (props: Props) => {
         </CardContent>
       </Card>
 
-      <Comments className='mt-12' targetType={TargetType.essay} targetId={essay.id} />
+      <Comments className='mt-12' targetType={TargetType.Essay} targetId={essay.id} />
     </Container>
   )
 }

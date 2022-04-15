@@ -135,10 +135,10 @@ export default Home
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
   // 获取浏览量最高的文章
-  const browseTopEssayResult = await getTopEssays(Type.browse)
+  const browseTopEssayResult = await getTopEssays(Type.Browse)
 
   // 获取点赞量最高的文章
-  const likeTopEssayResult = await getTopEssays(Type.like)
+  const likeTopEssayResult = await getTopEssays(Type.Like)
 
   // 获取最近更新的文章
   const latestEssayResult = await getEssays()
