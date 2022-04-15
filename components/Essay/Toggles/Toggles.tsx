@@ -13,9 +13,9 @@ import { create, remove, TargetType, Type } from '~/apis/toggle'
 import type { Props } from '.'
 
 const Toggles = (props: Props) => {
-  const [isToggled, setIsToggled] = useState<Record<Type.like | Type.collect, boolean>>({
-    like: false,
-    collect: false
+  const [isToggled, setIsToggled] = useState<Record<Type.Like | Type.Collect, boolean>>({
+    Like: false,
+    Collect: false
   })
 
   useQuery(ESSAY_TOGGLE, {
@@ -24,8 +24,8 @@ const Toggles = (props: Props) => {
     },
     onCompleted: (data) => {
       setIsToggled({
-        like: data.essay.isLiked,
-        collect: data.essay.isCollected
+        Like: data.essay.isLiked,
+        Collect: data.essay.isCollected
       })
     },
     fetchPolicy: 'no-cache'
@@ -34,7 +34,7 @@ const Toggles = (props: Props) => {
   // 登录状态
   const { status: sessionStatus } = useSession()
 
-  const onToggle = (type: Type.like | Type.collect) => async () => {
+  const onToggle = (type: Type.Like | Type.Collect) => async () => {
     // 未登录，跳转登录
     if (sessionStatus !== 'authenticated') {
       signIn()
@@ -45,18 +45,20 @@ const Toggles = (props: Props) => {
       create: () =>
         create({
           targetId: props.essayId,
-          targetType: TargetType.essay,
+          targetType: TargetType.Essay,
           type
         }),
       remove: () =>
         remove({
           targetId: props.essayId,
-          targetType: TargetType.essay,
+          targetType: TargetType.Essay,
           type
         })
     }
 
-    const result = isToggled[type] ? (await handlers.remove()).data?.removeToggle : (await handlers.create()).data?.createToggle
+    const result = isToggled[type]
+      ? (await handlers.remove()).data?.removeToggle
+      : (await handlers.create()).data?.createToggle
 
     if (!result) return
 
@@ -68,12 +70,12 @@ const Toggles = (props: Props) => {
 
   return (
     <Box className={props.className}>
-      <IconButton onClick={onToggle(Type.like)}>
-        <ThumbUp color={isToggled.like ? 'primary' : undefined} />
+      <IconButton onClick={onToggle(Type.Like)}>
+        <ThumbUp color={isToggled.Like ? 'primary' : undefined} />
       </IconButton>
 
-      <IconButton onClick={onToggle(Type.collect)}>
-        <Favorite color={isToggled.collect ? 'error' : undefined} />
+      <IconButton onClick={onToggle(Type.Collect)}>
+        <Favorite color={isToggled.Collect ? 'error' : undefined} />
       </IconButton>
     </Box>
   )
