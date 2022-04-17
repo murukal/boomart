@@ -14,7 +14,7 @@ import { createEmotionCache } from '~/utils/ui'
 import theme from '~/theme'
 import Layout from '~/layouts/Layout/Layout'
 import store from '~/store'
-import boomartUrl from '~/public/boomart.ico'
+import fantufantuUrl from '~/public/fantufantu.png'
 import client from '~/apis'
 // styles
 import '../styles/index.css'
@@ -36,7 +36,7 @@ const App = (props: AppProps) => {
             <ThemeProvider theme={theme}>
               <Head>
                 <title>番土番土</title>
-                <link rel='icon' href={boomartUrl.src} />
+                <link rel='icon' href={fantufantuUrl.src} />
               </Head>
               <Layout>
                 <Component {...pageProps} />

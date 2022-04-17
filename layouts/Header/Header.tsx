@@ -3,7 +3,6 @@ import { useMemo, useRef, useState } from 'react'
 import type { SyntheticEvent } from 'react'
 // next
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import { signIn, signOut, useSession } from 'next-auth/react'
 // redux
 import { useSelector } from 'react-redux'
@@ -19,13 +18,14 @@ import {
   Menu,
   MenuItem,
   Typography,
-  IconButton
+  IconButton,
+  CardMedia
 } from '@mui/material'
 import { Search, Notes, Home, RotateRightRounded } from '@mui/icons-material'
 // third
 import { useQuery } from '@apollo/client'
 // project
-import logo from '~/public/logo.png'
+import logo from '~/public/fantufantu.png'
 import ShortcutPortal from '~/components/Navigator/ShortcutPortal/ShortcutPortal'
 import RightDrawer from '~/components/RightDrawer'
 import { MENUS } from '~/apis/menu'
@@ -140,7 +140,19 @@ const Header = () => {
     <>
       {/* title */}
       <Container className='my-5 flex justify-between'>
-        <Image src={logo} alt='logo' />
+        <Box className='flex items-center'>
+          <CardMedia
+            component='img'
+            height={32}
+            image={logo.src}
+            sx={{
+              width: 'auto'
+            }}
+          />
+          <Typography className='ml-3' variant='h4'>
+            fantufantu.
+          </Typography>
+        </Box>
 
         <Box className='flex items-center'>
           <ShortcutPortal
