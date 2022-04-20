@@ -7,10 +7,7 @@ import type { GetServerSideProps } from 'next'
 import { Container, Box, Typography, Avatar, CardMedia, Card, CardContent } from '@mui/material'
 // third
 import dayjs from 'dayjs'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import Beeeditor from '@fantufantu/beeeditor'
 // project
 import Toggles from '~/components/Essay/Toggles'
 import Comments from '~/components/Essay/Comments'
@@ -68,23 +65,7 @@ const Essay = (props: Props) => {
       <CardMedia className='rounded-lg mt-12' component='img' height={500} image={cover} alt={essay.title} />
 
       {/* 文章正文 */}
-      <ReactMarkdown
-        className='mt-10'
-        remarkPlugins={[remarkGfm]}
-        components={{
-          code({ node, inline, className, children, ...props }) {
-            const languages = /language-(\w+)/.exec(className || '')
-
-            return (
-              <SyntaxHighlighter language={languages?.at(1)} style={a11yDark} PreTag='div' {...props}>
-                {children}
-              </SyntaxHighlighter>
-            )
-          }
-        }}
-      >
-        {essay.content}
-      </ReactMarkdown>
+      <Beeeditor defaultValue={essay.content} isReadonly={true} />
 
       {/* tags */}
       <Box className='mt-12 flex items-center'>
