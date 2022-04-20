@@ -18,6 +18,7 @@ import fantufantuUrl from '~/public/fantufantu.png'
 import client from '~/apis'
 // styles
 import '../styles/index.css'
+import '@fantufantu/beeeditor/compile/main.css'
 
 const App = (props: AppProps) => {
   const {

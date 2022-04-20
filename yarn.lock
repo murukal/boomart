@@ -242,13 +242,13 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fantufantu/beeeditor@^0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@fantufantu/beeeditor/-/beeeditor-0.0.18.tgz#4bd7541454e236dd645a39438d93dab53c1290fe"
-  integrity sha512-PBfffjF6Kg+AlCelmm/6wOqwU1Ll+U8mQWYRh0+giabZfl5Ud3SUqhYnBnayxBAMwovVyMYiHrNI5+MClQJ+2Q==
+"@fantufantu/beeeditor@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@fantufantu/beeeditor/-/beeeditor-0.0.19.tgz#b3919b50a53df5e343ac511f2872117fc6b817c7"
+  integrity sha512-ND3wvqgHh9qDt85psgxhBrbEbWD+tcUqmNDzP7VPv1viPP1ao4aeK73hBi3mzXTkXopeN6VI1U/n2pScNv2chw==
   dependencies:
-    "@lexical/react" "^0.2.2"
-    lexical "^0.2.2"
+    "@lexical/react" "^0.2.3"
+    lexical "^0.2.3"
 
 "@graphql-typed-document-node/core@^3.0.0":
   version "3.1.1"
@@ -345,7 +345,7 @@
   resolved "https://registry.yarnpkg.com/@lexical/plain-text/-/plain-text-0.2.3.tgz#8093724c91ffc58ca9f617df5e5b43fcaa25aa81"
   integrity sha512-j3z4E29Dz7jDqB/WcjDk9wuejDHGpZNvt7fU4IVPCFW5TN8SmRRrWj98v1s1eizOe6VoU45G6QNcNX8rSg7wNw==
 
-"@lexical/react@^0.2.2":
+"@lexical/react@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@lexical/react/-/react-0.2.3.tgz#0162c2d450ead9e2452eb09976af4ca3276e80da"
   integrity sha512-IzxggaLOlCNS0/Pv6l4hYF0x297wtH/kRSY4nnAEbKwqhAs88cjoKf7Xa1HFHj9HpLfKSi4UAv2wDFuX4hYf5Q==
@@ -2198,7 +2198,7 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-lexical@^0.2.2:
+lexical@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/lexical/-/lexical-0.2.3.tgz#a792888bc14c02983a16bf4add1baa28afe90be2"
   integrity sha512-wOjvW4gl39b8IXVxypEL/hx+GhKeNAr6uQOfEC99qQDwBArzDJhjLpbBMf5Mj+FGCmumpeNH7JiOIwuhlPMkmA==
