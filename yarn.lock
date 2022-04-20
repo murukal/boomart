@@ -242,10 +242,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fantufantu/beeeditor@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@fantufantu/beeeditor/-/beeeditor-0.0.16.tgz#fd8c35d57e7e8e43e99ecf7e0966c8bd164a08b7"
-  integrity sha512-SKUcNS6DJj4ElsQoZOFsZ6OSU+vPcBHDij9o5uLik0V24WnMYpzKj/zi3cVaHzP140+sgiywu+YNOdwzu0FqpQ==
+"@fantufantu/beeeditor@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@fantufantu/beeeditor/-/beeeditor-0.0.18.tgz#4bd7541454e236dd645a39438d93dab53c1290fe"
+  integrity sha512-PBfffjF6Kg+AlCelmm/6wOqwU1Ll+U8mQWYRh0+giabZfl5Ud3SUqhYnBnayxBAMwovVyMYiHrNI5+MClQJ+2Q==
   dependencies:
     "@lexical/react" "^0.2.2"
     lexical "^0.2.2"
