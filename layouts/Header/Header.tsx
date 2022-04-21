@@ -76,7 +76,17 @@ const Header = () => {
 
   /** tabs */
   const tabs = useMemo(
-    () => tags.map((tag) => <Tab key={tag.id} label={tag.name} value={`/category/${tag.id}`} />),
+    () =>
+      tags.map((tag) => (
+        <Tab
+          key={tag.id}
+          label={tag.name}
+          value={`/category/${tag.id}`}
+          sx={{
+            textTransform: 'unset'
+          }}
+        />
+      )),
     [tags]
   )
 
@@ -199,7 +209,7 @@ const Header = () => {
           onChange={onTabChange}
         >
           {/* home */}
-          <Tab label='Home' icon={<Home />} value='/' iconPosition='start' />
+          <Tab label='HOME' icon={<Home />} value='/' iconPosition='start' />
           {tabs}
         </Tabs>
 
