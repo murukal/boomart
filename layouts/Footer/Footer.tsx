@@ -19,11 +19,11 @@ const Footer = (props: Props) => {
 
             <Typography className={`mb-3 ${footerStyles.content}`}>谁也阻挡不了一颗想要创作的心</Typography>
 
-            <Typography className='mb-3 font-bold' color='#212529'>
+            <Typography className='mb-2 font-bold' color='#212529'>
               邮箱地址
             </Typography>
-            <Typography className={footerStyles.content}>fanfan: rrongpan@outlook.com</Typography>
-            <Typography className={footerStyles.content}>tutu: jokerxxx222@126.com</Typography>
+            <Typography className={`${footerStyles.content} ${footerStyles.email}`}>fanfan@fantufantu.com</Typography>
+            <Typography className={`${footerStyles.content} ${footerStyles.email}`}>tutu@fantufantu.com</Typography>
           </Grid>
           <Grid item xs={2}>
             <Typography className={layoutStyles['plate-title']}>quick link</Typography>

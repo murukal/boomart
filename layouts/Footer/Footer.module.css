@@ -1,5 +1,18 @@
 .content {
-    color: #687385;
-    font-size: 12px;
-    font-weight: 400 
+  color: #687385;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.email {
+  margin-top: 4px;
+  padding-left: 12px;
+  position: relative;
+}
+
+.email::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  font-weight: 900;
 }

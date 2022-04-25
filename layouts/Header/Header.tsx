@@ -160,7 +160,7 @@ const Header = () => {
             }}
           />
           <Typography className='ml-3' variant='h4'>
-            fantufantu.
+            fantu.
           </Typography>
         </Box>
 
