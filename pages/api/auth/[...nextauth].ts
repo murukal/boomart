@@ -49,7 +49,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 
           // 根据拿到的token，请求用户信息
           // 将token放到请求头里面
-          const { data, errors, error } = await fetcher.query({
+          const { data } = await fetcher.query({
             query: WHO_AM_I,
             context: {
               headers: {
