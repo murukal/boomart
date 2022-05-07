@@ -55,7 +55,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
               headers: {
                 Authorization: `Bearer ${result.data?.login}`
               }
-            }
+            },
+            fetchPolicy: 'no-cache'
           })
 
           if (!data?.whoAmI) {
