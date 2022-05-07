@@ -63,5 +63,6 @@ const JWT_SECRET: TypedDocumentNode<{
 
 export const getJwtSecret = () =>
   fetcher.query({
-    query: JWT_SECRET
+    query: JWT_SECRET,
+    fetchPolicy: 'no-cache'
   })
