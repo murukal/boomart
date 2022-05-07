@@ -1,17 +1,57 @@
 // react
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ChangeEvent } from 'react'
 // next
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 // mui
-import { Container, Box, Paper, TextField, Typography, Grid, FormControlLabel, Checkbox, Button } from '@mui/material'
+import {
+  Container,
+  Box,
+  Paper,
+  TextField,
+  Typography,
+  Grid,
+  FormControlLabel,
+  Checkbox,
+  Button,
+  FormControl,
+  FormHelperText,
+  useFormControl,
+  OutlinedInput
+} from '@mui/material'
+
+const KeyworkHelperTenxt = () => {
+  const controller = useFormControl()
+
+  console.log('controller===', controller)
+
+  const helperText = useMemo(() => {
+    if (controller?.focused) {
+      return 'This field is being focused'
+    }
+    return 'Helper text'
+  }, [controller?.focused])
+  return <FormHelperText>{helperText}</FormHelperText>
+}
 
 const Login = () => {
+  const router = useRouter()
   const [keyword, setKeyword] = useState('')
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({
+    keyword: false,
+    password: false
+  })
 
-  const router = useRouter()
+  useEffect(() => {
+    if (router.query.error) {
+      setErrors({
+        keyword: true,
+        password: true
+      })
+    }
+  }, [router])
 
   /** 登陆 */
   const onLogin = () => {
@@ -24,17 +64,24 @@ const Login = () => {
 
   /** 输入用户名 */
   const onKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setErrors({
+      ...errors,
+      keyword: false
+    })
     setKeyword(e.target.value)
   }
 
   /** 输入密码 */
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setErrors({
+      ...errors,
+      password: false
+    })
     setPassword(e.target.value)
   }
 
   return (
     <Box
-      component='form'
       className='py-20'
       sx={{
         backgroundColor: '#f1f2f3'
@@ -43,7 +90,7 @@ const Login = () => {
       <Container>
         <Grid container justifyContent='center'>
           <Grid item xs={6}>
-            <Paper className='flex flex-col items-center p-8 rounded-xl'>
+            <Paper className='flex flex-col items-center p-8 rounded-xl' component='form' noValidate autoComplete='off'>
               <Typography className='mb-8' variant='h4'>
                 Login
               </Typography>
@@ -60,6 +107,8 @@ const Login = () => {
                 label='用户名/邮箱'
                 value={keyword}
                 onChange={onKeywordChange}
+                error={errors.keyword}
+                helperText={errors.keyword ? '用户名/邮箱或者密码错误' : ''}
               />
 
               <TextField
@@ -75,13 +124,9 @@ const Login = () => {
                 label='密码'
                 value={password}
                 onChange={onPasswordChange}
+                error={errors.password}
+                helperText={errors.password && '用户名/邮箱或者密码错误'}
               />
-
-              <Box className='w-full flex justify-between items-center mb-3'>
-                <FormControlLabel label='记住我' control={<Checkbox />} />
-
-                <Typography variant='body1'>忘记密码？</Typography>
-              </Box>
 
               <Button
                 style={{

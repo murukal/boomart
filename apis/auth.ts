@@ -3,13 +3,18 @@ import { fetcher } from '.'
 import type { LoginInput, User } from '../typings/auth'
 
 /**
- * 获取用户信息
+ * 登陆
  */
-export const WHO_AM_I: TypedDocumentNode<{
-  whoAmI: User
-}> = gql`
-  query {
-    whoAmI {
+const AUTHORIZE: TypedDocumentNode<
+  {
+    authorize: User
+  },
+  {
+    loginInput: LoginInput
+  }
+> = gql`
+  mutation ($loginInput: LoginInput!) {
+    authorize(loginInput: $loginInput) {
       id
       username
       email
@@ -18,25 +23,9 @@ export const WHO_AM_I: TypedDocumentNode<{
   }
 `
 
-/**
- * 登陆
- */
-const LOGIN: TypedDocumentNode<
-  {
-    login: string
-  },
-  {
-    loginInput: LoginInput
-  }
-> = gql`
-  mutation Login($loginInput: LoginInput!) {
-    login(loginInput: $loginInput)
-  }
-`
-
-export const login = (loginInput: LoginInput) =>
+export const authorize = (loginInput: LoginInput) =>
   fetcher.mutate({
-    mutation: LOGIN,
+    mutation: AUTHORIZE,
     variables: {
       loginInput
     }

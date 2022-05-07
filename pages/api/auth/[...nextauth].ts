@@ -5,8 +5,8 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 // third
 import { JwtPayload, sign, verify } from 'jsonwebtoken'
 // project
-import { login, WHO_AM_I } from '../../../apis/auth'
-import { fetcher, getJwtSecret } from '../../../apis'
+import { authorize } from '../../../apis/auth'
+import { getJwtSecret } from '../../../apis'
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   // 获取后端中存在的秘钥
@@ -35,42 +35,27 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           // 没有认证信息
           if (!credentials) return null
 
-          // 账号密码登录
-          const result = await login({
+          // 认证账号密码
+          const result = await authorize({
             keyword: credentials?.keyword,
             password: credentials?.password
           })
 
-          // 登录接口报错，返回异常
-          if (!result.data?.login)
-            return {
-              error: 'login'
-            }
+          const authorizedUser = result.data?.authorize
 
-          // 根据拿到的token，请求用户信息
-          // 将token放到请求头里面
-          const { data } = await fetcher.query({
-            query: WHO_AM_I,
-            context: {
-              headers: {
-                Authorization: `Bearer ${result.data?.login}`
-              }
-            },
-            fetchPolicy: 'no-cache'
-          })
-
-          if (!data?.whoAmI) {
-            return {
-              error: 'whoAmI'
-            }
-          }
-
-          return {
+          if (authorizedUser) {
             // 用户信息
-            id: data.whoAmI.id,
-            name: data.whoAmI.username,
-            email: data.whoAmI.email,
-            image: data.whoAmI.avatar
+            return {
+              id: authorizedUser.id,
+              name: authorizedUser.username,
+              email: authorizedUser.email,
+              image: authorizedUser.avatar
+            }
+          } else {
+            // 登录接口报错，返回异常
+            return {
+              error: 'authorize'
+            }
           }
         }
       })
@@ -120,14 +105,18 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       decode: async ({ token, secret }) => {
         if (!token) return null
 
-        const payload = verify(token, secret) as JwtPayload
+        try {
+          const payload = verify(token, secret) as JwtPayload
 
-        // 返回token payload
-        return {
-          sub: payload.id,
-          name: payload.name,
-          email: payload.email,
-          picture: payload.image
+          // 返回token payload
+          return {
+            sub: payload.id,
+            name: payload.name,
+            email: payload.email,
+            picture: payload.image
+          }
+        } catch (error) {
+          return null
         }
       }
     },
