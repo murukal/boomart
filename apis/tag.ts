@@ -6,7 +6,7 @@ import { Tag, TopTag } from '../typings/tag'
 /**
  * 查询多个标签
  */
-const TAGS: TypedDocumentNode<
+export const TAGS: TypedDocumentNode<
   {
     tags: PaginateOutput<Tag>
   },
@@ -21,11 +21,6 @@ const TAGS: TypedDocumentNode<
     }
   }
 `
-
-export const getTags = () =>
-  fetcher.query({
-    query: TAGS
-  })
 
 /**
  * 查询标签排行榜

@@ -4,8 +4,6 @@ import type { SyntheticEvent } from 'react'
 // next
 import { useRouter } from 'next/router'
 import { signIn, signOut, useSession } from 'next-auth/react'
-// redux
-import { useSelector } from 'react-redux'
 // mui
 import {
   Box,
@@ -30,8 +28,8 @@ import ShortcutPortal from '~/components/Navigator/ShortcutPortal/ShortcutPortal
 import RightDrawer from '~/components/RightDrawer'
 import { MENUS } from '~/apis/menu'
 import { getMenuTreeFromMenus } from '~/utils/menu'
-import type { State } from '~/store'
 import type { Tag } from '~/typings/tag'
+import { TAGS } from '~/apis/tag'
 
 const Header = () => {
   const [isUserProfileOpened, setIsUserProfileOpened] = useState(false)
@@ -47,7 +45,8 @@ const Header = () => {
   const { data: session, status } = useSession()
   const userProfileEl = useRef(null)
   const router = useRouter()
-  const tags = useSelector<State, Tag[]>((state) => state.tags)
+
+  const { data: tags } = useQuery(TAGS)
 
   /** 搜索 */
   const onSearch = () => {
@@ -74,26 +73,11 @@ const Header = () => {
     router.push(value)
   }
 
-  /** tabs */
-  const tabs = useMemo(
-    () =>
-      tags.map((tag) => (
-        <Tab
-          key={tag.id}
-          label={tag.name}
-          value={`/category/${tag.id}`}
-          sx={{
-            textTransform: 'unset'
-          }}
-        />
-      )),
-    [tags]
-  )
-
   /** 选中 tab */
   const tabValue = useMemo(
-    () => (tags.length ? (['/category/[id]', '/'].includes(router.pathname) ? router.asPath : false) : '/'),
-    [tags, router.asPath]
+    () =>
+      tags?.tags.items?.length ? (['/category/[id]', '/'].includes(router.pathname) ? router.asPath : false) : '/',
+    [tags?.tags.items?.length, router.asPath]
   )
 
   /** 进入登录页面 */
@@ -210,7 +194,18 @@ const Header = () => {
         >
           {/* home */}
           <Tab label='HOME' icon={<Home />} value='/' iconPosition='start' />
-          {tabs}
+
+          {/* 动态 */}
+          {tags?.tags.items?.map((tag) => (
+            <Tab
+              key={tag.id}
+              label={tag.name}
+              value={`/category/${tag.id}`}
+              sx={{
+                textTransform: 'unset'
+              }}
+            />
+          ))}
         </Tabs>
 
         <Box>

@@ -1,16 +1,16 @@
 // router
 import { useRouter } from 'next/router'
-// redux
-import { useSelector } from 'react-redux'
 // mui
 import { Chip } from '@mui/material'
+// third
+import { useQuery } from '@apollo/client'
 // project
-import type { State } from '~/store'
-import type { Tag } from '~/typings/tag'
+import { TAGS } from '~/apis/tag'
 
 const TagChips = () => {
-  const tags = useSelector<State, Tag[]>((state) => state.tags)
   const router = useRouter()
+
+  const { data } = useQuery(TAGS)
 
   /** chip 点击事件 */
   const onChipClick = (id: number) => () => {
@@ -19,7 +19,7 @@ const TagChips = () => {
 
   return (
     <>
-      {tags.map((tag) => (
+      {data?.tags.items?.map((tag) => (
         <Chip
           className='mr-1 mb-2 cursor-pointer'
           key={tag.id}

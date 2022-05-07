@@ -2,8 +2,6 @@
 import Head from 'next/head'
 import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
-// redux
-import { Provider } from 'react-redux'
 // mui
 import { ThemeProvider } from '@mui/material'
 // third
@@ -13,7 +11,6 @@ import { ApolloProvider } from '@apollo/client'
 import { createEmotionCache } from '~/utils/ui'
 import theme from '~/theme'
 import Layout from '~/layouts/Layout/Layout'
-import store from '~/store'
 import fantufantuUrl from '~/public/fantufantu.png'
 import client from '~/apis'
 // styles
@@ -33,17 +30,15 @@ const App = (props: AppProps) => {
     <ApolloProvider client={client}>
       <SessionProvider session={session}>
         <CacheProvider value={emotionCache}>
-          <Provider store={store}>
-            <ThemeProvider theme={theme}>
-              <Head>
-                <title>番土番土</title>
-                <link rel='icon' href={fantufantuUrl.src} />
-              </Head>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </ThemeProvider>
-          </Provider>
+          <ThemeProvider theme={theme}>
+            <Head>
+              <title>番土番土</title>
+              <link rel='icon' href={fantufantuUrl.src} />
+            </Head>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
         </CacheProvider>
       </SessionProvider>
     </ApolloProvider>

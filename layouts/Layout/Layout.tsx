@@ -1,7 +1,5 @@
 // react
 import { useEffect, useState } from 'react'
-// redux
-import { useDispatch } from 'react-redux'
 // mui
 import { Box, Fab } from '@mui/material'
 import { ArrowUpward } from '@mui/icons-material'
@@ -10,20 +8,14 @@ import PerfectScrollbar from 'perfect-scrollbar'
 // project
 import Header from '../Header'
 import Footer from '../Footer/Footer'
-import { setTags } from '~/store/tags/action'
 import type { Props } from '.'
 
 const Layout = (props: Props) => {
   const [ps, setPs] = useState<PerfectScrollbar>()
   const [scrollTop, setScrollTop] = useState(0)
 
-  const dispatch = useDispatch()
-
   /** 渲染 */
   useEffect(() => {
-    // 获取tags存入redux
-    setTags().then((action) => dispatch(action))
-
     // 初始化渲染滚动条
     const current = new PerfectScrollbar('#layout')
 
