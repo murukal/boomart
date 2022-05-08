@@ -1,5 +1,7 @@
 // react
 import { useMemo } from 'react'
+// next
+import { useRouter } from 'next/router'
 // mui
 import { Container, Grid, Typography, CardMedia, Box } from '@mui/material'
 import { LabelOutlined } from '@mui/icons-material'
@@ -13,6 +15,7 @@ import styles from './Hot.module.css'
 import type { Props } from '.'
 
 const Hot = (props: Props) => {
+  const router = useRouter()
   const browseTopEssays = useMemo(() => props.browseTopEssays || [], [props.browseTopEssays])
   const likeTopEssays = useMemo(() => props.likeTopEssays || [], [props.likeTopEssays])
 
@@ -24,6 +27,13 @@ const Hot = (props: Props) => {
 
     return [...new Set(tagNames)].slice(0, 3)
   }, [browseTopEssays, likeTopEssays])
+
+  /**
+   * 跳转文章详情页
+   */
+  const onGo2Essay = (id: number) => () => {
+    router.push(`/essay/${id}`)
+  }
 
   return (
     <Container className={props.className}>
@@ -77,7 +87,16 @@ const Hot = (props: Props) => {
                     borderBottomLeftRadius: '0.25rem'
                   }}
                 >
-                  <Typography variant='h3' className='m-4' color='white' noWrap>
+                  <Typography
+                    variant='h3'
+                    className='m-4'
+                    color='white'
+                    noWrap
+                    sx={{
+                      cursor: 'pointer'
+                    }}
+                    onClick={onGo2Essay(essay.id)}
+                  >
                     {essay.title}
                   </Typography>
                 </Box>

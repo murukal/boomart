@@ -15,7 +15,7 @@ const ESSAY: TypedDocumentNode<
     id: number
   }
 > = gql`
-  query Essay($id: Int!) {
+  query ($id: Int!) {
     essay(id: $id) {
       id
       tags {
@@ -24,6 +24,7 @@ const ESSAY: TypedDocumentNode<
         image
       }
       createdBy {
+        id
         username
         avatar
         creationCount
@@ -71,7 +72,7 @@ export const ESSAYS: TypedDocumentNode<
   },
   QueryParams<FilterInput>
 > = gql`
-  query Essays($paginateInput: PaginateInput, $filterInput: FilterEssayInput) {
+  query ($paginateInput: PaginateInput, $filterInput: FilterEssayInput) {
     essays(paginateInput: $paginateInput, filterInput: $filterInput) {
       items {
         id
@@ -83,6 +84,7 @@ export const ESSAYS: TypedDocumentNode<
           image
         }
         createdBy {
+          id
           username
         }
       }

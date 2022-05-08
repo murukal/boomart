@@ -20,13 +20,7 @@ const TagChips = () => {
   return (
     <>
       {data?.tags.items?.map((tag) => (
-        <Chip
-          className='mr-1 mb-2 cursor-pointer'
-          key={tag.id}
-          label={tag.name}
-          clickable
-          onClick={onChipClick(tag.id)}
-        />
+        <Chip className='mr-1 mb-2' key={tag.id} label={tag.name} clickable onClick={onChipClick(tag.id)} />
       ))}
     </>
   )
