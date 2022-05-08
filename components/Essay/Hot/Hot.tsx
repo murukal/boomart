@@ -77,7 +77,7 @@ const Hot = (props: Props) => {
                     borderBottomLeftRadius: '0.25rem'
                   }}
                 >
-                  <Typography variant='h3' className='m-4' color='white'>
+                  <Typography variant='h3' className='m-4' color='white' noWrap>
                     {essay.title}
                   </Typography>
                 </Box>
