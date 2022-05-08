@@ -7,7 +7,7 @@ const theme = createTheme({
     }
   },
   typography: {
-    fontFamily: ['"Noto Sans JP", sans-serif'].join(','),
+    fontFamily: ['"Noto Sans SC", sans-serif'].join(','),
     fontSize: 12,
 
     h6: {

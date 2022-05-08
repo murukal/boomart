@@ -250,6 +250,11 @@
     "@lexical/react" "0.2.4"
     lexical "0.2.4"
 
+"@fontsource/noto-sans-sc@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans-sc/-/noto-sans-sc-4.5.9.tgz#6794b48f68ff165d3d9ea10a45b0bd01f0fa238f"
+  integrity sha512-2PLiFHsh+qhwTEjHRehzpjrAeL2IeG0xU0dJwEIcvSHk4Km5vaeCFKy9DRANFbbbs9W3dMZrUSPu1fcrKax4aQ==
+
 "@graphql-typed-document-node/core@^3.0.0":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.1.tgz#076d78ce99822258cf813ecc1e7fa460fa74d052"

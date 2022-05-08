@@ -14,6 +14,7 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
     "@fantufantu/beeeditor": "^0.0.33",
+    "@fontsource/noto-sans-sc": "^4.5.9",
     "@mui/icons-material": "^5.5.1",
     "@mui/lab": "^5.0.0-alpha.74",
     "@mui/material": "^5.5.2",
