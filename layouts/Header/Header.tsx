@@ -58,34 +58,46 @@ const Header = () => {
     setIsUserProfileOpened(false)
   }
 
-  /** 用户菜单打开 */
+  /**
+   * 用户菜单打开
+   */
   const onUserProfileOpen = () => {
     setIsUserProfileOpened(true)
   }
 
-  /** 退出登陆 */
+  /**
+   * 退出登陆
+   */
   const onLogout = () => {
     signOut()
   }
 
-  /** tab 切换 */
+  /**
+   * 切换tab
+   */
   const onTabChange = (event: SyntheticEvent, value: string) => {
     router.push(value)
   }
 
-  /** 选中 tab */
+  /**
+   * 根据页面路径获取选中的tab值
+   */
   const tabValue = useMemo(
     () =>
       tags?.tags.items?.length ? (['/category/[id]', '/'].includes(router.pathname) ? router.asPath : false) : '/',
     [tags?.tags.items?.length, router.asPath]
   )
 
-  /** 进入登录页面 */
+  /**
+   * 进入登录页面
+   */
   const onGo2Login = () => {
     signIn(undefined, { callbackUrl: router.asPath })
   }
 
-  /** 打开右侧抽屉 */
+  /**
+   * 打开右侧抽屉
+   */
   const onOpenDrawer = () => {
     setIsDrawerOpened(true)
   }
@@ -130,11 +142,24 @@ const Header = () => {
     )
   }, [session, status, isUserProfileOpened])
 
+  /**
+   * 点击页面logo和标题跳转到首页
+   */
+  const onGo2Home = () => {
+    router.push('/')
+  }
+
   return (
     <>
       {/* title */}
       <Container className='my-5 flex justify-between'>
-        <Box className='flex items-center'>
+        <Box
+          className='flex items-center'
+          onClick={onGo2Home}
+          sx={{
+            cursor: 'pointer'
+          }}
+        >
           <CardMedia
             component='img'
             height={32}
