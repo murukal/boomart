@@ -71,7 +71,7 @@ const CREATE: TypedDocumentNode<
     createToggleInput: CreateToggleInput
   }
 > = gql`
-  mutation CreateToggle($createToggleInput: CreateToggleInput!) {
+  mutation ($createToggleInput: CreateToggleInput!) {
     createToggle(createToggleInput: $createToggleInput)
   }
 `
@@ -93,7 +93,7 @@ const REMOVE: TypedDocumentNode<
     removeToggleInput: RemoveToggleInput
   }
 > = gql`
-  mutation RemoveToggle($removeToggleInput: RemoveToggleInput!) {
+  mutation ($removeToggleInput: RemoveToggleInput!) {
     removeToggle(removeToggleInput: $removeToggleInput)
   }
 `
