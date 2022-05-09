@@ -12,7 +12,7 @@ export const TAGS: TypedDocumentNode<
   },
   QueryParams
 > = gql`
-  query Tags($paginateInput: PaginateInput) {
+  query ($paginateInput: PaginateInput) {
     tags(paginateInput: $paginateInput) {
       items {
         id

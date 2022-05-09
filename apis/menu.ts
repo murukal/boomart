@@ -1,5 +1,4 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
-import { fetcher } from '.'
 import { PaginateOutput } from '../typings/api'
 import { FilterInput, Menu } from '../typings/menu'
 
@@ -14,7 +13,7 @@ export const MENUS: TypedDocumentNode<
     filterInput: FilterInput
   }
 > = gql`
-  query Menus($filterInput: FilterMenuInput!) {
+  query ($filterInput: FilterMenuInput!) {
     menus(filterInput: $filterInput) {
       items {
         id

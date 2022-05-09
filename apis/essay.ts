@@ -55,7 +55,7 @@ export const ESSAY_TOGGLE: TypedDocumentNode<
     id: number
   }
 > = gql`
-  query Essay($id: Int!) {
+  query ($id: Int!) {
     essay(id: $id) {
       isLiked
       isCollected
