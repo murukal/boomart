@@ -28,7 +28,6 @@ import ShortcutPortal from '~/components/Navigator/ShortcutPortal/ShortcutPortal
 import RightDrawer from '~/components/RightDrawer'
 import { MENUS } from '~/apis/menu'
 import { getMenuTreeFromMenus } from '~/utils/menu'
-import type { Tag } from '~/typings/tag'
 import { TAGS } from '~/apis/tag'
 
 const Header = () => {
@@ -48,12 +47,16 @@ const Header = () => {
 
   const { data: tags } = useQuery(TAGS)
 
-  /** 搜索 */
+  /**
+   * 搜索
+   */
   const onSearch = () => {
     router.push('/search')
   }
 
-  /** 用户菜单关闭 */
+  /**
+   * 用户菜单关闭
+   */
   const onUserProfileClose = () => {
     setIsUserProfileOpened(false)
   }
