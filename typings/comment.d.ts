@@ -6,7 +6,6 @@ import { Toggle } from './toggle'
 export interface Comment extends Core {
   content: string
   createdBy: User
-
   isDeleted: boolean
 }
 

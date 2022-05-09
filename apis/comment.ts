@@ -11,7 +11,7 @@ const CREATE: TypedDocumentNode<
     createCommentInput: CreateCommentInput
   }
 > = gql`
-  mutation CreateComment($createCommentInput: CreateCommentInput!) {
+  mutation ($createCommentInput: CreateCommentInput!) {
     createComment(createCommentInput: $createCommentInput)
   }
 `
@@ -35,7 +35,7 @@ export const COMMENTS: TypedDocumentNode<
     filterInput: FilterInput
   }
 > = gql`
-  query Comments($filterInput: FilterCommentInput!) {
+  query ($filterInput: FilterCommentInput!) {
     comments(filterInput: $filterInput) {
       id
       content
@@ -61,7 +61,7 @@ const Remove: TypedDocumentNode<
     id: number
   }
 > = gql`
-  mutation RemoveComment($id: Int!) {
+  mutation ($id: Int!) {
     removeComment(id: $id)
   }
 `

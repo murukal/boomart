@@ -91,8 +91,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     },
 
     jwt: {
-      encode: async (params) =>
-        sign(
+      encode: async (params) => {
+        // jwt secret 发生变更，用户信息被置空时，将现有token消除
+        if (!params.token) return ''
+
+        return sign(
           {
             id: params.token?.sub,
             name: params.token?.name,
@@ -100,7 +103,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             image: params.token?.picture
           },
           params.secret
-        ),
+        )
+      },
 
       decode: async ({ token, secret }) => {
         if (!token) return null

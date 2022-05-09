@@ -1,7 +1,7 @@
 // next
 import Image from 'next/image'
 // mui
-import { Box, Container, Grid, Typography, Link, Divider } from '@mui/material'
+import { Box, Container, Grid, Typography, Link, Divider, CardMedia } from '@mui/material'
 // project
 import footerStyles from './Footer.module.css'
 import layoutStyles from '../Layout/Layout.module.css'
@@ -42,25 +42,27 @@ const Footer = (props: Props) => {
 
         {/* copyright */}
         <Box className='flex justify-between'>
-          <Link
-            className={footerStyles.content}
-            target='_blank'
-            rel='noreferrer'
-            href='https://beian.miit.gov.cn'
-            underline='none'
-          >
-            浙ICP备2021003835号
+          <Link target='_blank' rel='noreferrer' href='https://beian.miit.gov.cn' underline='none'>
+            <Typography className={footerStyles.content}>浙ICP备2021003835号</Typography>
           </Link>
 
           <Link
-            className={`${footerStyles.content} flex items-center`}
+            className='flex items-center'
             target='_blank'
             rel='noreferrer'
             href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010902003160'
             underline='none'
           >
-            <Image src={beian} alt='' />
-            浙公网安备33010902003160号
+            <CardMedia
+              className='mr-1'
+              sx={{
+                width: beian.width,
+                height: beian.height
+              }}
+              image={beian.src}
+            />
+
+            <Typography className={footerStyles.content}>浙公网安备33010902003160号</Typography>
           </Link>
 
           <Typography className={footerStyles.content}>Copyright © 2022 by fanfan & tutu</Typography>

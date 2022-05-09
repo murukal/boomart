@@ -5,35 +5,7 @@ import type { ChangeEvent } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 // mui
-import {
-  Container,
-  Box,
-  Paper,
-  TextField,
-  Typography,
-  Grid,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  FormControl,
-  FormHelperText,
-  useFormControl,
-  OutlinedInput
-} from '@mui/material'
-
-const KeyworkHelperTenxt = () => {
-  const controller = useFormControl()
-
-  console.log('controller===', controller)
-
-  const helperText = useMemo(() => {
-    if (controller?.focused) {
-      return 'This field is being focused'
-    }
-    return 'Helper text'
-  }, [controller?.focused])
-  return <FormHelperText>{helperText}</FormHelperText>
-}
+import { Container, Box, Paper, TextField, Typography, Grid, Button } from '@mui/material'
 
 const Login = () => {
   const router = useRouter()

@@ -40,7 +40,7 @@ const Hot = (props: Props) => {
       {/* 热门文章cards */}
       <Grid container spacing={4}>
         <Grid item xs={8}>
-          <Typography>当前热门🔥</Typography>
+          <Typography>当前热门 🔥</Typography>
         </Grid>
 
         <Grid item xs={4} className='flex items-center justify-end'>

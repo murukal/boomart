@@ -59,7 +59,7 @@ const Home = (props: Props) => {
                 fontWeight: 900
               }}
             >
-              Halo, I’m
+              Halo, I am
               <Typography
                 variant='h2'
                 style={{
