@@ -1,5 +1,4 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
-import { fetcher } from '.'
 import { PaginateOutput, QueryParams } from '../typings/api'
 import { Tag, TopTag } from '../typings/tag'
 
