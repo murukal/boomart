@@ -116,7 +116,9 @@ const Essay = (props: Props) => {
 
 export default Essay
 
-/** 服务端渲染 */
+/**
+ * 服务端渲染
+ */
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
   if (!params?.id)
     return {

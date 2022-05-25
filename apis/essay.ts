@@ -15,7 +15,7 @@ const ESSAY: TypedDocumentNode<
     id: number
   }
 > = gql`
-  query ($id: Int!) {
+  query Essay($id: Int!) {
     essay(id: $id) {
       id
       tags {
@@ -31,7 +31,6 @@ const ESSAY: TypedDocumentNode<
       }
       title
       content
-      isLiked
     }
   }
 `
