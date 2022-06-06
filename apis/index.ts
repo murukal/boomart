@@ -14,9 +14,16 @@ import {
   TypedDocumentNode
 } from '@apollo/client'
 import type { GraphQLError } from 'graphql'
+import { AppID } from '~/assets'
 
 const link = createHttpLink({
-  uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
+  uri: (operation) => {
+    // 根据请求客户端appId标识不同，获取不同的请求地址
+    // 后端对不同的api进行了服务隔离
+    const context = operation.getContext()
+    const appId = context.appId || AppID.Boomart
+    return `${process.env.NEXT_PUBLIC_API_URL}/${appId}/graphql`
+  },
   credentials: 'include'
 })
 
@@ -52,11 +59,13 @@ export const fetcher = {
     )
 }
 
-/** 获取jwt秘钥 */
+/**
+ * 获取jwt秘钥
+ */
 const JWT_SECRET: TypedDocumentNode<{
   jwtSecret: string
 }> = gql`
-  query {
+  query JwtSecret {
     jwtSecret
   }
 `
@@ -64,5 +73,8 @@ const JWT_SECRET: TypedDocumentNode<{
 export const getJwtSecret = () =>
   fetcher.query({
     query: JWT_SECRET,
-    fetchPolicy: 'no-cache'
+    fetchPolicy: 'no-cache',
+    context: {
+      appId: AppID.Boomemory
+    }
   })

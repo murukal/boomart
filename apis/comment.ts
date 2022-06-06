@@ -11,7 +11,7 @@ const CREATE: TypedDocumentNode<
     createCommentInput: CreateCommentInput
   }
 > = gql`
-  mutation ($createCommentInput: CreateCommentInput!) {
+  mutation Create($createCommentInput: CreateCommentInput!) {
     createComment(createCommentInput: $createCommentInput)
   }
 `
@@ -35,7 +35,7 @@ export const COMMENTS: TypedDocumentNode<
     filterInput: FilterInput
   }
 > = gql`
-  query ($filterInput: FilterCommentInput!) {
+  query Comments($filterInput: FilterCommentInput!) {
     comments(filterInput: $filterInput) {
       id
       content
@@ -53,7 +53,7 @@ export const COMMENTS: TypedDocumentNode<
 /**
  * 删除评论
  */
-const Remove: TypedDocumentNode<
+const REMOVE: TypedDocumentNode<
   {
     removeComment: boolean
   },
@@ -61,14 +61,14 @@ const Remove: TypedDocumentNode<
     id: number
   }
 > = gql`
-  mutation ($id: Int!) {
+  mutation Remove($id: Int!) {
     removeComment(id: $id)
   }
 `
 
 export const remove = (id: number) =>
   fetcher.mutate({
-    mutation: Remove,
+    mutation: REMOVE,
     variables: {
       id
     }

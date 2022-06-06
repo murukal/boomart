@@ -29,6 +29,7 @@ import RightDrawer from '~/components/RightDrawer'
 import { MENUS } from '~/apis/menu'
 import { getMenuTreeFromMenus } from '~/utils/menu'
 import { TAGS } from '~/apis/tag'
+import { AppID } from '~/assets'
 
 const Header = () => {
   const [isUserProfileOpened, setIsUserProfileOpened] = useState(false)
@@ -39,6 +40,9 @@ const Header = () => {
       filterInput: {
         tenantCode: 'BOOMART'
       }
+    },
+    context: {
+      appId: AppID.Boomemory
     }
   })
   const { data: session, status } = useSession()

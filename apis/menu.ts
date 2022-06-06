@@ -13,7 +13,7 @@ export const MENUS: TypedDocumentNode<
     filterInput: FilterInput
   }
 > = gql`
-  query ($filterInput: FilterMenuInput!) {
+  query Menus($filterInput: FilterMenuInput!) {
     menus(filterInput: $filterInput) {
       items {
         id

@@ -28,7 +28,7 @@ const TOP_ESSAYS: TypedDocumentNode<
     topInput: TopInput
   }
 > = gql`
-  query ($topInput: TopInput!) {
+  query TopEssays($topInput: TopInput!) {
     topEssays(topInput: $topInput) {
       id
       title
@@ -71,7 +71,7 @@ const CREATE: TypedDocumentNode<
     createToggleInput: CreateToggleInput
   }
 > = gql`
-  mutation ($createToggleInput: CreateToggleInput!) {
+  mutation CreateToggle($createToggleInput: CreateToggleInput!) {
     createToggle(createToggleInput: $createToggleInput)
   }
 `
@@ -93,7 +93,7 @@ const REMOVE: TypedDocumentNode<
     removeToggleInput: RemoveToggleInput
   }
 > = gql`
-  mutation ($removeToggleInput: RemoveToggleInput!) {
+  mutation RemoveToggle($removeToggleInput: RemoveToggleInput!) {
     removeToggle(removeToggleInput: $removeToggleInput)
   }
 `

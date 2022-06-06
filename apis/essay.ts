@@ -54,7 +54,7 @@ export const ESSAY_TOGGLE: TypedDocumentNode<
     id: number
   }
 > = gql`
-  query ($id: Int!) {
+  query Essay($id: Int!) {
     essay(id: $id) {
       isLiked
       isCollected
@@ -71,7 +71,7 @@ export const ESSAYS: TypedDocumentNode<
   },
   QueryParams<FilterInput>
 > = gql`
-  query ($paginateInput: PaginateInput, $filterInput: FilterEssayInput) {
+  query Essays($paginateInput: PaginateInput, $filterInput: FilterEssayInput) {
     essays(paginateInput: $paginateInput, filterInput: $filterInput) {
       items {
         id

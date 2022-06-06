@@ -1,4 +1,5 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
+import { AppID } from '~/assets'
 import { fetcher } from '.'
 import type { LoginInput, User } from '../typings/auth'
 
@@ -13,7 +14,7 @@ const AUTHORIZE: TypedDocumentNode<
     loginInput: LoginInput
   }
 > = gql`
-  mutation ($loginInput: LoginInput!) {
+  mutation Authorize($loginInput: LoginInput!) {
     authorize(loginInput: $loginInput) {
       id
       username
@@ -28,5 +29,8 @@ export const authorize = (loginInput: LoginInput) =>
     mutation: AUTHORIZE,
     variables: {
       loginInput
+    },
+    context: {
+      appId: AppID.Boomemory
     }
   })

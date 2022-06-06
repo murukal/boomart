@@ -11,7 +11,7 @@ export const TAGS: TypedDocumentNode<
   },
   QueryParams
 > = gql`
-  query ($paginateInput: PaginateInput) {
+  query Tags($paginateInput: PaginateInput) {
     tags(paginateInput: $paginateInput) {
       items {
         id
@@ -27,7 +27,7 @@ export const TAGS: TypedDocumentNode<
 export const TopTags: TypedDocumentNode<{
   topTags: TopTag[]
 }> = gql`
-  query {
+  query TopTags {
     topTags {
       id
       name
