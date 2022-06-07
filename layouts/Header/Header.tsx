@@ -1,5 +1,5 @@
 // react
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState, createRef, useEffect } from 'react'
 import type { SyntheticEvent } from 'react'
 // next
 import { useRouter } from 'next/router'
@@ -30,6 +30,7 @@ import { MENUS } from '~/apis/menu'
 import { getMenuTreeFromMenus } from '~/utils/menu'
 import { TAGS } from '~/apis/tag'
 import { AppID } from '~/assets'
+import { log } from 'console'
 
 const Header = () => {
   const [isUserProfileOpened, setIsUserProfileOpened] = useState(false)
@@ -50,6 +51,20 @@ const Header = () => {
   const router = useRouter()
 
   const { data: tags } = useQuery(TAGS)
+
+  const navigationBar = createRef<HTMLDivElement>()
+
+  /**
+   * 注册监听事件
+   */
+  // useEffect(() => {
+  //   navigationBar.current?.addEventListener('sticky-change', (e) => {
+  //     const { detail } = e
+  //     const { target, status } = detail
+
+  //     console.log('status===', status)
+  //   })
+  // }, [])
 
   /**
    * 搜索
@@ -218,6 +233,7 @@ const Header = () => {
         sx={{
           zIndex: 2
         }}
+        ref={navigationBar}
       >
         <Tabs
           value={tabValue}
