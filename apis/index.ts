@@ -14,6 +14,7 @@ import {
   TypedDocumentNode
 } from '@apollo/client'
 import type { GraphQLError } from 'graphql'
+// project
 import { AppID } from '~/assets'
 
 const link = createHttpLink({
@@ -21,8 +22,14 @@ const link = createHttpLink({
     // 根据请求客户端appId标识不同，获取不同的请求地址
     // 后端对不同的api进行了服务隔离
     const context = operation.getContext()
-    const appId = context.appId || AppID.Boomart
-    return `${process.env.NEXT_PUBLIC_API_URL}/${appId}/graphql`
+    const appId = (context.appId as string) || AppID.Boomart
+
+    // 根据appId获取环境变量中对应的后端api地址
+    const apiUrl = process.env[`NEXT_PUBLIC_${appId.toUpperCase()}_API_URL`]
+
+    console.log('apiUrl====', apiUrl)
+
+    return `${apiUrl}/graphql`
   },
   credentials: 'include'
 })
