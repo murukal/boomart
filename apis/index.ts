@@ -18,19 +18,22 @@ import type { GraphQLError } from 'graphql'
 import { AppID } from '~/assets'
 
 const link = createHttpLink({
+  // 动态获取url
   uri: (operation) => {
     // 根据请求客户端appId标识不同，获取不同的请求地址
     // 后端对不同的api进行了服务隔离
     const context = operation.getContext()
-    const appId = (context.appId as string) || AppID.Boomart
+    const appId = context.appId
 
     // 根据appId获取环境变量中对应的后端api地址
-    const apiUrl = process.env[`NEXT_PUBLIC_${appId.toUpperCase()}_API_URL`]
+    const apiUrl =
+      appId === AppID.Boomemory ? process.env.NEXT_PUBLIC_BOOMEMORY_API_URL : process.env.NEXT_PUBLIC_BOOMART_API_URL
 
-    console.log('apiUrl====', apiUrl)
-
+    // 返回指定的URL
     return `${apiUrl}/graphql`
   },
+
+  // 携带cookie
   credentials: 'include'
 })
 
