@@ -45,15 +45,15 @@ const TOP_ESSAYS: TypedDocumentNode<
   }
 `
 
-export const getTopEssays = (type: Type) => {
+export const getTopEssays = (type: Type, from?: dayjs.Dayjs) => {
   const to = dayjs()
-  const from = to.subtract(1, 'M')
+  const actualFrom = from || to.subtract(1, 'M')
 
   return fetcher.query({
     query: TOP_ESSAYS,
     variables: {
       topInput: {
-        from: from.toDate(),
+        from: actualFrom.toDate(),
         to: to.toDate(),
         limit: 4,
         type

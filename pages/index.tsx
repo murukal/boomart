@@ -2,6 +2,8 @@
 import { createRef, useEffect } from 'react'
 // next
 import Image from 'next/image'
+// third
+import dayjs from 'dayjs'
 // mui
 import { Box, Container, Typography, Input, Button } from '@mui/material'
 // project
@@ -138,7 +140,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => 
   const browseTopEssayResult = await getTopEssays(Type.Browse)
 
   // 获取点赞量最高的文章
-  const likeTopEssayResult = await getTopEssays(Type.Like)
+  const likeTopEssayResult = await getTopEssays(Type.Like, dayjs(0))
 
   // 获取最近更新的文章
   const latestEssayResult = await getEssays()
