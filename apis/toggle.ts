@@ -41,6 +41,7 @@ const TOP_ESSAYS: TypedDocumentNode<
       createdBy {
         username
       }
+      createdAt
     }
   }
 `

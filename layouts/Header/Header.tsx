@@ -213,7 +213,12 @@ const Header = () => {
       <Divider />
 
       {/* 菜单栏 */}
-      <Container className='flex justify-between items-center'>
+      <Container
+        className='flex justify-between items-center sticky top-0 bg-white'
+        sx={{
+          zIndex: 2
+        }}
+      >
         <Tabs
           value={tabValue}
           variant='scrollable'

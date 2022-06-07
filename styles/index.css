@@ -4,6 +4,10 @@
 
 @import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
+.ps__rail-y {
+  z-index: 3;
+}
+
 body {
   margin: 0;
 }

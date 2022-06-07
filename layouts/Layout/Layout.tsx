@@ -52,8 +52,12 @@ const Layout = (props: Props) => {
 
   return (
     <Box id='layout' className='h-screen relative overflow-hidden'>
+      {/* 头部 */}
       <Header />
+
+      {/* 内容 */}
       <Box>{props.children}</Box>
+
       {/* 底部 */}
       <Footer className='pt-12 pb-5' />
 

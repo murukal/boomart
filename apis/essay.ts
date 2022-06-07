@@ -86,6 +86,7 @@ export const ESSAYS: TypedDocumentNode<
           id
           username
         }
+        createdAt
       }
       pageCount
     }
