@@ -86,7 +86,11 @@ const Wrapper = (props: Props) => {
 
   return (
     <Card key={essay.id} elevation={styles.cardStyles.elevation} style={styles.cardStyles.style}>
-      <CardMedia style={styles.coverStyles.style} image={essay.cover || tags.at(0)?.image} onClick={onGo2Essay(essay.id)} />
+      <CardMedia
+        style={styles.coverStyles.style}
+        image={essay.cover || tags.at(0)?.image}
+        onClick={onGo2Essay(essay.id)}
+      />
 
       <CardContent style={styles.contentStyles.style}>
         <Tags className='mb-3' tags={tags} />

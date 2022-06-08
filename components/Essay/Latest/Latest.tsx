@@ -13,9 +13,11 @@ const Latest = (props: Props) => {
 
   /** 事件 */
   const onPageChange = async (e: ChangeEvent<unknown>, page: number) => {
-    const result = await getEssays(undefined, {
-      page,
-      limit: 4
+    const result = await getEssays({
+      paginateInput: {
+        page,
+        limit: 4
+      }
     })
 
     result.data?.essays.items && setEssays(result.data?.essays.items)

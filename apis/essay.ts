@@ -96,19 +96,19 @@ export const ESSAYS: TypedDocumentNode<
 /**
  * 查询多个文章
  * 分页
- * 每页4篇
+ * 默认每页4篇
  */
-export const getEssays = (
-  filterInput?: FilterInput,
-  paginateInput: PaginateInput = {
-    page: 1,
-    limit: 4
-  }
-) =>
-  fetcher.query({
+export const getEssays = (query?: QueryParams<FilterInput>) => {
+  const { paginateInput, ...otherQuery } = query || {}
+
+  return fetcher.query({
     query: ESSAYS,
     variables: {
-      paginateInput,
-      filterInput
+      ...otherQuery,
+      paginateInput: {
+        page: paginateInput?.page || 1,
+        limit: paginateInput?.limit || 4
+      }
     }
   })
+}

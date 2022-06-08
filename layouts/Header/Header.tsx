@@ -91,7 +91,7 @@ const Header = () => {
   /**
    * 根据页面路径获取选中的tab值
    */
-  const tabValue = useMemo(
+  const selectedTab = useMemo(
     () =>
       tags?.tags.items?.length ? (['/category/[id]', '/'].includes(router.pathname) ? router.asPath : false) : '/',
     [tags?.tags.items?.length, router.asPath]
@@ -224,7 +224,7 @@ const Header = () => {
       >
         <Container className='flex justify-between items-center'>
           <Tabs
-            value={tabValue}
+            value={selectedTab}
             variant='scrollable'
             scrollButtons='auto'
             sx={{

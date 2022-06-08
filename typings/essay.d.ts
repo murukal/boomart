@@ -18,5 +18,4 @@ export interface Essay extends Core {
 
 export interface FilterInput {
   tagIds?: number[]
-  ids?: number[]
 }
