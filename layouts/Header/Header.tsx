@@ -53,20 +53,6 @@ const Header = () => {
 
   const { data: tags } = useQuery(TAGS)
 
-  const navigationBar = createRef<HTMLDivElement>()
-
-  /**
-   * 注册监听事件
-   */
-  // useEffect(() => {
-  //   navigationBar.current?.addEventListener('sticky-change', (e) => {
-  //     const { detail } = e
-  //     const { target, status } = detail
-
-  //     console.log('status===', status)
-  //   })
-  // }, [])
-
   /**
    * 搜索
    */
@@ -230,12 +216,11 @@ const Header = () => {
 
       {/* 菜单栏 */}
       <Paper
-        className='sticky top-0 bg-white'
+        className='sticky top-0'
         square
         sx={{
           zIndex: 2
         }}
-        ref={navigationBar}
       >
         <Container className='flex justify-between items-center'>
           <Tabs
