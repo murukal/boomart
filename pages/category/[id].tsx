@@ -10,6 +10,7 @@ import Wrapper from '~/components/Essay/Wrapper'
 import { getEssays } from '~/apis/essay'
 import type { Essay } from '~/typings/essay'
 import { useRouter } from 'next/router'
+import Navigations from '../navigations'
 
 interface Props {
   essays: Essay[]
@@ -47,13 +48,15 @@ const Category = (props: Props) => {
   return (
     <Container>
       {/* 文章板块 */}
-      <Box>
+      <Box className='mb-7'>
         {essays.map((essay) => (
           <Wrapper key={essay.id} essay={essay} />
         ))}
 
         <Pagination className='mt-7' count={essayPageCount} color='primary' onChange={onEssayPageChange} />
       </Box>
+
+      <Navigations />
     </Container>
   )
 }

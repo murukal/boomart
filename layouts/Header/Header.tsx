@@ -17,7 +17,8 @@ import {
   MenuItem,
   Typography,
   IconButton,
-  CardMedia
+  CardMedia,
+  Paper
 } from '@mui/material'
 import { Search, Notes, Home, RotateRightRounded } from '@mui/icons-material'
 // third
@@ -228,45 +229,48 @@ const Header = () => {
       <Divider />
 
       {/* 菜单栏 */}
-      <Container
-        className='flex justify-between items-center sticky top-0 bg-white'
+      <Paper
+        className='sticky top-0 bg-white'
+        square
         sx={{
           zIndex: 2
         }}
         ref={navigationBar}
       >
-        <Tabs
-          value={tabValue}
-          variant='scrollable'
-          scrollButtons='auto'
-          sx={{
-            flex: 1,
-            marginRight: '20px'
-          }}
-          onChange={onTabChange}
-        >
-          {/* home */}
-          <Tab label='HOME' icon={<Home />} value='/' iconPosition='start' />
+        <Container className='flex justify-between items-center'>
+          <Tabs
+            value={tabValue}
+            variant='scrollable'
+            scrollButtons='auto'
+            sx={{
+              flex: 1,
+              marginRight: '20px'
+            }}
+            onChange={onTabChange}
+          >
+            {/* home */}
+            <Tab label='HOME' icon={<Home />} value='/' iconPosition='start' />
 
-          {/* 动态 */}
-          {tags?.tags.items?.map((tag) => (
-            <Tab
-              key={tag.id}
-              label={tag.name}
-              value={`/category/${tag.id}`}
-              sx={{
-                textTransform: 'unset'
-              }}
-            />
-          ))}
-        </Tabs>
+            {/* 动态 */}
+            {tags?.tags.items?.map((tag) => (
+              <Tab
+                key={tag.id}
+                label={tag.name}
+                value={`/category/${tag.id}`}
+                sx={{
+                  textTransform: 'unset'
+                }}
+              />
+            ))}
+          </Tabs>
 
-        <Box>
-          <IconButton onClick={onOpenDrawer}>
-            <Notes />
-          </IconButton>
-        </Box>
-      </Container>
+          <Box>
+            <IconButton onClick={onOpenDrawer}>
+              <Notes />
+            </IconButton>
+          </Box>
+        </Container>
+      </Paper>
 
       {/* 右侧抽屉 */}
       <RightDrawer isOpened={isDrawerOpened} onClose={() => setIsDrawerOpened(false)} />
