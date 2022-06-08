@@ -28,16 +28,16 @@ const Latest = (props: Props) => {
       <Container>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Typography>最近发布的文章</Typography>
-            <Divider className='mt-2.5' />
+            <Typography className='mb-2.5'>最近发布的文章</Typography>
+            <Divider className='mb-7' />
 
             {/* 文章列表 */}
             {essays.map((essay) => (
-              <Wrapper key={essay.id} essay={essay} />
+              <Wrapper key={essay.id} essay={essay} className='mb-7' />
             ))}
 
             {/* 分页 */}
-            <Pagination className='mt-7' count={props.pageCount} color='primary' onChange={onPageChange} />
+            <Pagination count={props.pageCount} color='primary' onChange={onPageChange} />
           </Grid>
         </Grid>
       </Container>

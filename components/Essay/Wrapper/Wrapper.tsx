@@ -15,28 +15,34 @@ const Wrapper = (props: Props) => {
   const essay = useMemo(() => props.essay, [props.essay])
   const tags = useMemo(() => props.essay.tags, [props.essay])
 
-  /** 默认卡片大小 */
+  /**
+   * 默认卡片大小
+   */
   const type = useMemo(() => props.type || 'horizontal', [props.type])
 
-  /** 路由跳转 */
+  /**
+   * 路由跳转
+   */
   const onGo2Essay = (id: number) => () => {
     router.push(`/essay/${id}`)
   }
 
-  /** 根据 type 生成卡片的style */
+  /**
+   * 根据 type 生成卡片的style
+   */
   const styles = useMemo(() => {
     return {
       // 卡片外层样式
       cardStyles: {
         elevation: type === 'horizontal' ? 0 : undefined,
         style: {
+          ...props.style,
           backgroundColor: props.color || 'rgb(249 250 251 / var(--tw-bg-opacity))',
           display: 'flex',
           flexDirection: 'column',
 
           // 横向样式
           ...(type === 'horizontal' && {
-            marginTop: '1.75rem',
             flexDirection: 'row'
           }),
 
@@ -85,7 +91,12 @@ const Wrapper = (props: Props) => {
   }, [type])
 
   return (
-    <Card key={essay.id} elevation={styles.cardStyles.elevation} style={styles.cardStyles.style}>
+    <Card
+      key={essay.id}
+      elevation={styles.cardStyles.elevation}
+      style={styles.cardStyles.style}
+      className={props.className}
+    >
       <CardMedia
         style={styles.coverStyles.style}
         image={essay.cover || tags.at(0)?.image}

@@ -7,4 +7,6 @@ export interface Props {
   type?: 'horizontal' | 'vertical'
   essay: Essay
   color?: string
+  className?: string
+  style?: React.CSSProperties
 }

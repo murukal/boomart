@@ -66,13 +66,13 @@ const Category = (props: Props) => {
       }}
     >
       {/* 文章板块 */}
-      <Typography className={layoutStyles['plate-title']}>文章</Typography>
+      <Typography className={layoutStyles['plate-title'] + ' mb-7'}>文章</Typography>
 
       <Box className='mb-7'>
         {essays.map((essay) => (
-          <Wrapper key={essay.id} essay={essay} />
+          <Wrapper key={essay.id} essay={essay} className='mb-7' />
         ))}
-        <Pagination className='mt-7' count={essayPageCount} color='primary' onChange={onEssayPageChange} />
+        <Pagination count={essayPageCount} color='primary' onChange={onEssayPageChange} />
       </Box>
 
       {/* 导航板块 */}
@@ -100,16 +100,19 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
   // 获取当前分类下的文章列表
   const { data: essays } = await getEssays({
     filterInput: {
-      tagIds: [Number(params?.id)]
+      tagIds: [id]
     },
     paginateInput: {
-      page: 1,
       limit: 5
     }
   })
 
   // 获取当前分类下的导航列表
-  const { data: navigations } = await getNavigations({})
+  const { data: navigations } = await getNavigations({
+    filterInput: {
+      tagIds: [id]
+    }
+  })
 
   // 生成服务端参数，以props的方式传递给客户端
   return {
