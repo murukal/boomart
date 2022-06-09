@@ -13,12 +13,16 @@ const NAVIGATIONS: TypedDocumentNode<
 > = gql`
   query Navigations($paginateInput: PaginateInput, $filterInput: FilterNavigationInput) {
     navigations(paginateInput: $paginateInput, filterInput: $filterInput) {
-      id
-      title
-      tags {
+      items {
         id
         title
+        tags {
+          id
+          name
+          image
+        }
       }
+      pageCount
     }
   }
 `
@@ -34,6 +38,7 @@ export const getNavigations = (query?: QueryParams<FilterInput>) => {
         page: paginateInput?.page || 1,
         limit: paginateInput?.limit || 9
       }
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 }

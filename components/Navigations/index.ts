@@ -7,5 +7,5 @@ export interface Props {
   className?: string
   style?: React.CSSProperties
   navigations: Navigation[]
-  navigationPageCount: number
+  pageCount: number
 }
