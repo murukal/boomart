@@ -1,4 +1,5 @@
-import { TargetType } from '../../../apis/toggle'
+// project
+import { TargetType } from '~/apis/toggle'
 
 export { default } from './Comments'
 
