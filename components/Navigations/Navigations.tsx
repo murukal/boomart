@@ -1,10 +1,11 @@
 // mui
 import { Grid, Pagination } from '@mui/material'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 // project
 import Navigation from '../Navigation'
 import type { Props } from '.'
 import type { Navigation as NavigationType } from '~/typings/navigation'
+import { getNavigations } from '~/apis/navigation'
 
 const Navigations = (props: Props) => {
   const [navigations, setNavigations] = useState<NavigationType[]>([])
@@ -18,7 +19,20 @@ const Navigations = (props: Props) => {
   /**
    * 翻页
    */
-  const onPage = () => {}
+  const onPage = async (e: ChangeEvent<unknown>, page: number) => {
+    const result = await getNavigations({
+      filterInput: {
+        tagIds: props.tagIds
+      },
+      paginateInput: {
+        page,
+        limit: 9
+      }
+    })
+
+    setNavigations(result.data?.navigations.items || [])
+    setPageCount(result.data?.navigations.pageCount || 0)
+  }
 
   return (
     <>

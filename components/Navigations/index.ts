@@ -8,4 +8,5 @@ export interface Props {
   style?: React.CSSProperties
   navigations: Navigation[]
   pageCount: number
+  tagIds: number[]
 }

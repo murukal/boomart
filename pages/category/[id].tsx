@@ -25,36 +25,21 @@ const Category = (props: Props) => {
   const { id } = router.query
 
   /**
-   * 文章模块className
+   * 模块标题className
    */
-  const essayClassName = useMemo(() => {
-    const classNames = [layoutStyles['plate-title'], 'mb-7']
-    return classNames.join(' ')
+  const titleClassName = useMemo(() => {
+    return [layoutStyles['plate-title'], 'my-7'].join(' ')
   }, [])
-
-  /**
-   * 导航模块className
-   */
-  const navigationClassName = useMemo(() => {
-    const classNames = [layoutStyles['plate-title'], 'mb-7']
-
-    // 上方存在文章模块，设置外边距
-    if (props.essayPageCount) {
-      classNames.push('mt-7')
-    }
-
-    return classNames.join(' ')
-  }, [props.essayPageCount])
 
   /**
    * UI
    */
   return (
-    <Container className='pt-7'>
+    <Container>
       {/* 文章板块 */}
       {!!props.essayPageCount && (
         <>
-          <Typography className={essayClassName}>文章</Typography>
+          <Typography className={titleClassName}>文章</Typography>
           <Essays essays={props.essays} pageCount={props.essayPageCount} tagIds={[Number(id)]} />
         </>
       )}
@@ -62,8 +47,8 @@ const Category = (props: Props) => {
       {/* 导航板块 */}
       {!!props.navigationPageCount && (
         <>
-          <Typography className={navigationClassName}>导航</Typography>
-          <Navigations navigations={props.navigations} pageCount={props.navigationPageCount} />
+          <Typography className={titleClassName}>导航</Typography>
+          <Navigations navigations={props.navigations} pageCount={props.navigationPageCount} tagIds={[Number(id)]} />
         </>
       )}
     </Container>
