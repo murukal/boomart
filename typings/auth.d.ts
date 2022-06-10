@@ -5,12 +5,14 @@ export interface LoginInput {
   password: string
 }
 
+export interface MartProfile {
+  creationCount: number
+}
+
 export interface User extends Core {
   username: string
   email: string
   avatar: string
-
-  creationCount: number
-
   isSelf: boolean
+  martProfile: MartProfile
 }

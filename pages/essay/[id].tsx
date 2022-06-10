@@ -104,7 +104,7 @@ const Essay = (props: Props) => {
           <Typography className='mt-5'>这个人有点懒，没有介绍自己</Typography>
 
           <Typography className='mt-4' fontSize={14} fontStyle='italic' color={(theme) => theme.palette.muted?.main}>
-            <Link href='/'>{`去看下 ta ( ${createdBy.creationCount} )`}</Link>
+            <Link href='/'>{`去看下 ta ( ${createdBy.martProfile.creationCount} )`}</Link>
           </Typography>
         </CardContent>
       </Card>
@@ -125,7 +125,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
       notFound: true
     }
 
-  const { data } = await getEssay(Number(params?.id))
+  const { data, error } = await getEssay(Number(params?.id))
 
   if (!data?.essay) {
     return {

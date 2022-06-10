@@ -1,7 +1,7 @@
 // project
 import { gql, TypedDocumentNode } from '@apollo/client'
 import { fetcher } from '.'
-import { PaginateInput, PaginateOutput, QueryParams } from '../typings/api'
+import { PaginateOutput, QueryParams } from '../typings/api'
 import type { Essay, FilterInput } from '../typings/essay'
 
 /**
@@ -27,7 +27,9 @@ const ESSAY: TypedDocumentNode<
         id
         username
         avatar
-        creationCount
+        martProfile {
+          creationCount
+        }
       }
       title
       content
