@@ -16,6 +16,8 @@ const NAVIGATIONS: TypedDocumentNode<
       items {
         id
         title
+        subtitle
+        link
         tags {
           id
           name

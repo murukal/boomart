@@ -3,14 +3,9 @@
   height: 126px;
   padding: 12px;
   cursor: pointer;
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-size 0.5s ease;
-}
-
-.backgroud-hovered {
-  background-size: 101%;
 }
 
 .profile {

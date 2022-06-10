@@ -62,9 +62,22 @@ const Navigation = (props: Props) => {
    */
   const profileClassName = useMemo(() => [styles.profile, 'relative'].join(' '), [])
 
+  /**
+   * 跳转外链
+   */
+  const onClick = () => {
+    window.open(navigation.link, '_blank')
+  }
+
   return (
     <>
-      <Paper ref={backgroudRef} elevation={elevation} sx={backgroudStyle} className={backgroudClassName}>
+      <Paper
+        ref={backgroudRef}
+        elevation={elevation}
+        sx={backgroudStyle}
+        className={backgroudClassName}
+        onClick={onClick}
+      >
         <TagChips tags={navigation.tags} color='warning' />
       </Paper>
 
@@ -78,11 +91,12 @@ const Navigation = (props: Props) => {
           justifyContent: 'center',
           alignItems: 'center'
         }}
+        onClick={onClick}
       >
         <Typography fontWeight={700} gutterBottom>
           {navigation.title}
         </Typography>
-        <Typography>{navigation.title}</Typography>
+        <Typography>{navigation.subtitle}</Typography>
       </Paper>
     </>
   )
