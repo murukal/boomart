@@ -1,4 +1,5 @@
-import { Essay } from '~/typings/essay'
+// project
+import type { Essay } from '~/typings/essay'
 
 export { default } from './Essays'
 

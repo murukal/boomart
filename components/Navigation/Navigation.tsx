@@ -1,8 +1,11 @@
-import { Paper, Typography } from '@mui/material'
+// react
 import { createRef, useMemo, useState, useEffect } from 'react'
+// mui
+import { Paper, Typography } from '@mui/material'
+// project
 import TagChips from '~/layouts/Footer/TagChips'
-import { Props } from '.'
 import styles from './Navigation.module.css'
+import type { Props } from '.'
 
 const Navigation = (props: Props) => {
   const backgroudRef = createRef<HTMLDivElement>()

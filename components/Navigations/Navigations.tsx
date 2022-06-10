@@ -3,9 +3,9 @@ import { Grid, Pagination } from '@mui/material'
 import { useState, useEffect, ChangeEvent } from 'react'
 // project
 import Navigation from '../Navigation'
+import { getNavigations } from '~/apis/navigation'
 import type { Props } from '.'
 import type { Navigation as NavigationType } from '~/typings/navigation'
-import { getNavigations } from '~/apis/navigation'
 
 const Navigations = (props: Props) => {
   const [navigations, setNavigations] = useState<NavigationType[]>([])

@@ -1,4 +1,5 @@
-import { Navigation } from '~/typings/navigation'
+// project
+import type { Navigation } from '~/typings/navigation'
 
 export { default } from './Navigation'
 
