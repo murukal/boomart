@@ -1,12 +1,13 @@
 import { Pagination } from '@mui/material'
 import { ChangeEvent, useState, useEffect } from 'react'
 import { getEssays } from '~/apis/essay'
+import { Essay } from '~/typings/essay'
 import { Props } from '.'
 import Wrapper from '../Essay/Wrapper'
 
 const Essays = (props: Props) => {
-  const [essays, setEssays] = useState(props.essays)
-  const [pageCount, setPageCount] = useState(props.pageCount)
+  const [essays, setEssays] = useState<Essay[]>([])
+  const [pageCount, setPageCount] = useState(0)
 
   useEffect(() => {
     setEssays(props.essays)
@@ -37,7 +38,7 @@ const Essays = (props: Props) => {
       {essays.map((essay) => (
         <Wrapper key={essay.id} essay={essay} className='mb-7' />
       ))}
-      <Pagination count={pageCount} className='mb-7' color='primary' onChange={onPage} />
+      <Pagination count={pageCount} color='primary' onChange={onPage} />
     </>
   )
 }

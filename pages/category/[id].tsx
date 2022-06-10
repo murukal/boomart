@@ -1,25 +1,21 @@
-// react
-import { useEffect, useState } from 'react'
-import type { ChangeEvent } from 'react'
 // next
 import { useRouter } from 'next/router'
 import type { GetServerSideProps } from 'next'
 // mui
-import { Pagination, Container, Box, Typography } from '@mui/material'
+import { Container, Typography } from '@mui/material'
 // project
-import Wrapper from '~/components/Essay/Wrapper'
 import { getEssays } from '~/apis/essay'
-import Navigations from '~/components/Navigations'
-import layoutStyles from '~/layouts/Layout/Layout.module.css'
 import { getNavigations } from '~/apis/navigation'
+import Navigations from '~/components/Navigations'
+import Essays from '~/components/Essays'
+import layoutStyles from '~/layouts/Layout/Layout.module.css'
 import type { Essay } from '~/typings/essay'
 import type { Navigation } from '~/typings/navigation'
-import Essays from '~/components/Essays'
+import { useMemo } from 'react'
 
 interface Props {
   essays: Essay[]
   essayPageCount: number
-
   navigations: Navigation[]
   navigationPageCount: number
 }
@@ -28,19 +24,48 @@ const Category = (props: Props) => {
   const router = useRouter()
   const { id } = router.query
 
+  /**
+   * 文章模块className
+   */
+  const essayClassName = useMemo(() => {
+    const classNames = [layoutStyles['plate-title'], 'mb-7']
+    return classNames.join(' ')
+  }, [])
+
+  /**
+   * 导航模块className
+   */
+  const navigationClassName = useMemo(() => {
+    const classNames = [layoutStyles['plate-title'], 'mb-7']
+
+    // 上方存在文章模块，设置外边距
+    if (props.essayPageCount) {
+      classNames.push('mt-7')
+    }
+
+    return classNames.join(' ')
+  }, [props.essayPageCount])
+
+  /**
+   * UI
+   */
   return (
-    <Container
-      sx={{
-        paddingTop: '28px'
-      }}
-    >
+    <Container className='pt-7'>
       {/* 文章板块 */}
-      <Typography className={layoutStyles['plate-title'] + ' mb-7'}>文章</Typography>
-      <Essays essays={props.essays} pageCount={props.essayPageCount} tagIds={[Number(id)]} />
+      {!!props.essayPageCount && (
+        <>
+          <Typography className={essayClassName}>文章</Typography>
+          <Essays essays={props.essays} pageCount={props.essayPageCount} tagIds={[Number(id)]} />
+        </>
+      )}
 
       {/* 导航板块 */}
-      <Typography className={layoutStyles['plate-title'] + ' mb-7'}>导航</Typography>
-      <Navigations navigations={props.navigations} pageCount={props.navigationPageCount} />
+      {!!props.navigationPageCount && (
+        <>
+          <Typography className={navigationClassName}>导航</Typography>
+          <Navigations navigations={props.navigations} pageCount={props.navigationPageCount} />
+        </>
+      )}
     </Container>
   )
 }
