@@ -96,10 +96,10 @@ const Navigation = (props: Props) => {
         }}
         onClick={onClick}
       >
-        <Typography fontWeight={700} gutterBottom>
+        <Typography fontWeight={700} gutterBottom noWrap>
           {navigation.title}
         </Typography>
-        <Typography>{navigation.subtitle}</Typography>
+        <Typography noWrap>{navigation.subtitle}</Typography>
       </Paper>
     </>
   )
