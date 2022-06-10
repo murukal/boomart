@@ -1,11 +1,9 @@
-// next
-import Image from 'next/image'
 // mui
 import { Box, Container, Grid, Typography, Link, Divider, CardMedia } from '@mui/material'
 // project
 import footerStyles from './Footer.module.css'
 import layoutStyles from '../Layout/Layout.module.css'
-import beian from '../../public/beian.png'
+import beian from '~/public/beian.png'
 import TagChips from './TagChips'
 import type { Props } from '.'
 
@@ -31,7 +29,7 @@ const Footer = (props: Props) => {
           <Grid item xs={3}>
             <Typography className={layoutStyles['plate-title']}>tags</Typography>
             {/* chips */}
-            <TagChips />
+            <TagChips clickable variant='outlined' color='info' />
           </Grid>
           <Grid item xs={4}>
             <Typography className={layoutStyles['plate-title']}>newsletter</Typography>

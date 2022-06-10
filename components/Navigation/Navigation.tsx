@@ -1,5 +1,6 @@
 import { Paper, Typography } from '@mui/material'
 import { createRef, useMemo, useState, useEffect } from 'react'
+import TagChips from '~/layouts/Footer/TagChips'
 import { Props } from '.'
 import styles from './Navigation.module.css'
 
@@ -44,7 +45,7 @@ const Navigation = (props: Props) => {
   const elevation = useMemo(() => (isHovered ? 6 : 2), [isHovered])
 
   /**
-   * 背景块 className
+   * 背景块className
    */
   const backgroudClassName = useMemo(() => {
     const classNames = [styles.backgroud]
@@ -56,11 +57,31 @@ const Navigation = (props: Props) => {
     return classNames.join(' ')
   }, [isHovered])
 
+  /**
+   * 详情块className
+   */
+  const profileClassName = useMemo(() => [styles.profile, 'relative'].join(' '), [])
+
   return (
     <>
-      <Paper ref={backgroudRef} elevation={elevation} sx={backgroudStyle} className={backgroudClassName} />
+      <Paper ref={backgroudRef} elevation={elevation} sx={backgroudStyle} className={backgroudClassName}>
+        <TagChips tags={navigation.tags} color='warning' />
+      </Paper>
 
-      <Paper ref={profileRef} className={styles.profile + ' relative'} elevation={elevation}>
+      <Paper
+        ref={profileRef}
+        className={profileClassName}
+        elevation={elevation}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Typography fontWeight={700} gutterBottom>
+          {navigation.title}
+        </Typography>
         <Typography>{navigation.title}</Typography>
       </Paper>
     </>
