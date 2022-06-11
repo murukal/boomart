@@ -1,3 +1,5 @@
+// react
+import { useMemo } from 'react'
 // next
 import { useRouter } from 'next/router'
 import type { GetServerSideProps } from 'next'
@@ -11,7 +13,6 @@ import Essays from '~/components/Essays'
 import layoutStyles from '~/layouts/Layout/Layout.module.css'
 import type { Essay } from '~/typings/essay'
 import type { Navigation } from '~/typings/navigation'
-import { useMemo } from 'react'
 
 interface Props {
   essays: Essay[]
