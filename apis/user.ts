@@ -31,8 +31,5 @@ export const authorize = (loginInput: LoginInput) =>
     mutation: AUTHORIZE,
     variables: {
       loginInput
-    },
-    context: {
-      appId: AppID.Boomemory
     }
   })
