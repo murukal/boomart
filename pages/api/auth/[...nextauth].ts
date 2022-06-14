@@ -5,7 +5,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 // third
 import { JwtPayload, sign, verify } from 'jsonwebtoken'
 // project
-import { authorize } from '~/apis/auth'
+import { authorize } from '~/apis/user'
 import { getJwtSecret } from '~/apis'
 import { AuthError } from '~/utils/auth'
 
@@ -52,11 +52,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           }
 
           // 用户未认证
-          // if (!authorizedUser.isVerified) {
-          //   return {
-          //     error: AuthError.NotVerified
-          //   }
-          // }
+          if (!authorizedUser.isVerified) {
+            return {
+              error: AuthError.NotVerified
+            }
+          }
 
           // 登录成功，返回用户信息
           // 用户信息

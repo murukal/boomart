@@ -1,7 +1,6 @@
 // third
 import { gql, TypedDocumentNode } from '@apollo/client'
 // project
-import { AppID } from '~/assets'
 import { fetcher } from '.'
 import type { LoginInput, User } from '../typings/auth'
 
@@ -31,8 +30,5 @@ export const authorize = (loginInput: LoginInput) =>
     mutation: AUTHORIZE,
     variables: {
       loginInput
-    },
-    context: {
-      appId: AppID.Boomemory
     }
   })
