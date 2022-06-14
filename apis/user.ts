@@ -2,7 +2,8 @@
 import { gql, TypedDocumentNode } from '@apollo/client'
 // project
 import { fetcher } from '.'
-import type { LoginInput, User } from '../typings/auth'
+import type { LoginInput } from '~/typings/auth'
+import type { User } from '~/typings/user'
 
 /**
  * 登陆
@@ -19,7 +20,7 @@ const AUTHORIZE: TypedDocumentNode<
     authorize(loginInput: $loginInput) {
       id
       username
-      email
+      emailAddress
       avatar
     }
   }

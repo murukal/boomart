@@ -20,8 +20,12 @@ const Footer = (props: Props) => {
             <Typography className='mb-2 font-bold' color='#212529'>
               邮箱地址
             </Typography>
-            <Typography className={`${footerStyles.content} ${footerStyles.email}`}>fanfan@fantufantu.com</Typography>
-            <Typography className={`${footerStyles.content} ${footerStyles.email}`}>tutu@fantufantu.com</Typography>
+            <Typography className={`${footerStyles.content} ${footerStyles['email-address']}`}>
+              fanfan@fantufantu.com
+            </Typography>
+            <Typography className={`${footerStyles.content} ${footerStyles['email-address']}`}>
+              tutu@fantufantu.com
+            </Typography>
           </Grid>
           <Grid item xs={2}>
             <Typography className={layoutStyles['plate-title']}>quick link</Typography>

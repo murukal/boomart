@@ -63,7 +63,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           return {
             id: authorizedUser.id,
             name: authorizedUser.username,
-            email: authorizedUser.email,
+            email: authorizedUser.emailAddress,
             image: authorizedUser.avatar
           }
         }

@@ -4,13 +4,13 @@
   font-weight: 400;
 }
 
-.email {
+.email-address {
   margin-top: 4px;
   padding-left: 12px;
   position: relative;
 }
 
-.email::before {
+.email-address::before {
   content: '>';
   position: absolute;
   left: 0;
