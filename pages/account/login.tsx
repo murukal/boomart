@@ -1,65 +1,90 @@
 // react
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { ChangeEvent } from 'react'
 // next
-import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react'
 // mui
-import { Container, Box, Paper, TextField, Typography, Grid, Button } from '@mui/material'
+import { Container, Box, Paper, TextField, Typography, Grid, Button, Alert, AlertTitle, Collapse } from '@mui/material'
+import { AuthError } from '~/utils/auth'
+
+const errors = {
+  [AuthError.NotVerified]: {
+    title: '邮箱未验证',
+    message: '请前往admin.fantufantu.com登录后验证邮箱'
+  },
+  [AuthError.NotAuthenticated]: {
+    title: '登录失败',
+    message: '请检查您的用户名和密码'
+  }
+}
 
 const Login = () => {
-  const router = useRouter()
   const [keyword, setKeyword] = useState('')
   const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState({
-    keyword: false,
-    password: false
-  })
+  const [isErrorOpened, setIsErrorOpened] = useState<boolean>()
+  const router = useRouter()
 
-  useEffect(() => {
-    if (router.query.error) {
-      setErrors({
-        keyword: true,
-        password: true
-      })
-    }
-  }, [router])
-
-  /** 登陆 */
+  /**
+   * 登陆
+   */
   const onLogin = () => {
     signIn('credentials', {
       keyword,
-      password,
-      callbackUrl: router.query.callbackUrl?.toString() || '/'
+      password
     })
   }
 
-  /** 输入用户名 */
+  /**
+   * 输入用户名
+   */
   const onKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setErrors({
-      ...errors,
-      keyword: false
-    })
     setKeyword(e.target.value)
   }
 
   /** 输入密码 */
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setErrors({
-      ...errors,
-      password: false
-    })
     setPassword(e.target.value)
+  }
+
+  /**
+   * 页面错误代码
+   */
+  const errorCode = useMemo(() => {
+    const { error } = router.query
+    return error as AuthError | undefined
+  }, [router.query.error])
+
+  /**
+   * 错误提示展现
+   */
+  const isErrorOpenedWithErrorCode = useMemo(() => {
+    return !!(isErrorOpened ?? !!errorCode)
+  }, [errorCode, isErrorOpened])
+
+  /**
+   * 关闭错误提示
+   */
+  const onErrorClose = () => {
+    setIsErrorOpened(false)
   }
 
   return (
     <Box
-      className='py-20'
       sx={{
         backgroundColor: '#f1f2f3'
       }}
     >
-      <Container>
+      {!!errorCode && (
+        <Collapse in={isErrorOpenedWithErrorCode}>
+          <Alert severity='error' onClose={onErrorClose}>
+            <AlertTitle>{errors[errorCode].title}</AlertTitle>
+            {errors[errorCode].message}
+          </Alert>
+        </Collapse>
+      )}
+
+      <Container className='py-20'>
         <Grid container justifyContent='center'>
           <Grid item xs={6}>
             <Paper className='flex flex-col items-center p-8 rounded-xl' component='form' noValidate autoComplete='off'>
@@ -79,8 +104,6 @@ const Login = () => {
                 label='用户名/邮箱'
                 value={keyword}
                 onChange={onKeywordChange}
-                error={errors.keyword}
-                helperText={errors.keyword ? '用户名/邮箱或者密码错误' : ''}
               />
 
               <TextField
@@ -96,8 +119,6 @@ const Login = () => {
                 label='密码'
                 value={password}
                 onChange={onPasswordChange}
-                error={errors.password}
-                helperText={errors.password && '用户名/邮箱或者密码错误'}
               />
 
               <Button
@@ -110,7 +131,7 @@ const Login = () => {
                 variant='contained'
                 onClick={onLogin}
               >
-                log in
+                登 录
               </Button>
             </Paper>
           </Grid>

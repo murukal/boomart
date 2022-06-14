@@ -1,4 +1,7 @@
-export const errors = {
-  login: '用户名或者密码错误！',
-  whoAmI: '服务器异常，请联系管理员！'
+/**
+ * 认证失败后的回调页面枚举
+ */
+export enum AuthError {
+  NotAuthenticated = 'not-authenticated',
+  NotVerified = 'not-verified'
 }

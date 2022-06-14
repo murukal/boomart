@@ -22,17 +22,14 @@ import '../styles/index.css'
 import '@fantufantu/beeeditor/compile/main.css'
 
 const App = (props: AppProps) => {
-  const {
-    Component,
-    pageProps: { session, ...pageProps }
-  } = props
+  const { Component, pageProps } = props
 
   const emotionCache = createEmotionCache()
 
   /** createElement */
   return (
     <ApolloProvider client={client}>
-      <SessionProvider session={session}>
+      <SessionProvider>
         <CacheProvider value={emotionCache}>
           <ThemeProvider theme={theme}>
             <Head>

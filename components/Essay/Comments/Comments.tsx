@@ -16,10 +16,14 @@ import type { Props } from '.'
 const Comments = (props: Props) => {
   const [content, setContent] = useState('')
 
-  /** 用户信息 */
+  /**
+   * 用户信息
+   */
   const { status: sessionStatus } = useSession()
 
-  /** 获取评论列表 */
+  /**
+   * 获取评论列表
+   */
   const { data, refetch } = useQuery(COMMENTS, {
     variables: {
       filterInput: {
@@ -29,7 +33,9 @@ const Comments = (props: Props) => {
     }
   })
 
-  /** 发表评论 */
+  /**
+   * 发表评论
+   */
   const onSubmit = async () => {
     const result = await create({
       content,
@@ -44,7 +50,9 @@ const Comments = (props: Props) => {
     }
   }
 
-  /** 删除评论 */
+  /**
+   * 删除评论
+   */
   const onRemove = (id: number) => async () => {
     const result = await remove(id)
 
@@ -54,7 +62,9 @@ const Comments = (props: Props) => {
     }
   }
 
-  /** 评论内容发生变更 */
+  /**
+   * 评论内容发生变更
+   */
   const onContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value)
 
   return (
@@ -116,7 +126,14 @@ const Comments = (props: Props) => {
           {/* 发表评论 */}
           <Typography className={`${styles['plate-title']} mt-20`}>发表评论</Typography>
 
-          <TextField className='mt-7 w-full' label='友善的评论' value={content} multiline rows={3} onChange={onContentChange} />
+          <TextField
+            className='mt-7 w-full'
+            label='友善的评论'
+            value={content}
+            multiline
+            rows={3}
+            onChange={onContentChange}
+          />
 
           <Button className='mt-7 rounded-3xl' variant='contained' onClick={onSubmit}>
             发表评论

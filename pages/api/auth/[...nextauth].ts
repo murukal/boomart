@@ -5,8 +5,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 // third
 import { JwtPayload, sign, verify } from 'jsonwebtoken'
 // project
-import { authorize } from '../../../apis/auth'
-import { getJwtSecret } from '../../../apis'
+import { authorize } from '~/apis/auth'
+import { getJwtSecret } from '~/apis'
+import { AuthError } from '~/utils/auth'
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   // 获取后端中存在的秘钥
@@ -43,19 +44,27 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 
           const authorizedUser = result.data?.authorize
 
-          if (authorizedUser) {
-            // 用户信息
+          // 登录报错
+          if (!authorizedUser) {
             return {
-              id: authorizedUser.id,
-              name: authorizedUser.username,
-              email: authorizedUser.email,
-              image: authorizedUser.avatar
+              error: AuthError.NotAuthenticated
             }
-          } else {
-            // 登录接口报错，返回异常
-            return {
-              error: 'authorize'
-            }
+          }
+
+          // 用户未认证
+          // if (!authorizedUser.isVerified) {
+          //   return {
+          //     error: AuthError.NotVerified
+          //   }
+          // }
+
+          // 登录成功，返回用户信息
+          // 用户信息
+          return {
+            id: authorizedUser.id,
+            name: authorizedUser.username,
+            email: authorizedUser.email,
+            image: authorizedUser.avatar
           }
         }
       })
@@ -64,27 +73,35 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     secret: jwtSecret,
 
     callbacks: {
-      /** 登录后的回调 */
+      /**
+       * 登录后的回调
+       */
       signIn: async ({ user }) => {
         // 存在异常码，重定向到登录页
         if (user.error) {
-          return `/account/login?error=${user.error}`
+          return '/account/login?' + new URLSearchParams(user as Record<string, string>).toString()
         }
 
         return true
       },
 
-      /** session 回调 内的数据来源于 jwt 回调 */
+      /**
+       * session 回调 内的数据来源于 jwt 回调
+       */
       jwt: async (params) => {
         return params.token
       },
 
-      /** 生成用户会话 */
+      /**
+       * 生成用户会话
+       */
       session: async (params) => {
         return params.session
       },
 
-      /** 回调url */
+      /**
+       * 回调url
+       */
       redirect(params) {
         return params.url
       }
