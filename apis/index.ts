@@ -25,12 +25,9 @@ const link = createHttpLink({
     const context = operation.getContext()
     const appId = context.appId
 
-    // 根据appId获取环境变量中对应的后端api地址
-    const apiUrl =
-      appId === AppID.Boomemory ? process.env.NEXT_PUBLIC_BOOMEMORY_API_URL : process.env.NEXT_PUBLIC_BOOMART_API_URL
-
     // 返回指定的URL
-    return `${apiUrl}/graphql`
+    // 为了解决跨域不携带cookie问题，在nginx层做反向代理，前端请求同域地址
+    return `${process.env.NEXT_PUBLIC_API_URL}/${appId}/graphql`
   },
 
   // 携带cookie
