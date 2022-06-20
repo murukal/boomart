@@ -27,7 +27,7 @@ const link = createHttpLink({
 
     // 返回指定的URL
     // 为了解决跨域不携带cookie问题，在nginx层做反向代理，前端请求同域地址
-    return `${process.env.NEXT_PUBLIC_API_URL}/${appId}/graphql`
+    return `${process.env.NEXT_PUBLIC_API_URL}/${appId || AppID.Boomart}/graphql`
   },
 
   // 携带cookie
